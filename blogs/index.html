@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="google-site-verification" content="hd8yNOteRAp1dXUrnxAteADUF3Qy9vsV6dRyd_w7MZ8" />
+    <meta
+      name="google-site-verification"
+      content="hd8yNOteRAp1dXUrnxAteADUF3Qy9vsV6dRyd_w7MZ8"
+    />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,7 +21,7 @@
       property="og:description"
       content="SEO and web development blog collection by Saqib Ali."
     />
-    <meta property="og:image" content="../assets/Meta.png" />
+    <meta property="og:image" content="/Portfolio/assets/Meta.png" />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Blogs | Saqib Ali" />
@@ -26,39 +29,43 @@
       property="twitter:description"
       content="SEO and web development blog collection by Saqib Ali."
     />
-    <meta property="twitter:image" content="../assets/Meta.png" />
+    <meta property="twitter:image" content="/Portfolio/assets/Meta.png" />
 
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="../assets/favicon/apple-touch-icon.png"
+      href="/Portfolio/assets/favicon/apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="../assets/favicon/favicon-16x16.png"
+      href="/Portfolio/assets/favicon/favicon-16x16.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="../assets/favicon/favicon-32x32.png"
+      href="/Portfolio/assets/favicon/favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="192x192"
-      href="../assets/favicon/android-chrome-192x192.png"
+      href="/Portfolio/assets/favicon/android-chrome-192x192.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="512x512"
-      href="../assets/favicon/android-chrome-512x512.png"
+      href="/Portfolio/assets/favicon/android-chrome-512x512.png"
     />
-    <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico" />
-    <link rel="manifest" href="../assets/favicon/site.webmanifest" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/Portfolio/assets/favicon/favicon.ico"
+    />
+    <link rel="manifest" href="/Portfolio/assets/favicon/site.webmanifest" />
 
     <link
       rel="stylesheet"
@@ -66,8 +73,8 @@
       integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="/Portfolio/css/style.css" />
+    <link rel="stylesheet" href="/Portfolio/css/utilities.css" />
 
     <style>
       .blogs-page-section {
@@ -143,6 +150,27 @@
         padding-bottom: 3rem;
       }
 
+      .blogs-status {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+
+      .empty-blogs {
+        max-width: 760px;
+        margin: 2rem auto 0;
+        background: var(--card-background);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+
+      .empty-blogs h3 {
+        margin-bottom: 0.8rem;
+      }
+
       @media (max-width: 768px) {
         .blogs-grid {
           grid-template-columns: 1fr;
@@ -168,21 +196,29 @@
       <nav class="navbar">
         <div class="container">
           <h1 id="logo">
-            <a href="../index.html">
-              <img src="../assets/logo.png" alt="Your Logo" />
+            <a href="/Portfolio/">
+              <img src="/Portfolio/assets/logo.png" alt="Your Logo" />
             </a>
           </h1>
 
           <ul class="nav-menu">
-            <li><a class="nav-link" href="../index.html">HOME</a></li>
-            <li><a class="nav-link" href="./index.html">BLOGS</a></li>
+            <li><a class="nav-link" href="/Portfolio/">HOME</a></li>
+            <li><a class="nav-link" href="/Portfolio/blogs/">BLOGS</a></li>
             <li><a class="nav-link" href="#footer">CONTACT</a></li>
 
             <div class="theme-switch">
               <input type="checkbox" id="switch" />
               <label class="toggle-icons" for="switch">
-                <img class="moon" src="../assets/moon.svg" alt="Dark mode" />
-                <img class="sun" src="../assets/sun.svg" alt="Light mode" />
+                <img
+                  class="moon"
+                  src="/Portfolio/assets/moon.svg"
+                  alt="Dark mode"
+                />
+                <img
+                  class="sun"
+                  src="/Portfolio/assets/sun.svg"
+                  alt="Light mode"
+                />
               </label>
             </div>
           </ul>
@@ -196,14 +232,18 @@
       </nav>
 
       <section class="header-container blogs-header">
-        <img class="profile-image" src="../assets/profile-image.svg" alt="Saqib Ali" />
+        <img
+          class="profile-image"
+          src="/Portfolio/assets/profile-image.svg"
+          alt="Saqib Ali"
+        />
         <h1>My Blogs</h1>
 
         <div class="content-text">
           <h2>SEO Insights & Practical Website Growth Tips</h2>
           <p>
-            Explore SEO, web development, on-page optimization, and practical strategies
-            to improve rankings, structure, and online visibility.
+            Explore SEO, web development, on-page optimization, and practical
+            strategies to improve rankings, structure, and online visibility.
           </p>
         </div>
 
@@ -223,84 +263,22 @@
 
       <div class="content-text">
         <h2>Latest Blog Posts</h2>
-        <p>Five practical articles on SEO, structure, and website growth</p>
+        <p>
+          This page updates automatically based on the blog folders available in
+          the repository.
+        </p>
       </div>
 
-      <div class="blogs-grid">
-        <!-- Featured / Live Blog -->
-        <article class="blog-card featured-blog">
-          <div class="blog-card-content">
-            <span class="blog-card-tag">Featured</span>
-            <h3>SEO H1 Tags Best Practices</h3>
-            <p>
-              Learn how to write clear, effective H1 tags that improve page structure,
-              usability, and on-page SEO without unnecessary keyword stuffing.
-            </p>
-            <a href="./blog-h1-tags-best-practices.html" class="btn btn-primary">
-              Read Article <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </article>
+      <div id="blogsStatus" class="blogs-status">Loading blog posts...</div>
+      <div id="blogsGrid" class="blogs-grid" style="display: none;"></div>
 
-        <!-- Blog 2 -->
-        <article class="blog-card">
-          <div class="blog-card-content">
-            <span class="blog-card-tag">SEO</span>
-            <h3>On-Page SEO Checklist for Better Rankings</h3>
-            <p>
-              A simple on-page SEO checklist covering titles, headings, internal links,
-              content structure, and key optimization areas that improve visibility.
-            </p>
-            <a href="./on-page-seo-checklist.html" class="btn btn-primary">
-              Read Article <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </article>
-
-        <!-- Blog 3 -->
-        <article class="blog-card">
-          <div class="blog-card-content">
-            <span class="blog-card-tag">Technical SEO</span>
-            <h3>Technical SEO Basics Every Business Website Needs</h3>
-            <p>
-              Understand the technical SEO essentials that support crawlability, indexing,
-              speed, mobile usability, and stronger website performance.
-            </p>
-            <a href="./technical-seo-basics.html" class="btn btn-primary">
-              Read Article <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </article>
-
-        <!-- Blog 4 -->
-        <article class="blog-card">
-          <div class="blog-card-content">
-            <span class="blog-card-tag">Local SEO</span>
-            <h3>How Local SEO Helps Small Businesses Grow</h3>
-            <p>
-              Discover how local SEO improves map visibility, attracts nearby customers,
-              and helps small businesses build stronger local search presence.
-            </p>
-            <a href="./local-seo-small-business.html" class="btn btn-primary">
-              Read Article <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </article>
-
-        <!-- Blog 5 -->
-        <article class="blog-card">
-          <div class="blog-card-content">
-            <span class="blog-card-tag">E-commerce SEO</span>
-            <h3>Product Page SEO Tips for E-commerce Websites</h3>
-            <p>
-              Improve your product pages with better headings, descriptions, image
-              optimization, and content structure designed for search and conversions.
-            </p>
-            <a href="./product-page-seo-tips.html" class="btn btn-primary">
-              Read Article <i class="fas fa-arrow-right"></i>
-            </a>
-          </div>
-        </article>
+      <div id="emptyBlogs" class="empty-blogs" style="display: none;">
+        <h3>No blog posts available yet</h3>
+        <p>
+          Add a new folder inside <strong>/blogs/</strong> with an
+          <strong>index.html</strong> file, and it will appear here
+          automatically after deployment.
+        </p>
       </div>
     </section>
 
@@ -310,10 +288,19 @@
 
         <div class="social">
           <a href="https://www.facebook.com/share/17BCCCzvfh/" target="_blank">
-            <img src="../assets/facebook-icon.svg" alt="Facebook" />
+            <img
+              src="/Portfolio/assets/facebook-icon.svg"
+              alt="Facebook"
+            />
           </a>
-          <a href="https://www.linkedin.com/in/saqib-ali-seo/" target="_blank">
-            <img src="../assets/linkedin-icon.svg" alt="LinkedIn" />
+          <a
+            href="https://www.linkedin.com/in/saqib-ali-seo/"
+            target="_blank"
+          >
+            <img
+              src="/Portfolio/assets/linkedin-icon.svg"
+              alt="LinkedIn"
+            />
           </a>
         </div>
 
@@ -323,14 +310,156 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src="../assets/Fiverr W.svg" alt="Fiverr" width="150px" />
+            <img
+              src="/Portfolio/assets/Fiverr W.svg"
+              alt="Fiverr"
+              width="150px"
+            />
           </a>
         </div>
 
-        <p>Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights reserved</p>
+        <p>
+          Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights
+          reserved
+        </p>
       </div>
     </footer>
 
-    <script src="../js/script.js"></script>
+    <script src="/Portfolio/js/script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const blogsGrid = document.getElementById("blogsGrid");
+        const blogsStatus = document.getElementById("blogsStatus");
+        const emptyBlogs = document.getElementById("emptyBlogs");
+
+        const owner = "saqibali7339";
+        const repo = "Portfolio";
+        const branch = "main";
+        const siteBase = "/Portfolio";
+        const blogsApiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/blogs?ref=${branch}`;
+
+        function cleanTitle(title, folderName) {
+          if (!title) {
+            return folderName
+              .replace(/-/g, " ")
+              .replace(/\b\w/g, (c) => c.toUpperCase());
+          }
+
+          return title
+            .replace(/\s*\|\s*Saqib Ali\s*$/i, "")
+            .replace(/\s*-\s*Saqib Ali\s*$/i, "")
+            .trim();
+        }
+
+        function createCardMarkup(blog, isFeatured = false) {
+          return `
+            <article class="blog-card ${isFeatured ? "featured-blog" : ""}">
+              <div class="blog-card-content">
+                <span class="blog-card-tag">${blog.tag}</span>
+                <h3>${blog.title}</h3>
+                <p>${blog.description}</p>
+                <a href="${blog.url}" class="btn btn-primary">
+                  Read Article <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </article>
+          `;
+        }
+
+        async function getBlogDetails(folder) {
+          const folderName = folder.name;
+          const blogUrl = `${siteBase}/blogs/${encodeURIComponent(folderName)}/`;
+
+          try {
+            const response = await fetch(blogUrl, { cache: "no-store" });
+
+            if (!response.ok) return null;
+
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+
+            const title =
+              cleanTitle(
+                doc.querySelector('meta[property="og:title"]')?.content ||
+                  doc.querySelector("title")?.textContent ||
+                  doc.querySelector("h1")?.textContent,
+                folderName
+              );
+
+            const description =
+              doc.querySelector('meta[name="description"]')?.content ||
+              doc.querySelector('meta[property="og:description"]')?.content ||
+              "Read this blog post by Saqib Ali.";
+
+            const tag =
+              doc.querySelector('meta[name="blog-category"]')?.content ||
+              "Blog";
+
+            return {
+              title,
+              description,
+              tag,
+              url: blogUrl,
+              folderName
+            };
+          } catch (error) {
+            return null;
+          }
+        }
+
+        try {
+          const response = await fetch(blogsApiUrl, {
+            headers: {
+              Accept: "application/vnd.github+json"
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error("Unable to fetch blog folders");
+          }
+
+          const items = await response.json();
+
+          const blogFolders = items
+            .filter((item) => item.type === "dir")
+            .filter((item) => !item.name.startsWith("."));
+
+          if (!blogFolders.length) {
+            blogsStatus.style.display = "none";
+            emptyBlogs.style.display = "block";
+            return;
+          }
+
+          const blogResults = await Promise.all(
+            blogFolders.map((folder) => getBlogDetails(folder))
+          );
+
+          const blogs = blogResults
+            .filter(Boolean)
+            .sort((a, b) => a.folderName.localeCompare(b.folderName));
+
+          if (!blogs.length) {
+            blogsStatus.style.display = "none";
+            emptyBlogs.style.display = "block";
+            return;
+          }
+
+          let html = "";
+
+          blogs.forEach((blog, index) => {
+            html += createCardMarkup(blog, index === 0);
+          });
+
+          blogsGrid.innerHTML = html;
+          blogsGrid.style.display = "grid";
+          blogsStatus.style.display = "none";
+        } catch (error) {
+          blogsStatus.innerHTML =
+            "Unable to load blog posts right now. Please try again in a moment.";
+        }
+      });
+    </script>
   </body>
 </html>
