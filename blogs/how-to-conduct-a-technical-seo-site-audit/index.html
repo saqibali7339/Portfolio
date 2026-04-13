@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="google-site-verification"
+      content="hd8yNOteRAp1dXUrnxAteADUF3Qy9vsV6dRyd_w7MZ8"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How to Conduct a Technical SEO Site Audit | Saqib Ali</title>
+    <meta
+      name="description"
+      content="Learn how to conduct a technical SEO site audit using Screaming Frog, Google PageSpeed Insights, SEO Site Checkup, and Semrush, then turn the findings into a practical action plan."
+    />
+    <meta name="blog-category" content="Technical SEO" />
+
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:title"
+      content="How to Conduct a Technical SEO Site Audit | Saqib Ali"
+    />
+    <meta
+      property="og:description"
+      content="A practical technical SEO audit workflow using Screaming Frog, PageSpeed Insights, SEO Site Checkup, Semrush, Google Docs, and an action-plan system."
+    />
+    <meta property="og:image" content="/Portfolio/assets/Meta.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="How to Conduct a Technical SEO Site Audit | Saqib Ali"
+    />
+    <meta
+      property="twitter:description"
+      content="A practical technical SEO audit workflow using Screaming Frog, PageSpeed Insights, SEO Site Checkup, Semrush, Google Docs, and an action-plan system."
+    />
+    <meta property="twitter:image" content="/Portfolio/assets/Meta.png" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/Portfolio/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/Portfolio/assets/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/Portfolio/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/Portfolio/assets/favicon/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/Portfolio/assets/favicon/android-chrome-512x512.png"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/Portfolio/assets/favicon/favicon.ico"
+    />
+    <link rel="manifest" href="/Portfolio/assets/favicon/site.webmanifest" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/Portfolio/css/style.css" />
+    <link rel="stylesheet" href="/Portfolio/css/utilities.css" />
+
+    <style>
+      .blog-post-wrap .btn {
+        margin-top: 0.5rem;
+      }
+
+      .blog-inline-figure {
+        margin: 2rem 0;
+      }
+
+      .blog-inline-figure img {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .blog-inline-figure figcaption {
+        font-size: 0.9rem;
+        opacity: 0.85;
+        margin-top: 0.75rem;
+        line-height: 1.7;
+      }
+
+      .blog-highlight-list {
+        margin: 1.25rem 0 1.5rem;
+        padding-left: 1.25rem;
+      }
+
+      .blog-highlight-list li {
+        margin-bottom: 0.7rem;
+      }
+
+      .blog-tool-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin: 1.75rem 0;
+      }
+
+      .blog-tool-card {
+        background: var(--card-background);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 1.25rem;
+      }
+
+      .blog-tool-card h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      .blog-tool-card p {
+        margin-bottom: 0;
+      }
+
+      .blog-cta-box {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: var(--card-background);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .blog-cta-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .blog-doc-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .doc-preview-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(0, 0, 0, 0.78);
+        padding: 1rem;
+      }
+
+      .doc-preview-modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .doc-preview-dialog {
+        width: min(1100px, 96vw);
+        height: min(88vh, 900px);
+        background: var(--bg-primary);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .doc-preview-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+      }
+
+      .doc-preview-title {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .doc-preview-close {
+        background: transparent;
+        border: none;
+        font-size: 1.8rem;
+        line-height: 1;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+
+      .doc-preview-frame {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #fff;
+      }
+
+      body.doc-modal-open {
+        overflow: hidden;
+      }
+
+      @media (max-width: 768px) {
+        .blog-tool-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .doc-preview-dialog {
+          width: 100%;
+          height: 90vh;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="hero">
+      <nav class="navbar">
+        <div class="container">
+          <h1 id="logo">
+            <a href="/Portfolio/">
+              <img src="/Portfolio/assets/logo.png" alt="Your Logo" />
+            </a>
+          </h1>
+
+          <ul class="nav-menu">
+            <li><a class="nav-link" href="/Portfolio/">HOME</a></li>
+            <li><a class="nav-link" href="/Portfolio/blogs/">BLOGS</a></li>
+            <li><a class="nav-link" href="#footer">CONTACT</a></li>
+
+            <div class="theme-switch">
+              <input type="checkbox" id="switch" />
+              <label class="toggle-icons" for="switch">
+                <img
+                  class="moon"
+                  src="/Portfolio/assets/moon.svg"
+                  alt="Dark mode"
+                />
+                <img
+                  class="sun"
+                  src="/Portfolio/assets/sun.svg"
+                  alt="Light mode"
+                />
+              </label>
+            </div>
+          </ul>
+
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </nav>
+
+      <section class="header-container">
+        <img
+          class="profile-image"
+          src="/Portfolio/assets/profile-image.svg"
+          alt="Saqib Ali"
+        />
+        <h1>How to Conduct a Technical SEO Site Audit</h1>
+
+        <div class="content-text">
+          <h2>SEO Specialist & Web Developer</h2>
+          <p>
+            A practical step-by-step guide to auditing a website with Screaming
+            Frog, Google PageSpeed Insights, SEO Site Checkup, and Semrush,
+            then turning the findings into a clear action plan.
+          </p>
+          <p class="blog-meta-line">By <strong>Saqib Ali</strong></p>
+        </div>
+
+        <a
+          href="#sample-audit"
+          class="btn btn-secondary"
+          data-open-audit-doc
+        >
+          View Sample Audit
+        </a>
+      </section>
+    </header>
+
+    <section class="project-container container blog-post-section">
+      <div class="division"></div>
+
+      <div class="content-text">
+        <h2>Blog Post</h2>
+        <p>
+          A practical workflow for running a technical SEO audit and fixing
+          issues step by step
+        </p>
+      </div>
+
+      <article class="blog-post-wrap">
+        <p>
+          A technical SEO site audit is one of the best ways to understand why a
+          website is underperforming in search. It helps uncover crawl issues,
+          indexability problems, broken pages, weak internal structure, slow
+          performance, missing metadata, poor mobile usability, and technical
+          errors that can hold rankings back. The goal is not just to produce a
+          long report, but to turn findings into a practical action plan that
+          improves the site over time.
+        </p>
+
+        <p>
+          My own workflow starts with crawling the website, validating technical
+          issues with multiple tools, documenting everything clearly in Google
+          Docs, then converting the findings into a phase-based action plan that
+          I work through one item at a time. This process keeps the audit useful
+          for both website owners and implementation teams.
+        </p>
+
+        <h2>Tools I use for a technical SEO audit</h2>
+        <p>
+          I mainly use
+          <a
+            href="https://www.screamingfrog.co.uk/seo-spider/"
+            target="_blank"
+            rel="noopener"
+            >Screaming Frog SEO Spider</a
+          >
+          to crawl the site and identify technical issues at scale,
+          <a
+            href="https://pagespeed.web.dev/"
+            target="_blank"
+            rel="noopener"
+            >Google PageSpeed Insights</a
+          >
+          to evaluate page speed and user experience,
+          <a
+            href="https://seositecheckup.com/"
+            target="_blank"
+            rel="noopener"
+            >SEO Site Checkup</a
+          >
+          for additional technical checks and page-level validation, and
+          <a
+            href="https://www.semrush.com/features/site-audit/"
+            target="_blank"
+            rel="noopener"
+            >Semrush Site Audit</a
+          >
+          when I want another strong layer of crawl-based diagnostics and issue
+          prioritization.
+        </p>
+
+        <div class="blog-tool-grid">
+          <div class="blog-tool-card">
+            <h3>Screaming Frog</h3>
+            <p>
+              Best for status codes, broken links, metadata audits, heading
+              checks, canonicals, crawlability, and large-scale technical SEO
+              analysis.
+            </p>
+          </div>
+
+          <div class="blog-tool-card">
+            <h3>Google PageSpeed Insights</h3>
+            <p>
+              Best for Core Web Vitals context, image delivery issues,
+              render-blocking resources, caching opportunities, and layout
+              stability problems.
+            </p>
+          </div>
+
+          <div class="blog-tool-card">
+            <h3>SEO Site Checkup</h3>
+            <p>
+              Useful for quick validation, HTML size checks, compression review,
+              and additional page-level technical SEO diagnostics.
+            </p>
+          </div>
+
+          <div class="blog-tool-card">
+            <h3>Semrush Site Audit</h3>
+            <p>
+              Helpful for site health scoring, issue prioritization, page-level
+              errors, warnings, and a more structured technical to-do list.
+            </p>
+          </div>
+        </div>
+
+        <h2>Step 1: Crawl the website with Screaming Frog</h2>
+        <p>
+          I usually begin with a full crawl in Screaming Frog because it gives a
+          strong overview of how the website is built. This is where I check
+          status codes, broken links, redirect chains, indexability, canonical
+          tags, missing metadata, duplicate headings, thin pages, and other
+          technical signals that are easy to miss when reviewing pages
+          manually.
+        </p>
+
+        <figure class="blog-inline-figure">
+          <img
+            src="/Portfolio/assets/Sfrog%20issue.png"
+            alt="Screaming Frog issues screenshot showing broken CSS and JavaScript files, low text-to-HTML ratio, and missing metadata issues"
+          />
+          <figcaption>
+            A Screaming Frog issue summary can quickly reveal broken internal
+            JavaScript and CSS files, unminified assets, weak text-to-HTML
+            ratio, low word count pages, missing meta descriptions, and even
+            duplicate H1 and title issues.
+          </figcaption>
+        </figure>
+
+        <p>
+          Starting with a crawl gives you a site-wide foundation instead of
+          relying on assumptions. It helps you understand whether the main
+          problems are technical, structural, content-related, or a mix of all
+          three.
+        </p>
+
+        <h2>Step 2: Review technical SEO issues by priority</h2>
+        <p>
+          Once the crawl is complete, I review the issues that most directly
+          affect accessibility, crawlability, and indexation. This typically
+          includes robots.txt, XML sitemap setup, heading hierarchy, Google
+          Search Console connection, 404 pages, mobile-friendly URLs,
+          text-to-HTML ratio, structured data, schema implementation, and page
+          load speed.
+        </p>
+
+        <ul class="blog-highlight-list">
+          <li>Check whether robots.txt is blocking important content</li>
+          <li>Review the XML sitemap for wrong or non-indexable URLs</li>
+          <li>Look for broken pages, redirect issues, and 4xx errors</li>
+          <li>Validate canonical tags and indexability signals</li>
+          <li>Review heading structure and duplicated H1 or H2 usage</li>
+          <li>Check schema and structured data implementation</li>
+          <li>Confirm Google Search Console is connected correctly</li>
+          <li>Assess mobile usability and clean URL structure</li>
+          <li>Review speed and rendering bottlenecks</li>
+        </ul>
+
+        <h2>Step 3: Use Semrush to spot broader audit patterns</h2>
+        <p>
+          After the crawl, I often validate issues with Semrush because it helps
+          prioritize technical problems in a more structured site-audit format.
+          It is especially useful for highlighting recurring patterns across the
+          site such as HTTP URLs, internal client errors, missing canonicals,
+          oversized images, multiple H1s, duplicate H1s, weak title lengths,
+          uppercase URLs, and missing security headers.
+        </p>
+
+        <figure class="blog-inline-figure">
+          <img
+            src="/Portfolio/assets/Semrush.png"
+            alt="Semrush site audit screenshot showing HTTP URLs, internal 4xx errors, oversized images, missing canonicals, multiple H1s, and missing security headers"
+          />
+          <figcaption>
+            Semrush is helpful when you want a more categorized view of issues
+            such as HTTP URLs, 4xx response codes, missing canonicals, oversized
+            images, multiple H1s, duplicate headings, and missing security
+            headers.
+          </figcaption>
+        </figure>
+
+        <p>
+          That kind of summary makes it easier to identify what is affecting the
+          site most and what should be fixed first.
+        </p>
+
+        <h2>Step 4: Check speed and performance with PageSpeed Insights</h2>
+        <p>
+          Technical SEO is not only about crawl errors. Performance has a direct
+          impact on user experience and can also affect how efficiently search
+          engines interact with the site. That is why I run important URLs
+          through PageSpeed Insights to identify slow scripts, image bloat,
+          unused CSS, missing image dimensions, poor caching behavior, and
+          render-blocking requests.
+        </p>
+
+        <figure class="blog-inline-figure">
+          <img
+            src="/Portfolio/assets/Lighthous.png"
+            alt="Google Lighthouse and PageSpeed Insights screenshot showing image delivery issues, render-blocking requests, font display issues, inefficient cache lifetimes, and unused CSS"
+          />
+          <figcaption>
+            Lighthouse and PageSpeed Insights help surface performance problems
+            such as image delivery issues, render-blocking requests, missing
+            width and height attributes on images, unused CSS, and overly large
+            network payloads.
+          </figcaption>
+        </figure>
+
+        <p>
+          If load speed is weak, the audit should not stop at “the site is
+          slow.” It should explain what is making it slow and which fixes are
+          likely to create the biggest improvement.
+        </p>
+
+        <h2>Step 5: Validate additional speed findings with SEO Site Checkup</h2>
+        <p>
+          I also use SEO Site Checkup as another layer of validation. It can be
+          helpful for quickly reviewing HTML page size, DOM size, compression,
+          and general speed optimization findings. Sometimes it confirms what
+          the other tools already showed, and sometimes it helps present the
+          issue in a way that is easier for a client to understand.
+        </p>
+
+        <figure class="blog-inline-figure">
+          <img
+            src="/Portfolio/assets/Sitechekup.png"
+            alt="SEO Site Checkup screenshot showing speed optimization score, HTML page size test, DOM size test, and HTML compression results"
+          />
+          <figcaption>
+            SEO Site Checkup can be useful for validating HTML size, DOM size,
+            compression, and page-level speed observations from a second audit
+            perspective.
+          </figcaption>
+        </figure>
+
+        <h2>Step 6: Write the audit clearly in Google Docs</h2>
+        <p>
+          After reviewing the technical findings, I write the audit in Google
+          Docs so everything is organized, easy to share, and simple for clients
+          or developers to follow. I usually group findings by priority and
+          topic, explain what the issue is, where it appears, why it matters,
+          and what should be done next. This makes the audit useful as a working
+          document instead of a confusing export full of raw tool data.
+        </p>
+
+        <div class="blog-doc-actions" id="sample-audit">
+          <a href="#" class="btn btn-primary" data-open-audit-doc>
+            Open Sample Audit in Pop-up
+          </a>
+
+          <a
+            href="https://docs.google.com/document/d/1_2LwKph2eUvuytThXT-3rivKITVpECLu563oYnJtmX4/edit?usp=sharing"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-secondary"
+          >
+            Open Audit in New Tab
+          </a>
+        </div>
+
+        <h2>Step 7: Turn the audit into an action plan</h2>
+        <p>
+          An audit becomes far more valuable when it leads to action. After the
+          report is written, I create a clear implementation plan so the work
+          can be done in phases instead of getting stuck in one large document.
+          This keeps the process practical and makes it easier to track what has
+          been completed and what still needs attention.
+        </p>
+
+        <figure class="blog-inline-figure">
+          <img
+            src="https://www.genspark.ai/api/files/s/k8wAGXRu"
+            alt="Technical SEO action plan example showing phases, actions, roles, and status tracking"
+          />
+          <figcaption>
+            A simple action-plan format breaks the work into phases such as
+            fixing technical issues, keyword research, on-page optimization, and
+            off-page tasks, making implementation much easier to manage.
+          </figcaption>
+        </figure>
+
+        <p>
+          A practical action plan often begins with fixing technical issues such
+          as robots.txt, sitemap.xml, heading hierarchy, Search Console setup,
+          404 pages, mobile-friendly URLs, text-to-HTML ratio, structured data,
+          schema, and page speed. Then it moves into keyword research, on-page
+          optimization, and off-page tasks where needed.
+        </p>
+
+        <h2>Step 8: Fix issues one by one</h2>
+        <p>
+          Once the action plan is ready, I move into implementation and work
+          through the issues one by one. That usually means fixing the
+          crawlability and indexation problems first, then improving page speed,
+          metadata, headings, image optimization, URL structure, and other
+          technical areas before expanding into wider on-page and off-page SEO
+          work.
+        </p>
+
+        <p>
+          This step-by-step method is far more practical than trying to fix
+          everything at once. It also makes it easier to report progress and
+          show exactly which SEO tasks are complete.
+        </p>
+
+        <h2>What makes a technical SEO audit actually useful?</h2>
+        <p>
+          A useful audit should do more than point out problems. It should
+          explain priorities, connect issues to business impact, and show what
+          needs to happen next. If a report only lists errors without a path
+          forward, it becomes difficult for clients or teams to implement. That
+          is why I prefer audits that lead naturally into an action plan and
+          then into implementation.
+        </p>
+
+        <h2>Final thoughts</h2>
+        <p>
+          The best technical SEO audits combine crawling, validation, clear
+          documentation, and execution. If you use the right tools, write your
+          findings clearly, and build a phase-based action plan afterward, the
+          audit becomes something you can actually use to improve the site. That
+          is the difference between an audit that only looks impressive and one
+          that creates measurable progress.
+        </p>
+
+        <div class="blog-cta-box">
+          <h3>Need a technical SEO audit for your website?</h3>
+          <p>
+            If running a technical SEO audit feels overwhelming, or if you want
+            a clear report with a practical action plan and implementation
+            support, you can
+            <a
+              href="https://www.fiverr.com/s/o8R4Xe4"
+              target="_blank"
+              rel="noopener"
+              >contact me on Fiverr for an audit</a
+            >.
+          </p>
+
+          <div class="blog-cta-buttons">
+            <a
+              href="https://www.fiverr.com/s/o8R4Xe4"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-primary"
+            >
+              Order Audit on Fiverr
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/saqib-ali-seo/"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-secondary"
+            >
+              Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div
+      class="doc-preview-modal"
+      id="auditDocModal"
+      aria-hidden="true"
+      role="dialog"
+      aria-label="Sample technical SEO audit document preview"
+    >
+      <div class="doc-preview-dialog">
+        <div class="doc-preview-topbar">
+          <div class="doc-preview-title">Sample Technical SEO Audit</div>
+
+          <div class="blog-doc-actions" style="margin-top: 0;">
+            <a
+              href="https://docs.google.com/document/d/1_2LwKph2eUvuytThXT-3rivKITVpECLu563oYnJtmX4/edit?usp=sharing"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-secondary"
+            >
+              Open in New Tab
+            </a>
+            <button
+              type="button"
+              class="doc-preview-close"
+              id="closeAuditDocModal"
+              aria-label="Close preview"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+
+        <iframe
+          class="doc-preview-frame"
+          id="auditDocFrame"
+          data-src="https://docs.google.com/document/d/1_2LwKph2eUvuytThXT-3rivKITVpECLu563oYnJtmX4/preview"
+          title="Technical SEO audit sample document"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+
+    <footer id="footer">
+      <div class="container">
+        <a href="mailto:saqibali7339@gmail.com">saqibali7339@gmail.com</a>
+
+        <div class="social">
+          <a href="https://www.facebook.com/share/17BCCCzvfh/" target="_blank">
+            <img src="/Portfolio/assets/facebook-icon.svg" alt="Facebook" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/saqib-ali-seo/"
+            target="_blank"
+          >
+            <img src="/Portfolio/assets/linkedin-icon.svg" alt="LinkedIn" />
+          </a>
+        </div>
+
+        <div class="attribution">
+          <a
+            href="https://www.fiverr.com/s/NNxVlko"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/Portfolio/assets/Fiverr W.svg"
+              alt="Fiverr"
+              width="150px"
+            />
+          </a>
+        </div>
+
+        <p>
+          Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights
+          reserved
+        </p>
+      </div>
+    </footer>
+
+    <script src="/Portfolio/js/script.js"></script>
+    <script>
+      (function () {
+        const modal = document.getElementById("auditDocModal");
+        const frame = document.getElementById("auditDocFrame");
+        const closeBtn = document.getElementById("closeAuditDocModal");
+        const openButtons = document.querySelectorAll("[data-open-audit-doc]");
+
+        if (!modal || !frame || !closeBtn || !openButtons.length) return;
+
+        function openModal(event) {
+          if (event) event.preventDefault();
+          if (!frame.src) {
+            frame.src = frame.getAttribute("data-src");
+          }
+          modal.classList.add("active");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.classList.add("doc-modal-open");
+        }
+
+        function closeModal() {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("doc-modal-open");
+        }
+
+        openButtons.forEach((button) => {
+          button.addEventListener("click", openModal);
+        });
+
+        closeBtn.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            closeModal();
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && modal.classList.contains("active")) {
+            closeModal();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
