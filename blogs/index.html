@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="google-site-verification" content="hd8yNOteRAp1dXUrnxAteADUF3Qy9vsV6dRyd_w7MZ8" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Blogs | Saqib Ali</title>
+    <meta
+      name="description"
+      content="Read SEO and web development blogs by Saqib Ali. Explore practical guides, on-page SEO tips, technical SEO advice, and website growth strategies."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Blogs | Saqib Ali" />
+    <meta
+      property="og:description"
+      content="SEO and web development blog collection by Saqib Ali."
+    />
+    <meta property="og:image" content="../assets/Meta.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Blogs | Saqib Ali" />
+    <meta
+      property="twitter:description"
+      content="SEO and web development blog collection by Saqib Ali."
+    />
+    <meta property="twitter:image" content="../assets/Meta.png" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../assets/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="../assets/favicon/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="../assets/favicon/android-chrome-512x512.png"
+    />
+    <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico" />
+    <link rel="manifest" href="../assets/favicon/site.webmanifest" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+
+    <style>
+      .blogs-page-section {
+        padding-bottom: 5rem;
+      }
+
+      .blogs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .blog-card {
+        background: var(--card-background);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .blog-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .blog-card-content {
+        padding: 1.5rem;
+      }
+
+      .blog-card-tag {
+        display: inline-block;
+        margin-bottom: 0.8rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        background: var(--primary-color);
+        color: #000;
+        font-size: 0.75rem;
+        font-weight: var(--weight-bold);
+      }
+
+      .blog-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .blog-card p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+      }
+
+      .blog-card .btn {
+        margin-top: auto;
+      }
+
+      .featured-blog {
+        grid-column: 1 / -1;
+      }
+
+      .featured-blog .blog-card-content {
+        padding: 2rem;
+      }
+
+      .featured-blog h3 {
+        font-size: 1.5rem;
+      }
+
+      .header-container.blogs-header {
+        min-height: auto;
+        padding-top: 7rem;
+        padding-bottom: 3rem;
+      }
+
+      @media (max-width: 768px) {
+        .blogs-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .featured-blog {
+          grid-column: auto;
+        }
+
+        .blog-card-content {
+          padding: 1.25rem;
+        }
+
+        .featured-blog .blog-card-content {
+          padding: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="hero">
+      <nav class="navbar">
+        <div class="container">
+          <h1 id="logo">
+            <a href="../index.html">
+              <img src="../assets/logo.png" alt="Your Logo" />
+            </a>
+          </h1>
+
+          <ul class="nav-menu">
+            <li><a class="nav-link" href="../index.html">HOME</a></li>
+            <li><a class="nav-link" href="./index.html">BLOGS</a></li>
+            <li><a class="nav-link" href="#footer">CONTACT</a></li>
+
+            <div class="theme-switch">
+              <input type="checkbox" id="switch" />
+              <label class="toggle-icons" for="switch">
+                <img class="moon" src="../assets/moon.svg" alt="Dark mode" />
+                <img class="sun" src="../assets/sun.svg" alt="Light mode" />
+              </label>
+            </div>
+          </ul>
+
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </nav>
+
+      <section class="header-container blogs-header">
+        <img class="profile-image" src="../assets/profile-image.svg" alt="Saqib Ali" />
+        <h1>My Blogs</h1>
+
+        <div class="content-text">
+          <h2>SEO Insights & Practical Website Growth Tips</h2>
+          <p>
+            Explore SEO, web development, on-page optimization, and practical strategies
+            to improve rankings, structure, and online visibility.
+          </p>
+        </div>
+
+        <a
+          href="https://www.linkedin.com/in/saqib-ali-seo/"
+          class="btn btn-secondary"
+          target="_blank"
+          rel="noopener"
+        >
+          Connect With Me
+        </a>
+      </section>
+    </header>
+
+    <section class="project-container container blogs-page-section">
+      <div class="division"></div>
+
+      <div class="content-text">
+        <h2>Latest Blog Posts</h2>
+        <p>Five practical articles on SEO, structure, and website growth</p>
+      </div>
+
+      <div class="blogs-grid">
+        <!-- Featured / Live Blog -->
+        <article class="blog-card featured-blog">
+          <div class="blog-card-content">
+            <span class="blog-card-tag">Featured</span>
+            <h3>SEO H1 Tags Best Practices</h3>
+            <p>
+              Learn how to write clear, effective H1 tags that improve page structure,
+              usability, and on-page SEO without unnecessary keyword stuffing.
+            </p>
+            <a href="./blog-h1-tags-best-practices.html" class="btn btn-primary">
+              Read Article <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog 2 -->
+        <article class="blog-card">
+          <div class="blog-card-content">
+            <span class="blog-card-tag">SEO</span>
+            <h3>On-Page SEO Checklist for Better Rankings</h3>
+            <p>
+              A simple on-page SEO checklist covering titles, headings, internal links,
+              content structure, and key optimization areas that improve visibility.
+            </p>
+            <a href="./on-page-seo-checklist.html" class="btn btn-primary">
+              Read Article <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog 3 -->
+        <article class="blog-card">
+          <div class="blog-card-content">
+            <span class="blog-card-tag">Technical SEO</span>
+            <h3>Technical SEO Basics Every Business Website Needs</h3>
+            <p>
+              Understand the technical SEO essentials that support crawlability, indexing,
+              speed, mobile usability, and stronger website performance.
+            </p>
+            <a href="./technical-seo-basics.html" class="btn btn-primary">
+              Read Article <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog 4 -->
+        <article class="blog-card">
+          <div class="blog-card-content">
+            <span class="blog-card-tag">Local SEO</span>
+            <h3>How Local SEO Helps Small Businesses Grow</h3>
+            <p>
+              Discover how local SEO improves map visibility, attracts nearby customers,
+              and helps small businesses build stronger local search presence.
+            </p>
+            <a href="./local-seo-small-business.html" class="btn btn-primary">
+              Read Article <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog 5 -->
+        <article class="blog-card">
+          <div class="blog-card-content">
+            <span class="blog-card-tag">E-commerce SEO</span>
+            <h3>Product Page SEO Tips for E-commerce Websites</h3>
+            <p>
+              Improve your product pages with better headings, descriptions, image
+              optimization, and content structure designed for search and conversions.
+            </p>
+            <a href="./product-page-seo-tips.html" class="btn btn-primary">
+              Read Article <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <div class="container">
+        <a href="mailto:saqibali7339@gmail.com">saqibali7339@gmail.com</a>
+
+        <div class="social">
+          <a href="https://www.facebook.com/share/17BCCCzvfh/" target="_blank">
+            <img src="../assets/facebook-icon.svg" alt="Facebook" />
+          </a>
+          <a href="https://www.linkedin.com/in/saqib-ali-seo/" target="_blank">
+            <img src="../assets/linkedin-icon.svg" alt="LinkedIn" />
+          </a>
+        </div>
+
+        <div class="attribution">
+          <a
+            href="https://www.fiverr.com/s/NNxVlko"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="../assets/Fiverr W.svg" alt="Fiverr" width="150px" />
+          </a>
+        </div>
+
+        <p>Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights reserved</p>
+      </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+  </body>
+</html>
