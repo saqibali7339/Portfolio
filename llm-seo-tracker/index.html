@@ -79,6 +79,56 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+      .tool-card,
+.tool-chart-card,
+.tool-analysis-box,
+.tool-table-card,
+.tool-visual-panel,
+.tool-source-tags,
+.tool-analysis-grid > *,
+.tool-top-grid > *,
+.tool-main-grid > *,
+.tool-chart-grid > * {
+  min-width: 0;
+}
+
+.tool-analysis-box,
+.tool-card,
+.tool-table-card {
+  overflow: hidden;
+}
+
+.tool-analysis-list,
+.tool-recommendation-list {
+  min-width: 0;
+}
+
+.tool-analysis-list li,
+.tool-analysis-list a,
+.tool-analysis-box a,
+.tool-table td,
+.tool-table th {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.tool-analysis-list a,
+.tool-analysis-box a {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.tool-source-tags {
+  min-width: 0;
+}
+
+.tool-source-tag {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
       .tool-page-wrap {
   max-width: 100%;
 }
