@@ -79,361 +79,364 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-      .tool-page-wrap .btn {
-        margin-top: 0.5rem;
-      }
+      .tool-page-wrap {
+  max-width: 100%;
+}
 
-      .tool-intro-note,
-      .tool-card,
-      .tool-cta-box,
-      .tool-metric-card,
-      .tool-chart-card,
-      .tool-analysis-box,
-      .tool-table-card,
-      .tool-prompt-item,
-      .tool-visual-panel {
-        background: var(--card-background);
-        border-radius: 12px;
-        box-shadow: var(--shadow);
-      }
+.tool-shell {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
 
-      .tool-intro-note {
-        margin-top: 1.5rem;
-        padding: 1rem 1.1rem;
-      }
+.tool-intro-bar,
+.tool-top-grid,
+.tool-main-grid,
+.tool-chart-grid,
+.tool-analysis-grid,
+.tool-summary-columns,
+.tool-dashboard-grid,
+.tool-actions-grid {
+  display: grid;
+  gap: 1rem;
+}
 
-      .tool-intro-note p {
-        margin-bottom: 0;
-      }
+.tool-intro-bar {
+  grid-template-columns: 1.3fr 0.7fr;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
-      .tool-dashboard-grid,
-      .tool-chart-grid,
-      .tool-analysis-grid,
-      .tool-actions-grid {
-        display: grid;
-        gap: 1rem;
-      }
+.tool-top-grid,
+.tool-main-grid,
+.tool-analysis-grid,
+.tool-dashboard-grid,
+.tool-actions-grid,
+.tool-summary-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 
-      .tool-dashboard-grid,
-      .tool-actions-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+.tool-chart-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+}
 
-      .tool-chart-grid,
-      .tool-analysis-grid {
-        grid-template-columns: repeat(2, 1fr);
-        margin-top: 1rem;
-      }
+.tool-chart-grid .full {
+  grid-column: 1 / -1;
+}
 
-      .tool-card,
-      .tool-chart-card,
-      .tool-analysis-box,
-      .tool-table-card,
-      .tool-visual-panel {
-        padding: 1.25rem;
-      }
+.tool-intro-note,
+.tool-card,
+.tool-cta-box,
+.tool-metric-card,
+.tool-chart-card,
+.tool-analysis-box,
+.tool-table-card,
+.tool-prompt-item,
+.tool-visual-panel {
+  background: var(--card-background);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
 
-      .tool-card h3,
-      .tool-chart-card h3,
-      .tool-analysis-box h3,
-      .tool-table-card h3,
-      .tool-cta-box h3,
-      .tool-visual-panel h3 {
-        margin-bottom: 0.6rem;
-      }
+.tool-card,
+.tool-chart-card,
+.tool-analysis-box,
+.tool-table-card,
+.tool-visual-panel,
+.tool-intro-note,
+.tool-cta-box {
+  padding: 1.25rem;
+}
 
-      .tool-form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        margin-top: 1rem;
-      }
+.tool-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
 
-      .tool-form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
-      }
+.tool-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
 
-      .tool-form-group.full {
-        grid-column: 1 / -1;
-      }
+.tool-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
 
-      .tool-form-group label {
-        font-weight: 700;
-      }
+.tool-form-group.full {
+  grid-column: 1 / -1;
+}
 
-      .tool-form-group input,
-      .tool-form-group textarea,
-      .tool-form-group select {
-        width: 100%;
-        padding: 0.85rem 1rem;
-        border-radius: 10px;
-        border: 1px solid rgba(128, 128, 128, 0.2);
-        background: var(--bg-primary);
-        color: var(--text-color);
-        font: inherit;
-      }
+.tool-form-group input,
+.tool-form-group textarea,
+.tool-form-group select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  background: var(--bg-primary);
+  color: var(--text-color);
+  font: inherit;
+}
 
-      .tool-form-group textarea {
-        min-height: 110px;
-        resize: vertical;
-      }
+.tool-form-group textarea {
+  min-height: 110px;
+  resize: vertical;
+}
 
-      .tool-helper-text {
-        font-size: 0.92rem;
-        opacity: 0.85;
-        line-height: 1.7;
-      }
+.tool-inline-actions,
+.tool-project-select-row,
+.tool-pill-row,
+.tool-prompt-actions,
+.tool-cta-buttons,
+.tool-source-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 
-      .tool-status {
-        display: none;
-        margin-top: 1rem;
-        padding: 0.85rem 1rem;
-        border-radius: 10px;
-        line-height: 1.7;
-      }
+.tool-project-select-row select {
+  flex: 1 1 280px;
+}
 
-      .tool-status.show {
-        display: block;
-      }
+.tool-project-select-row .btn {
+  flex: 0 0 auto;
+}
 
-      .tool-status.info {
-        background: rgba(59, 130, 246, 0.12);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-      }
+.tool-helper-text {
+  font-size: 0.92rem;
+  opacity: 0.85;
+  line-height: 1.7;
+}
 
-      .tool-status.success {
-        background: rgba(34, 197, 94, 0.14);
-        border: 1px solid rgba(34, 197, 94, 0.22);
-      }
+.tool-status {
+  display: none;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  line-height: 1.7;
+}
 
-      .tool-status.error {
-        background: rgba(239, 68, 68, 0.12);
-        border: 1px solid rgba(239, 68, 68, 0.22);
-      }
+.tool-status.show {
+  display: block;
+}
 
-      .tool-inline-actions,
-      .tool-project-select-row,
-      .tool-pill-row,
-      .tool-prompt-actions,
-      .tool-cta-buttons,
-      .tool-source-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
+.tool-status.info {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
 
-      .tool-pill-row,
-      .tool-source-tags {
-        gap: 0.6rem;
-        margin-top: 0.8rem;
-      }
+.tool-status.success {
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+}
 
-      .tool-pill,
-      .tool-source-tag,
-      .tool-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.45rem 0.8rem;
-        border-radius: 999px;
-        font-size: 0.88rem;
-        line-height: 1.3;
-      }
+.tool-status.error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
 
-      .tool-pill,
-      .tool-source-tag {
-        background: var(--bg-primary);
-        box-shadow: var(--shadow);
-      }
+.tool-pill,
+.tool-source-tag,
+.tool-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  line-height: 1.3;
+}
 
-      .tool-badge {
-        font-weight: 700;
-      }
+.tool-pill,
+.tool-source-tag {
+  background: var(--bg-primary);
+  box-shadow: var(--shadow);
+}
 
-      .tool-badge.success {
-        background: rgba(34, 197, 94, 0.14);
-      }
+.tool-badge {
+  font-weight: 700;
+}
 
-      .tool-badge.warn {
-        background: rgba(245, 158, 11, 0.16);
-      }
+.tool-badge.success {
+  background: rgba(34, 197, 94, 0.14);
+}
 
-      .tool-badge.info {
-        background: rgba(59, 130, 246, 0.12);
-      }
+.tool-badge.warn {
+  background: rgba(245, 158, 11, 0.16);
+}
 
-      .tool-metric-grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 1rem;
-        margin-top: 1rem;
-      }
+.tool-badge.info {
+  background: rgba(59, 130, 246, 0.12);
+}
 
-      .tool-metric-card {
-        padding: 1.1rem 1rem;
-        text-align: center;
-      }
+.tool-metric-card {
+  padding: 1.1rem 1rem;
+  text-align: center;
+}
 
-      .tool-metric-card i {
-        font-size: 1.15rem;
-        margin-bottom: 0.7rem;
-        opacity: 0.9;
-      }
+.tool-metric-card i {
+  font-size: 1.15rem;
+  margin-bottom: 0.7rem;
+  opacity: 0.9;
+}
 
-      .tool-metric-card span {
-        display: block;
-        font-size: 0.9rem;
-        opacity: 0.85;
-        margin-bottom: 0.45rem;
-      }
+.tool-metric-card span {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 0.45rem;
+}
 
-      .tool-metric-card strong {
-        display: block;
-        font-size: 1.8rem;
-        line-height: 1;
-      }
+.tool-metric-card strong {
+  display: block;
+  font-size: 1.8rem;
+  line-height: 1;
+}
 
-      .tool-prompt-library {
-        display: grid;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
+.tool-prompt-library {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
 
-      .tool-prompt-item {
-        padding: 1rem;
-      }
+.tool-prompt-item {
+  padding: 1rem;
+}
 
-      .tool-prompt-item h4 {
-        margin-bottom: 0.5rem;
-      }
+.tool-prompt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
 
-      .tool-prompt-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 0.7rem;
-      }
+.tool-analysis-list,
+.tool-recommendation-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
 
-      .tool-analysis-list,
-      .tool-recommendation-list {
-        margin: 0;
-        padding-left: 1.2rem;
-      }
+.tool-analysis-list li,
+.tool-recommendation-list li {
+  margin-bottom: 0.55rem;
+  line-height: 1.8;
+}
 
-      .tool-analysis-list li,
-      .tool-recommendation-list li {
-        margin-bottom: 0.55rem;
-        line-height: 1.8;
-      }
+.tool-chart-card canvas {
+  width: 100% !important;
+  height: 320px !important;
+  max-height: none;
+  display: block;
+}
 
-      .tool-analysis-box p:last-child {
-        margin-bottom: 0;
-      }
+.tool-table-wrap {
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 1rem;
+}
 
-      .tool-chart-card canvas {
-        width: 100% !important;
-        max-height: 330px;
-      }
+.tool-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
 
-      .tool-table-wrap {
-        overflow-x: auto;
-        margin-top: 1rem;
-      }
+.tool-table th,
+.tool-table td {
+  text-align: left;
+  padding: 0.9rem 0.75rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+  vertical-align: top;
+}
 
-      .tool-table {
-        width: 100%;
-        min-width: 900px;
-        border-collapse: collapse;
-      }
+.tool-empty {
+  padding: 1.25rem;
+  border-radius: 10px;
+  background: var(--bg-primary);
+  text-align: center;
+  opacity: 0.9;
+}
 
-      .tool-table th,
-      .tool-table td {
-        text-align: left;
-        padding: 0.9rem 0.75rem;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.15);
-        vertical-align: top;
-      }
+.tool-trust-note {
+  font-size: 0.95rem;
+  opacity: 0.88;
+  line-height: 1.8;
+}
 
-      .tool-table th {
-        font-size: 0.88rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
+.tool-visual-panel svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 0.8rem;
+}
 
-      .tool-empty {
-        padding: 1.25rem;
-        border-radius: 10px;
-        background: var(--bg-primary);
-        text-align: center;
-        opacity: 0.9;
-      }
+.spin-icon {
+  animation: spinIt 1s linear infinite;
+}
 
-      .tool-cta-box {
-        margin-top: 2rem;
-        padding: 1.5rem;
-      }
+@keyframes spinIt {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-      .tool-trust-note {
-        font-size: 0.95rem;
-        opacity: 0.88;
-        line-height: 1.8;
-      }
+@media (max-width: 1280px) {
+  .tool-metric-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
-      .tool-visual-panel svg {
-        width: 100%;
-        height: auto;
-        display: block;
-        margin-top: 0.8rem;
-      }
+@media (max-width: 1024px) {
+  .tool-intro-bar,
+  .tool-top-grid,
+  .tool-main-grid,
+  .tool-chart-grid,
+  .tool-analysis-grid,
+  .tool-summary-columns,
+  .tool-dashboard-grid,
+  .tool-actions-grid {
+    grid-template-columns: 1fr;
+  }
 
-      .tool-summary-columns {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-      }
+  .tool-chart-grid .full {
+    grid-column: auto;
+  }
+}
 
-      .tool-api-badge {
-        margin-top: 0.75rem;
-      }
+@media (max-width: 768px) {
+  .tool-form-grid,
+  .tool-metric-grid {
+    grid-template-columns: 1fr;
+  }
 
-      .spin-icon {
-        animation: spinIt 1s linear infinite;
-      }
+  .tool-project-select-row,
+  .tool-inline-actions,
+  .tool-prompt-actions,
+  .tool-cta-buttons {
+    flex-direction: column;
+  }
 
-      @keyframes spinIt {
-        to {
-          transform: rotate(360deg);
-        }
-      }
+  .tool-project-select-row select,
+  .tool-project-select-row .btn,
+  .tool-inline-actions .btn,
+  .tool-prompt-actions .btn,
+  .tool-cta-buttons .btn {
+    width: 100%;
+  }
 
-      @media (max-width: 1100px) {
-        .tool-metric-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-
-        .tool-dashboard-grid,
-        .tool-chart-grid,
-        .tool-analysis-grid,
-        .tool-actions-grid,
-        .tool-summary-columns {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .tool-form-grid,
-        .tool-metric-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .tool-project-select-row select,
-        .tool-inline-actions .btn,
-        .tool-prompt-actions .btn {
-          width: 100%;
-        }
-      }
+  .tool-chart-card canvas {
+    height: 260px !important;
+  }
+}
     </style>
   </head>
 
@@ -513,7 +516,7 @@
         </p>
       </div>
 
-      <article class="blog-post-wrap">
+      <div class="tool-shell">
         <p>
           This tool is designed to help brands, publishers, SEO teams, and site
           owners monitor how they appear across AI-powered answers. Instead of
@@ -983,7 +986,7 @@
             </a>
           </div>
         </div>
-      </article>
+      </div>
     </section>
 
     <footer id="footer">
