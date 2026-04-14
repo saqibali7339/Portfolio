@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="google-site-verification"
+      content="hd8yNOteRAp1dXUrnxAteADUF3Qy9vsV6dRyd_w7MZ8"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>LLM SEO Tracker | Saqib Ali</title>
+    <meta
+      name="description"
+      content="Track brand mentions, citations, visibility, rankings, prompts, and competitor references across ChatGPT, Gemini, Claude, Perplexity, Copilot, and AI search."
+    />
+    <meta name="blog-category" content="SEO Tool" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="LLM SEO Tracker | Saqib Ali" />
+    <meta
+      property="og:description"
+      content="A practical AI visibility and citation tracking tool for brand mentions, prompts, rankings, and action planning."
+    />
+    <meta property="og:image" content="/Portfolio/assets/Meta.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="LLM SEO Tracker | Saqib Ali" />
+    <meta
+      property="twitter:description"
+      content="Track LLM brand visibility, citations, source domains, prompts, and action plans in one place."
+    />
+    <meta property="twitter:image" content="/Portfolio/assets/Meta.png" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/Portfolio/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/Portfolio/assets/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/Portfolio/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/Portfolio/assets/favicon/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/Portfolio/assets/favicon/android-chrome-512x512.png"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/Portfolio/assets/favicon/favicon.ico"
+    />
+    <link rel="manifest" href="/Portfolio/assets/favicon/site.webmanifest" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/Portfolio/css/style.css" />
+    <link rel="stylesheet" href="/Portfolio/css/utilities.css" />
+
+    <style>
+      .tracker-shell {
+        padding-bottom: 5rem;
+      }
+
+      .tracker-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .tracker-card {
+        background: var(--card-background);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        padding: 1.25rem;
+      }
+
+      .tracker-card h3 {
+        margin-bottom: 0.8rem;
+      }
+
+      .tracker-subtext {
+        opacity: 0.8;
+        margin-bottom: 1rem;
+      }
+
+      .tracker-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+      }
+
+      .tracker-form-grid .full {
+        grid-column: 1 / -1;
+      }
+
+      .tracker-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .tracker-field label {
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .tracker-field input,
+      .tracker-field select,
+      .tracker-field textarea {
+        width: 100%;
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        background: var(--bg-primary);
+        color: var(--text-color);
+        border-radius: 10px;
+        padding: 0.85rem 0.95rem;
+        font: inherit;
+      }
+
+      .tracker-field textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+
+      .tracker-actions,
+      .tracker-inline-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .tracker-kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .tracker-kpi {
+        background: var(--card-background);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        padding: 1rem;
+      }
+
+      .tracker-kpi small {
+        display: block;
+        opacity: 0.75;
+        margin-bottom: 0.45rem;
+      }
+
+      .tracker-kpi strong {
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .tracker-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .tracker-filter-row {
+        display: grid;
+        grid-template-columns: 1.1fr 0.8fr 0.8fr 0.8fr;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .tracker-table-wrap {
+        overflow-x: auto;
+        margin-top: 1rem;
+      }
+
+      .tracker-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1180px;
+      }
+
+      .tracker-table th,
+      .tracker-table td {
+        padding: 0.85rem 0.8rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.92rem;
+      }
+
+      .tracker-table th {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        opacity: 0.75;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+
+      .badge-ok {
+        background: rgba(20, 160, 90, 0.14);
+        color: #2dbd74;
+      }
+
+      .badge-warn {
+        background: rgba(255, 205, 66, 0.18);
+        color: #a67800;
+      }
+
+      .badge-bad {
+        background: rgba(220, 50, 70, 0.14);
+        color: #d63b57;
+      }
+
+      .bar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-top: 1rem;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 120px 1fr 60px;
+        gap: 0.8rem;
+        align-items: center;
+      }
+
+      .bar-track {
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(128, 128, 128, 0.15);
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary-color), #f6b700);
+      }
+
+      .mini-list {
+        display: grid;
+        gap: 0.7rem;
+        margin-top: 1rem;
+      }
+
+      .mini-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        padding: 0.75rem 0.9rem;
+        border-radius: 10px;
+        background: rgba(128, 128, 128, 0.08);
+      }
+
+      .tracker-note {
+        font-size: 0.92rem;
+        opacity: 0.8;
+      }
+
+      .tool-tag {
+        display: inline-block;
+        margin: 0 0.45rem 0.45rem 0;
+        padding: 0.4rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(255, 205, 66, 0.15);
+        color: var(--text-color);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .empty-state {
+        padding: 1rem 0;
+        opacity: 0.8;
+      }
+
+      .tracker-output {
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        background: var(--bg-primary);
+        color: var(--text-color);
+        border-radius: 12px;
+        padding: 1rem;
+        white-space: pre-wrap;
+        line-height: 1.7;
+        min-height: 140px;
+      }
+
+      .inline-link {
+        word-break: break-word;
+      }
+
+      @media (max-width: 1100px) {
+        .tracker-grid,
+        .tracker-split {
+          grid-template-columns: 1fr;
+        }
+
+        .tracker-kpi-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .tracker-form-grid,
+        .tracker-filter-row {
+          grid-template-columns: 1fr;
+        }
+
+        .tracker-kpi-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: 90px 1fr 50px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="hero">
+      <nav class="navbar">
+        <div class="container">
+          <h1 id="logo">
+            <a href="/Portfolio/">
+              <img src="/Portfolio/assets/logo.png" alt="Saqib Ali Logo" />
+            </a>
+          </h1>
+
+          <ul class="nav-menu">
+            <li><a class="nav-link" href="/Portfolio/">HOME</a></li>
+            <li><a class="nav-link" href="/Portfolio/blogs/">BLOGS</a></li>
+            <li><a class="nav-link" href="#footer">CONTACT</a></li>
+
+            <div class="theme-switch">
+              <input type="checkbox" id="switch" />
+              <label class="toggle-icons" for="switch">
+                <img class="moon" src="/Portfolio/assets/moon.svg" alt="Dark mode" />
+                <img class="sun" src="/Portfolio/assets/sun.svg" alt="Light mode" />
+              </label>
+            </div>
+          </ul>
+
+          <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </nav>
+
+      <section class="header-container">
+        <img
+          class="profile-image"
+          src="/Portfolio/assets/profile-image.svg"
+          alt="Saqib Ali"
+        />
+        <h1>LLM SEO Tracker</h1>
+
+        <div class="content-text">
+          <h2>AI Visibility, Citation & Brand Mention Tracking</h2>
+          <p>
+            A stronger portfolio-ready LLM SEO tool for logging prompts, brand mentions,
+            citations, rankings, competitors, source domains, action plans, and
+            llms.txt ideas across AI search platforms.
+          </p>
+        </div>
+
+        <a href="#tracker-app" class="btn btn-secondary">Open Tracker</a>
+      </section>
+    </header>
+
+    <section class="project-container container tracker-shell" id="tracker-app">
+      <div class="division"></div>
+
+      <div class="content-text">
+        <h2>Track AI Search Visibility</h2>
+        <p>
+          Inspired by keyword-first AI visibility trackers, but built as a more practical
+          working page for prompt logging, citation analysis, manual audits, and action planning.
+          [Source](https://llmrefs.com/)
+        </p>
+      </div>
+
+      <div class="tracker-kpi-grid">
+        <div class="tracker-kpi">
+          <small>Total Logs</small>
+          <strong id="kpiTotal">0</strong>
+        </div>
+        <div class="tracker-kpi">
+          <small>Brand Mention Rate</small>
+          <strong id="kpiMentionRate">0%</strong>
+        </div>
+        <div class="tracker-kpi">
+          <small>Citation Rate</small>
+          <strong id="kpiCitationRate">0%</strong>
+        </div>
+        <div class="tracker-kpi">
+          <small>Average Rank</small>
+          <strong id="kpiAvgRank">-</strong>
+        </div>
+        <div class="tracker-kpi">
+          <small>Visibility Score</small>
+          <strong id="kpiScore">0</strong>
+        </div>
+      </div>
+
+      <div class="tracker-grid">
+        <div class="tracker-card">
+          <h3>Project Setup</h3>
+          <p class="tracker-subtext">
+            Set your brand and domain once, then log LLM answers over time.
+          </p>
+
+          <div class="tracker-form-grid">
+            <div class="tracker-field">
+              <label for="projectName">Project / Brand</label>
+              <input type="text" id="projectName" placeholder="Saqib Ali SEO" />
+            </div>
+            <div class="tracker-field">
+              <label for="projectDomain">Main Domain</label>
+              <input type="text" id="projectDomain" placeholder="saqibali7339.github.io/Portfolio" />
+            </div>
+            <div class="tracker-field full">
+              <label for="projectNotes">Positioning / Notes</label>
+              <textarea id="projectNotes" placeholder="SEO specialist, technical SEO audits, on-page SEO, AI visibility, portfolio website..."></textarea>
+            </div>
+          </div>
+
+          <div class="tracker-actions">
+            <button class="btn btn-primary" id="saveProjectBtn">Save Project</button>
+            <button class="btn btn-secondary" id="clearAllBtn" type="button">Reset All Data</button>
+          </div>
+        </div>
+
+        <div class="tracker-card">
+          <h3>What makes this version stronger?</h3>
+          <p class="tracker-subtext">
+            Public AI visibility tools often emphasize share of voice, position metrics,
+            citations, fan-out prompts, geo-targeting, reports, and exports.
+            This version adds more hands-on workflow features for a portfolio tool. [Source](https://llmrefs.com/)
+          </p>
+
+          <div>
+            <span class="tool-tag">Prompt Log</span>
+            <span class="tool-tag">Brand Mention Tracking</span>
+            <span class="tool-tag">Citation URLs</span>
+            <span class="tool-tag">Competitor Mentions</span>
+            <span class="tool-tag">Source Domain Leaderboard</span>
+            <span class="tool-tag">Action Plan Generator</span>
+            <span class="tool-tag">CSV + JSON Export</span>
+            <span class="tool-tag">llms.txt Helper</span>
+            <span class="tool-tag">Browser Persistence</span>
+            <span class="tool-tag">Engine / Country / Device Filters</span>
+          </div>
+
+          <div class="tracker-inline-actions">
+            <button class="btn btn-primary" id="exportCsvBtn" type="button">Export CSV</button>
+            <button class="btn btn-secondary" id="exportJsonBtn" type="button">Export JSON</button>
+            <label class="btn btn-secondary" for="importJsonInput" style="cursor:pointer;">Import JSON</label>
+            <input id="importJsonInput" type="file" accept=".json" hidden />
+          </div>
+        </div>
+      </div>
+
+      <div class="tracker-card" style="margin-top:1.5rem;">
+        <h3>Add New LLM Result</h3>
+        <p class="tracker-subtext">
+          Log each prompt/result manually so you can compare performance by engine,
+          location, device, and query intent.
+        </p>
+
+        <div class="tracker-form-grid">
+          <div class="tracker-field">
+            <label for="entryDate">Date</label>
+            <input type="date" id="entryDate" />
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryEngine">Engine</label>
+            <select id="entryEngine">
+              <option value="ChatGPT">ChatGPT</option>
+              <option value="Perplexity">Perplexity</option>
+              <option value="Gemini">Gemini</option>
+              <option value="Claude">Claude</option>
+              <option value="Copilot">Copilot</option>
+              <option value="Google AI Overviews">Google AI Overviews</option>
+              <option value="Grok">Grok</option>
+              <option value="Meta AI">Meta AI</option>
+              <option value="DeepSeek">DeepSeek</option>
+            </select>
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryKeyword">Keyword / Topic</label>
+            <input type="text" id="entryKeyword" placeholder="best technical SEO audit expert" />
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryCountry">Country</label>
+            <input type="text" id="entryCountry" placeholder="Pakistan / UK / US" />
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryLanguage">Language</label>
+            <input type="text" id="entryLanguage" placeholder="English" />
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryDevice">Device</label>
+            <select id="entryDevice">
+              <option value="Desktop">Desktop</option>
+              <option value="Mobile">Mobile</option>
+              <option value="Tablet">Tablet</option>
+            </select>
+          </div>
+
+          <div class="tracker-field full">
+            <label for="entryPrompt">Prompt Used</label>
+            <textarea id="entryPrompt" placeholder="Who offers the best technical SEO audits for small business websites?"></textarea>
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryMention">Brand Mentioned?</label>
+            <select id="entryMention">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="partial">Partial / unclear</option>
+            </select>
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryLinked">Brand Linked?</label>
+            <select id="entryLinked">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryCited">Brand / page cited?</label>
+            <select id="entryCited">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="competitor-only">Competitor only</option>
+            </select>
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryRank">Mention Position</label>
+            <input type="number" id="entryRank" min="1" placeholder="1" />
+          </div>
+
+          <div class="tracker-field full">
+            <label for="entryCitationUrl">Citation URL</label>
+            <input type="url" id="entryCitationUrl" placeholder="https://example.com/article" />
+          </div>
+
+          <div class="tracker-field">
+            <label for="entryCompetitors">Competitors Mentioned</label>
+            <input type="text" id="entryCompetitors" placeholder="Competitor A, Competitor B" />
+          </div>
+
+          <div class="tracker-field">
+            <label for="entrySentiment">Brand Framing</label>
+            <select id="entrySentiment">
+              <option value="positive">Positive</option>
+              <option value="neutral">Neutral</option>
+              <option value="negative">Negative</option>
+              <option value="not-mentioned">Not mentioned</option>
+            </select>
+          </div>
+
+          <div class="tracker-field full">
+            <label for="entryEvidence">Evidence URL / screenshot note</label>
+            <input type="text" id="entryEvidence" placeholder="Paste screenshot URL, note, or source link" />
+          </div>
+
+          <div class="tracker-field full">
+            <label for="entryNotes">Notes / Answer summary</label>
+            <textarea id="entryNotes" placeholder="Summarize the answer, cited domains, what competitors appeared, what was missing, and why it matters."></textarea>
+          </div>
+        </div>
+
+        <div class="tracker-actions">
+          <button class="btn btn-primary" id="addEntryBtn" type="button">Add Result</button>
+          <button class="btn btn-secondary" id="fillSampleBtn" type="button">Load Sample Entry</button>
+        </div>
+      </div>
+
+      <div class="tracker-split">
+        <div class="tracker-card">
+          <h3>Engine Visibility Breakdown</h3>
+          <p class="tracker-note">
+            This shows mention rate by engine based on your logged entries.
+          </p>
+          <div class="bar-list" id="engineBreakdown"></div>
+        </div>
+
+        <div class="tracker-card">
+          <h3>Top Citation Domains</h3>
+          <p class="tracker-note">
+            Which domains are appearing most often in cited answers.
+          </p>
+          <div class="mini-list" id="topDomains"></div>
+        </div>
+      </div>
+
+      <div class="tracker-split">
+        <div class="tracker-card">
+          <h3>Competitor Mentions</h3>
+          <p class="tracker-note">
+            Which competitors are recurring most often in AI responses.
+          </p>
+          <div class="mini-list" id="competitorList"></div>
+        </div>
+
+        <div class="tracker-card">
+          <h3>Recommended Actions</h3>
+          <p class="tracker-note">
+            Auto-generated from your current data.
+          </p>
+          <div class="tracker-output" id="actionPlanOutput"></div>
+        </div>
+      </div>
+
+      <div class="tracker-card" style="margin-top:1.5rem;">
+        <h3>Tracked Results</h3>
+        <p class="tracker-subtext">
+          Filter, review, and clean your logs across keywords, engines, devices, and mention states.
+        </p>
+
+        <div class="tracker-filter-row">
+          <div class="tracker-field">
+            <label for="filterSearch">Search</label>
+            <input type="text" id="filterSearch" placeholder="Search keyword, prompt, competitor, notes..." />
+          </div>
+
+          <div class="tracker-field">
+            <label for="filterEngine">Engine</label>
+            <select id="filterEngine">
+              <option value="all">All</option>
+              <option value="ChatGPT">ChatGPT</option>
+              <option value="Perplexity">Perplexity</option>
+              <option value="Gemini">Gemini</option>
+              <option value="Claude">Claude</option>
+              <option value="Copilot">Copilot</option>
+              <option value="Google AI Overviews">Google AI Overviews</option>
+              <option value="Grok">Grok</option>
+              <option value="Meta AI">Meta AI</option>
+              <option value="DeepSeek">DeepSeek</option>
+            </select>
+          </div>
+
+          <div class="tracker-field">
+            <label for="filterMention">Mention</label>
+            <select id="filterMention">
+              <option value="all">All</option>
+              <option value="yes">Yes</option>
+              <option value="partial">Partial</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div class="tracker-field">
+            <label for="filterDevice">Device</label>
+            <select id="filterDevice">
+              <option value="all">All</option>
+              <option value="Desktop">Desktop</option>
+              <option value="Mobile">Mobile</option>
+              <option value="Tablet">Tablet</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tracker-table-wrap">
+          <table class="tracker-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Engine</th>
+                <th>Keyword</th>
+                <th>Mention</th>
+                <th>Cited</th>
+                <th>Rank</th>
+                <th>Citation URL</th>
+                <th>Competitors</th>
+                <th>Notes</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="resultsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tracker-split">
+        <div class="tracker-card">
+          <h3>Prompt Templates</h3>
+          <p class="tracker-note">
+            Quick prompts for testing brand visibility, comparison, citations, and buying intent.
+          </p>
+          <div class="tracker-output" id="promptTemplatesOutput"></div>
+        </div>
+
+        <div class="tracker-card">
+          <h3>llms.txt Helper</h3>
+          <p class="tracker-note">
+            Draft a simple llms.txt-style guidance file for AI agents and crawlers.
+          </p>
+
+          <div class="tracker-form-grid">
+            <div class="tracker-field full">
+              <label for="llmsPriorityPages">Priority URLs</label>
+              <textarea id="llmsPriorityPages" placeholder="https://yourdomain.com/\nhttps://yourdomain.com/services/\nhttps://yourdomain.com/blog/technical-seo-audit/"></textarea>
+            </div>
+            <div class="tracker-field full">
+              <label for="llmsExtraGuidance">Extra guidance</label>
+              <textarea id="llmsExtraGuidance" placeholder="Prefer citing service pages, blog tutorials, and case studies. Avoid thin archive pages."></textarea>
+            </div>
+          </div>
+
+          <div class="tracker-actions">
+            <button class="btn btn-primary" id="generateLlmsBtn" type="button">Generate llms.txt Draft</button>
+          </div>
+
+          <div class="tracker-output" id="llmsOutput"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer">
+      <div class="container">
+        <a href="mailto:saqibali7339@gmail.com">saqibali7339@gmail.com</a>
+
+        <div class="social">
+          <a href="https://www.facebook.com/share/17BCCCzvfh/" target="_blank">
+            <img src="/Portfolio/assets/facebook-icon.svg" alt="Facebook" />
+          </a>
+          <a href="https://www.linkedin.com/in/saqib-ali-seo/" target="_blank">
+            <img src="/Portfolio/assets/linkedin-icon.svg" alt="LinkedIn" />
+          </a>
+        </div>
+
+        <div class="attribution">
+          <a
+            href="https://www.fiverr.com/s/NNxVlko"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/Portfolio/assets/Fiverr W.svg" alt="Fiverr" width="150px" />
+          </a>
+        </div>
+
+        <p>Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights reserved</p>
+      </div>
+    </footer>
+
+    <script src="/Portfolio/js/script.js"></script>
+    <script>
+      const STORAGE_KEY = "saqib_llm_seo_tracker_v2";
+
+      const state = {
+        project: {
+          name: "",
+          domain: "",
+          notes: ""
+        },
+        entries: []
+      };
+
+      function byId(id) {
+        return document.getElementById(id);
+      }
+
+      function todayISO() {
+        return new Date().toISOString().split("T")[0];
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.project) state.project = parsed.project;
+          if (Array.isArray(parsed.entries)) state.entries = parsed.entries;
+        } catch (e) {
+          console.warn("Could not load tracker state", e);
+        }
+      }
+
+      function escapeHtml(str) {
+        return String(str || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function parseDomain(url) {
+        if (!url) return "";
+        try {
+          return new URL(url).hostname.replace(/^www\./, "");
+        } catch {
+          return "";
+        }
+      }
+
+      function getFilteredEntries() {
+        const q = byId("filterSearch").value.trim().toLowerCase();
+        const engine = byId("filterEngine").value;
+        const mention = byId("filterMention").value;
+        const device = byId("filterDevice").value;
+
+        return state.entries.filter((entry) => {
+          const haystack = [
+            entry.keyword,
+            entry.prompt,
+            entry.notes,
+            entry.citationUrl,
+            entry.competitors,
+            entry.evidence
+          ]
+            .join(" ")
+            .toLowerCase();
+
+          const matchesSearch = !q || haystack.includes(q);
+          const matchesEngine = engine === "all" || entry.engine === engine;
+          const matchesMention = mention === "all" || entry.mention === mention;
+          const matchesDevice = device === "all" || entry.device === device;
+
+          return matchesSearch && matchesEngine && matchesMention && matchesDevice;
+        });
+      }
+
+      function renderProject() {
+        byId("projectName").value = state.project.name || "";
+        byId("projectDomain").value = state.project.domain || "";
+        byId("projectNotes").value = state.project.notes || "";
+      }
+
+      function computeStats(entries) {
+        const total = entries.length;
+        const mentionYes = entries.filter((e) => e.mention === "yes").length;
+        const citationYes = entries.filter((e) => e.cited === "yes").length;
+        const linkedYes = entries.filter((e) => e.linked === "yes").length;
+        const validRanks = entries
+          .map((e) => Number(e.rank))
+          .filter((n) => Number.isFinite(n) && n > 0);
+        const avgRank = validRanks.length
+          ? validRanks.reduce((a, b) => a + b, 0) / validRanks.length
+          : null;
+
+        const mentionRate = total ? (mentionYes / total) * 100 : 0;
+        const citationRate = total ? (citationYes / total) * 100 : 0;
+        const linkRate = total ? (linkedYes / total) * 100 : 0;
+        const avgRankScore = avgRank ? Math.max(0, 100 - (avgRank - 1) * 15) : 0;
+
+        const score = Math.round(
+          mentionRate * 0.45 +
+          citationRate * 0.25 +
+          linkRate * 0.15 +
+          avgRankScore * 0.15
+        );
+
+        return {
+          total,
+          mentionRate,
+          citationRate,
+          avgRank,
+          score
+        };
+      }
+
+      function renderKPIs() {
+        const stats = computeStats(state.entries);
+        byId("kpiTotal").textContent = stats.total;
+        byId("kpiMentionRate").textContent = `${Math.round(stats.mentionRate)}%`;
+        byId("kpiCitationRate").textContent = `${Math.round(stats.citationRate)}%`;
+        byId("kpiAvgRank").textContent = stats.avgRank ? stats.avgRank.toFixed(1) : "-";
+        byId("kpiScore").textContent = stats.score;
+      }
+
+      function renderEngineBreakdown() {
+        const container = byId("engineBreakdown");
+        const engines = [
+          "ChatGPT",
+          "Perplexity",
+          "Gemini",
+          "Claude",
+          "Copilot",
+          "Google AI Overviews",
+          "Grok",
+          "Meta AI",
+          "DeepSeek"
+        ];
+
+        const html = engines
+          .map((engine) => {
+            const set = state.entries.filter((e) => e.engine === engine);
+            const rate = set.length
+              ? Math.round((set.filter((e) => e.mention === "yes").length / set.length) * 100)
+              : 0;
+
+            return `
+              <div class="bar-row">
+                <div>${escapeHtml(engine)}</div>
+                <div class="bar-track"><div class="bar-fill" style="width:${rate}%"></div></div>
+                <div>${rate}%</div>
+              </div>
+            `;
+          })
+          .join("");
+
+        container.innerHTML = html || `<div class="empty-state">No engine data yet.</div>`;
+      }
+
+      function getTopDomains() {
+        const map = {};
+        state.entries.forEach((entry) => {
+          const domain = parseDomain(entry.citationUrl);
+          if (!domain) return;
+          map[domain] = (map[domain] || 0) + 1;
+        });
+        return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      }
+
+      function renderTopDomains() {
+        const container = byId("topDomains");
+        const items = getTopDomains();
+        container.innerHTML = items.length
+          ? items
+              .map(
+                ([domain, count]) => `
+                  <div class="mini-item">
+                    <span>${escapeHtml(domain)}</span>
+                    <strong>${count}</strong>
+                  </div>
+                `
+              )
+              .join("")
+          : `<div class="empty-state">No cited domains yet.</div>`;
+      }
+
+      function getTopCompetitors() {
+        const map = {};
+        state.entries.forEach((entry) => {
+          String(entry.competitors || "")
+            .split(",")
+            .map((x) => x.trim())
+            .filter(Boolean)
+            .forEach((name) => {
+              map[name] = (map[name] || 0) + 1;
+            });
+        });
+        return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      }
+
+      function renderCompetitors() {
+        const container = byId("competitorList");
+        const items = getTopCompetitors();
+        container.innerHTML = items.length
+          ? items
+              .map(
+                ([name, count]) => `
+                  <div class="mini-item">
+                    <span>${escapeHtml(name)}</span>
+                    <strong>${count}</strong>
+                  </div>
+                `
+              )
+              .join("")
+          : `<div class="empty-state">No competitor data yet.</div>`;
+      }
+
+      function buildActionPlan() {
+        if (!state.entries.length) {
+          return "No entries yet. Start logging prompts to generate recommendations.";
+        }
+
+        const total = state.entries.length;
+        const mentionNo = state.entries.filter((e) => e.mention === "no").length;
+        const citationNo = state.entries.filter((e) => e.cited !== "yes").length;
+        const noLink = state.entries.filter((e) => e.linked === "no").length;
+        const weakRanks = state.entries.filter((e) => Number(e.rank) > 3).length;
+
+        const topDomains = getTopDomains().slice(0, 3).map(([d]) => d);
+        const competitors = getTopCompetitors().slice(0, 3).map(([c]) => c);
+
+        const actions = [];
+
+        if (mentionNo / total >= 0.4) {
+          actions.push("Increase brand entity clarity across homepage, service pages, about page, and author pages because mention rate is currently weak.");
+        }
+        if (citationNo / total >= 0.4) {
+          actions.push("Create more citation-worthy assets such as statistics pages, practical guides, case studies, comparisons, and glossary content.");
+        }
+        if (noLink / total >= 0.5) {
+          actions.push("Improve pages that deserve direct citations by strengthening titles, unique findings, structured headings, and trustworthy source formatting.");
+        }
+        if (weakRanks >= 2) {
+          actions.push("Prioritize keywords where your brand appears below position 3 and build supporting content plus internal links around those topics.");
+        }
+        if (topDomains.length) {
+          actions.push(`Study the domains AI engines cite most often: ${topDomains.join(", ")}. Reverse-engineer why they earn citations.`);
+        }
+        if (competitors.length) {
+          actions.push(`Compare content positioning against frequently mentioned competitors: ${competitors.join(", ")}.`);
+        }
+
+        actions.push("Test the same prompts across multiple engines and locations to detect visibility gaps by platform.");
+        actions.push("Re-run tracked prompts after content updates and log before/after changes to measure improvement.");
+
+        return actions.map((item, index) => `${index + 1}. ${item}`).join("\n");
+      }
+
+      function renderActionPlan() {
+        byId("actionPlanOutput").textContent = buildActionPlan();
+      }
+
+      function mentionBadge(value) {
+        if (value === "yes") return `<span class="badge badge-ok">Mentioned</span>`;
+        if (value === "partial") return `<span class="badge badge-warn">Partial</span>`;
+        return `<span class="badge badge-bad">Missed</span>`;
+      }
+
+      function citedBadge(value) {
+        if (value === "yes") return `<span class="badge badge-ok">Cited</span>`;
+        if (value === "competitor-only") return `<span class="badge badge-warn">Competitor only</span>`;
+        return `<span class="badge badge-bad">No</span>`;
+      }
+
+      function renderTable() {
+        const body = byId("resultsTableBody");
+        const entries = getFilteredEntries();
+
+        if (!entries.length) {
+          body.innerHTML = `
+            <tr>
+              <td colspan="10" class="empty-state">No matching entries yet.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        body.innerHTML = entries
+          .slice()
+          .reverse()
+          .map(
+            (entry) => `
+              <tr>
+                <td>${escapeHtml(entry.date)}</td>
+                <td>${escapeHtml(entry.engine)}</td>
+                <td>${escapeHtml(entry.keyword)}</td>
+                <td>${mentionBadge(entry.mention)}</td>
+                <td>${citedBadge(entry.cited)}</td>
+                <td>${entry.rank ? escapeHtml(entry.rank) : "-"}</td>
+                <td class="inline-link">
+                  ${
+                    entry.citationUrl
+                      ? `<a href="${escapeHtml(entry.citationUrl)}" target="_blank" rel="noopener">${escapeHtml(parseDomain(entry.citationUrl) || entry.citationUrl)}</a>`
+                      : "-"
+                  }
+                </td>
+                <td>${escapeHtml(entry.competitors || "-")}</td>
+                <td>${escapeHtml(entry.notes || "-")}</td>
+                <td>
+                  <button class="btn btn-secondary" onclick="deleteEntry('${entry.id}')">Delete</button>
+                </td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderPromptTemplates() {
+        const brand = state.project.name || "[Your Brand]";
+        const domain = state.project.domain || "[yourdomain.com]";
+
+        const templates = [
+          `What are the best technical SEO audit services for small business websites?`,
+          `Who is a good SEO specialist for technical audits and on-page SEO?`,
+          `Which websites are most trustworthy for learning technical SEO auditing?`,
+          `What should I check in a technical SEO audit for ${brand}?`,
+          `Compare ${brand} with top SEO audit providers.`,
+          `Which sources should I read before hiring an SEO consultant for ${domain}?`
+        ];
+
+        byId("promptTemplatesOutput").textContent = templates
+          .map((item, index) => `${index + 1}. ${item}`)
+          .join("\n");
+      }
+
+      function generateLlmsTxt() {
+        const brand = (state.project.name || "Your Brand").trim();
+        const domain = (state.project.domain || "example.com").trim();
+        const notes = (state.project.notes || "").trim();
+        const guidance = byId("llmsExtraGuidance").value.trim();
+        const pages = byId("llmsPriorityPages").value
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+
+        const content = [
+          `# llms.txt`,
+          `brand: ${brand}`,
+          `domain: ${domain}`,
+          ``,
+          `preferred-content:`,
+          ...pages.map((page) => `- ${page}`),
+          ``,
+          `notes:`,
+          `- ${notes || "Share service pages, case studies, guides, and authoritative content first."}`,
+          `- ${guidance || "Prefer accurate, well-structured, citation-worthy pages."}`
+        ].join("\n");
+
+        byId("llmsOutput").textContent = content;
+      }
+
+      function collectEntry() {
+        return {
+          id: String(Date.now()),
+          date: byId("entryDate").value || todayISO(),
+          engine: byId("entryEngine").value,
+          keyword: byId("entryKeyword").value.trim(),
+          country: byId("entryCountry").value.trim(),
+          language: byId("entryLanguage").value.trim(),
+          device: byId("entryDevice").value,
+          prompt: byId("entryPrompt").value.trim(),
+          mention: byId("entryMention").value,
+          linked: byId("entryLinked").value,
+          cited: byId("entryCited").value,
+          rank: byId("entryRank").value.trim(),
+          citationUrl: byId("entryCitationUrl").value.trim(),
+          competitors: byId("entryCompetitors").value.trim(),
+          sentiment: byId("entrySentiment").value,
+          evidence: byId("entryEvidence").value.trim(),
+          notes: byId("entryNotes").value.trim()
+        };
+      }
+
+      function validateEntry(entry) {
+        if (!entry.keyword) {
+          alert("Please enter a keyword or topic.");
+          return false;
+        }
+        if (!entry.prompt) {
+          alert("Please enter the prompt used.");
+          return false;
+        }
+        return true;
+      }
+
+      function clearEntryForm() {
+        byId("entryDate").value = todayISO();
+        byId("entryEngine").value = "ChatGPT";
+        byId("entryKeyword").value = "";
+        byId("entryCountry").value = "";
+        byId("entryLanguage").value = "";
+        byId("entryDevice").value = "Desktop";
+        byId("entryPrompt").value = "";
+        byId("entryMention").value = "yes";
+        byId("entryLinked").value = "yes";
+        byId("entryCited").value = "yes";
+        byId("entryRank").value = "";
+        byId("entryCitationUrl").value = "";
+        byId("entryCompetitors").value = "";
+        byId("entrySentiment").value = "positive";
+        byId("entryEvidence").value = "";
+        byId("entryNotes").value = "";
+      }
+
+      function renderAll() {
+        renderProject();
+        renderKPIs();
+        renderEngineBreakdown();
+        renderTopDomains();
+        renderCompetitors();
+        renderActionPlan();
+        renderTable();
+        renderPromptTemplates();
+      }
+
+      function saveProject() {
+        state.project.name = byId("projectName").value.trim();
+        state.project.domain = byId("projectDomain").value.trim();
+        state.project.notes = byId("projectNotes").value.trim();
+        saveState();
+        renderAll();
+        alert("Project saved.");
+      }
+
+      function addEntry() {
+        const entry = collectEntry();
+        if (!validateEntry(entry)) return;
+        state.entries.push(entry);
+        saveState();
+        clearEntryForm();
+        renderAll();
+      }
+
+      function exportCsv() {
+        if (!state.entries.length) {
+          alert("No entries to export.");
+          return;
+        }
+
+        const headers = [
+          "date","engine","keyword","country","language","device","prompt","mention","linked","cited","rank","citationUrl","competitors","sentiment","evidence","notes"
+        ];
+
+        const rows = state.entries.map((entry) =>
+          headers
+            .map((header) => {
+              const value = String(entry[header] || "").replace(/"/g, '""');
+              return `"${value}"`;
+            })
+            .join(",")
+        );
+
+        const csv = [headers.join(","), ...rows].join("\n");
+        downloadFile(csv, "text/csv;charset=utf-8;", "llm-seo-tracker.csv");
+      }
+
+      function exportJson() {
+        const data = JSON.stringify(state, null, 2);
+        downloadFile(data, "application/json;charset=utf-8;", "llm-seo-tracker.json");
+      }
+
+      function downloadFile(content, type, fileName) {
+        const blob = new Blob([content], { type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function importJsonFile(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const parsed = JSON.parse(e.target.result);
+            if (!parsed || !Array.isArray(parsed.entries)) {
+              alert("Invalid JSON format.");
+              return;
+            }
+            state.project = parsed.project || { name: "", domain: "", notes: "" };
+            state.entries = parsed.entries || [];
+            saveState();
+            renderAll();
+            alert("Import complete.");
+          } catch (err) {
+            alert("Could not import JSON file.");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      function fillSampleEntry() {
+        byId("entryDate").value = todayISO();
+        byId("entryEngine").value = "ChatGPT";
+        byId("entryKeyword").value = "best technical seo audit service";
+        byId("entryCountry").value = "UK";
+        byId("entryLanguage").value = "English";
+        byId("entryDevice").value = "Desktop";
+        byId("entryPrompt").value = "Who offers the best technical SEO audit service for small business websites?";
+        byId("entryMention").value = "partial";
+        byId("entryLinked").value = "no";
+        byId("entryCited").value = "competitor-only";
+        byId("entryRank").value = "4";
+        byId("entryCitationUrl").value = "https://example.com/technical-seo-guide";
+        byId("entryCompetitors").value = "Agency Alpha, Agency Beta";
+        byId("entrySentiment").value = "neutral";
+        byId("entryEvidence").value = "Manual test from ChatGPT desktop session";
+        byId("entryNotes").value = "Brand not directly cited. Competitors appeared in a stronger comparison context.";
+      }
+
+      function resetAll() {
+        const confirmReset = confirm("This will remove all saved project and tracking data. Continue?");
+        if (!confirmReset) return;
+        localStorage.removeItem(STORAGE_KEY);
+        state.project = { name: "", domain: "", notes: "" };
+        state.entries = [];
+        clearEntryForm();
+        byId("filterSearch").value = "";
+        byId("filterEngine").value = "all";
+        byId("filterMention").value = "all";
+        byId("filterDevice").value = "all";
+        byId("llmsPriorityPages").value = "";
+        byId("llmsExtraGuidance").value = "";
+        byId("llmsOutput").textContent = "";
+        renderAll();
+      }
+
+      function deleteEntry(id) {
+        state.entries = state.entries.filter((entry) => entry.id !== id);
+        saveState();
+        renderAll();
+      }
+
+      window.deleteEntry = deleteEntry;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadState();
+        byId("entryDate").value = todayISO();
+
+        byId("saveProjectBtn").addEventListener("click", saveProject);
+        byId("addEntryBtn").addEventListener("click", addEntry);
+        byId("fillSampleBtn").addEventListener("click", fillSampleEntry);
+        byId("exportCsvBtn").addEventListener("click", exportCsv);
+        byId("exportJsonBtn").addEventListener("click", exportJson);
+        byId("generateLlmsBtn").addEventListener("click", generateLlmsTxt);
+        byId("clearAllBtn").addEventListener("click", resetAll);
+
+        byId("filterSearch").addEventListener("input", renderTable);
+        byId("filterEngine").addEventListener("change", renderTable);
+        byId("filterMention").addEventListener("change", renderTable);
+        byId("filterDevice").addEventListener("change", renderTable);
+
+        byId("importJsonInput").addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (file) importJsonFile(file);
+          e.target.value = "";
+        });
+
+        renderAll();
+      });
+    </script>
+  </body>
+</html>
