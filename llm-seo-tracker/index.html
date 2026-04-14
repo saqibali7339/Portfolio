@@ -12,15 +12,15 @@
     <title>LLM SEO Tracker | Saqib Ali</title>
     <meta
       name="description"
-      content="Track brand mentions, citations, visibility, rankings, prompts, and competitor references across ChatGPT, Gemini, Claude, Perplexity, Copilot, and AI search."
+      content="Track how brands appear across AI answers, citations, and referenced source pages with a clean LLM SEO Tracker dashboard."
     />
-    <meta name="blog-category" content="SEO Tool" />
+    <meta name="blog-category" content="SEO Tools" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="LLM SEO Tracker | Saqib Ali" />
     <meta
       property="og:description"
-      content="A practical AI visibility and citation tracking tool for brand mentions, prompts, rankings, and action planning."
+      content="An advanced AI visibility dashboard for monitoring AI answer presence, citation presence, source-page visibility, and prompt-level trends."
     />
     <meta property="og:image" content="/Portfolio/assets/Meta.png" />
 
@@ -28,45 +28,15 @@
     <meta property="twitter:title" content="LLM SEO Tracker | Saqib Ali" />
     <meta
       property="twitter:description"
-      content="Track LLM brand visibility, citations, source domains, prompts, and action plans in one place."
+      content="Track AI visibility, citations, source presence, and prompt performance with a premium LLM SEO dashboard."
     />
     <meta property="twitter:image" content="/Portfolio/assets/Meta.png" />
 
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/Portfolio/assets/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/Portfolio/assets/favicon/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/Portfolio/assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="/Portfolio/assets/favicon/android-chrome-192x192.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="512x512"
-      href="/Portfolio/assets/favicon/android-chrome-512x512.png"
-    />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="/Portfolio/assets/favicon/favicon.ico"
-    />
-    <link rel="manifest" href="/Portfolio/assets/favicon/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/Portfolio/assets/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/Portfolio/assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/Portfolio/assets/favicon-16x16.png" />
+    <link rel="manifest" href="/Portfolio/assets/site.webmanifest" />
+    <link rel="shortcut icon" href="/Portfolio/assets/favicon.ico" />
 
     <link
       rel="stylesheet"
@@ -76,303 +46,741 @@
     />
     <link rel="stylesheet" href="/Portfolio/css/style.css" />
     <link rel="stylesheet" href="/Portfolio/css/utilities.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-      .tracker-shell {
+      :root {
+        --tracker-bg: #0b1220;
+        --tracker-bg-soft: #111827;
+        --tracker-card: rgba(255, 255, 255, 0.96);
+        --tracker-card-dark: #0f172a;
+        --tracker-line: rgba(255, 255, 255, 0.08);
+        --tracker-border: #e5e7eb;
+        --tracker-text: #0f172a;
+        --tracker-muted: #64748b;
+        --tracker-primary: #2563eb;
+        --tracker-primary-2: #0ea5e9;
+        --tracker-success: #16a34a;
+        --tracker-warning: #f59e0b;
+        --tracker-danger: #ef4444;
+        --tracker-purple: #7c3aed;
+        --tracker-shadow: 0 18px 50px rgba(2, 8, 23, 0.12);
+        --tracker-radius: 20px;
+      }
+
+      body {
+        background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+        color: var(--tracker-text);
+      }
+
+      .tracker-page {
         padding-bottom: 5rem;
+      }
+
+      .tracker-hero {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.18), transparent 28%),
+          radial-gradient(circle at 85% 20%, rgba(124, 58, 237, 0.16), transparent 24%),
+          linear-gradient(135deg, #081120 0%, #10203b 55%, #0f1b31 100%);
+        color: #fff;
+        padding: 7rem 0 5rem;
+      }
+
+      .tracker-hero::before,
+      .tracker-hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .tracker-hero::before {
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
+        top: -130px;
+        left: -120px;
+      }
+
+      .tracker-hero::after {
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.18), transparent 70%);
+        bottom: -180px;
+        right: -140px;
+      }
+
+      .tracker-hero-grid {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        gap: 2.5rem;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+      }
+
+      .tracker-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.6rem 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.08);
+        color: #dbeafe;
+        font-size: 0.92rem;
+        margin-bottom: 1.15rem;
+      }
+
+      .tracker-hero h1 {
+        color: #fff;
+        font-size: clamp(2.25rem, 5vw, 4rem);
+        line-height: 1.08;
+        margin-bottom: 1rem;
+      }
+
+      .tracker-hero p {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1.05rem;
+        line-height: 1.9;
+        max-width: 780px;
+      }
+
+      .tracker-hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.75rem;
+      }
+
+      .tracker-hero-note {
+        display: flex;
+        gap: 0.85rem;
+        margin-top: 1.4rem;
+        padding: 1rem 1.1rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        color: #dbeafe;
+      }
+
+      .tracker-hero-note i {
+        margin-top: 0.2rem;
+        color: #67e8f9;
+      }
+
+      .tracker-hero-visual {
+        position: relative;
+      }
+
+      .tracker-glass-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 28px;
+        padding: 1.25rem;
+        box-shadow: 0 30px 60px rgba(2, 8, 23, 0.35);
+      }
+
+      .tracker-mini-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+        margin-top: 1rem;
+      }
+
+      .tracker-mini-stat {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 1rem;
+        color: #fff;
+      }
+
+      .tracker-mini-stat span {
+        display: block;
+        font-size: 0.85rem;
+        color: #bfdbfe;
+        margin-bottom: 0.35rem;
+      }
+
+      .tracker-mini-stat strong {
+        font-size: 1.35rem;
+        font-weight: 700;
+      }
+
+      .tracker-trust-strip {
+        margin-top: -34px;
+        position: relative;
+        z-index: 4;
+      }
+
+      .tracker-trust-box {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: var(--tracker-shadow);
+        border: 1px solid rgba(37, 99, 235, 0.08);
+        padding: 1.2rem 1.4rem;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .tracker-trust-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+        color: var(--tracker-primary);
+        font-size: 1.2rem;
+      }
+
+      .tracker-section {
+        padding: 2.25rem 0 0;
       }
 
       .tracker-grid {
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 1.5rem;
-        margin-top: 2rem;
+        gap: 1.35rem;
+      }
+
+      .tracker-two-col {
+        grid-template-columns: 1.05fr 0.95fr;
       }
 
       .tracker-card {
-        background: var(--card-background);
-        border-radius: 14px;
-        box-shadow: var(--shadow);
-        padding: 1.25rem;
+        background: var(--tracker-card);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        border-radius: var(--tracker-radius);
+        box-shadow: var(--tracker-shadow);
+        padding: 1.4rem;
       }
 
-      .tracker-card h3 {
+      .tracker-card h2,
+      .tracker-card h3,
+      .tracker-card h4 {
         margin-bottom: 0.8rem;
       }
 
-      .tracker-subtext {
-        opacity: 0.8;
+      .tracker-card-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
         margin-bottom: 1rem;
+      }
+
+      .tracker-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.86rem;
+        color: var(--tracker-muted);
       }
 
       .tracker-form-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.9rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
       }
 
-      .tracker-form-grid .full {
+      .tracker-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .tracker-form-group.full {
         grid-column: 1 / -1;
       }
 
-      .tracker-field {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
+      .tracker-form-group label {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.95rem;
       }
 
-      .tracker-field label {
-        font-size: 0.92rem;
-        font-weight: 700;
-      }
-
-      .tracker-field input,
-      .tracker-field select,
-      .tracker-field textarea {
+      .tracker-form-group input,
+      .tracker-form-group textarea,
+      .tracker-form-group select {
         width: 100%;
-        border: 1px solid rgba(128, 128, 128, 0.25);
-        background: var(--bg-primary);
-        color: var(--text-color);
-        border-radius: 10px;
-        padding: 0.85rem 0.95rem;
-        font: inherit;
+        border-radius: 14px;
+        border: 1px solid #dbe3ee;
+        background: #fff;
+        padding: 0.9rem 1rem;
+        font-size: 0.98rem;
+        color: #0f172a;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
       }
 
-      .tracker-field textarea {
-        resize: vertical;
+      .tracker-form-group textarea {
         min-height: 110px;
+        resize: vertical;
       }
 
-      .tracker-actions,
-      .tracker-inline-actions {
+      .tracker-form-group input:focus,
+      .tracker-form-group textarea:focus,
+      .tracker-form-group select:focus {
+        border-color: #93c5fd;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+      }
+
+      .tracker-help {
+        color: var(--tracker-muted);
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+
+      .tracker-actions {
+        display: flex;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+        margin-top: 0.45rem;
+      }
+
+      .tracker-btn {
+        border: none;
+        border-radius: 14px;
+        padding: 0.9rem 1.15rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+      }
+
+      .tracker-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .tracker-btn-primary {
+        background: linear-gradient(135deg, #2563eb, #0ea5e9);
+        color: #fff;
+        box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
+      }
+
+      .tracker-btn-secondary {
+        background: #eef4ff;
+        color: #1d4ed8;
+      }
+
+      .tracker-btn-dark {
+        background: #0f172a;
+        color: #fff;
+      }
+
+      .tracker-btn-success {
+        background: linear-gradient(135deg, #16a34a, #22c55e);
+        color: #fff;
+      }
+
+      .tracker-btn-outline {
+        background: #fff;
+        color: #0f172a;
+        border: 1px solid #d7dee8;
+      }
+
+      .tracker-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+        transform: none;
+      }
+
+      .tracker-status {
+        margin-top: 1rem;
+        padding: 0.95rem 1rem;
+        border-radius: 14px;
+        font-size: 0.95rem;
+        display: none;
+      }
+
+      .tracker-status.show {
+        display: block;
+      }
+
+      .tracker-status.success {
+        background: #ecfdf5;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+      }
+
+      .tracker-status.error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+      }
+
+      .tracker-status.info {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+      }
+
+      .tracker-select-wrap {
+        display: flex;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .tracker-select-wrap select {
+        min-width: 260px;
+      }
+
+      .tracker-pill-row {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.8rem;
-        margin-top: 1rem;
+        gap: 0.6rem;
+        margin-top: 0.9rem;
+      }
+
+      .tracker-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.55rem 0.8rem;
+        border-radius: 999px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-size: 0.88rem;
+        font-weight: 600;
+      }
+
+      .tracker-pill.dark {
+        background: #e2e8f0;
+        color: #0f172a;
       }
 
       .tracker-kpi-grid {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: 1rem;
-        margin-top: 1.5rem;
       }
 
       .tracker-kpi {
-        background: var(--card-background);
-        border-radius: 14px;
-        box-shadow: var(--shadow);
-        padding: 1rem;
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 20px;
+        padding: 1.1rem 1rem;
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        box-shadow: var(--tracker-shadow);
       }
 
-      .tracker-kpi small {
+      .tracker-kpi::after {
+        content: "";
+        position: absolute;
+        inset: auto -12px -12px auto;
+        width: 80px;
+        height: 80px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.1), transparent 70%);
+      }
+
+      .tracker-kpi-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .tracker-kpi-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+      }
+
+      .tracker-kpi-icon.blue { background: #dbeafe; color: #1d4ed8; }
+      .tracker-kpi-icon.green { background: #dcfce7; color: #15803d; }
+      .tracker-kpi-icon.amber { background: #fef3c7; color: #b45309; }
+      .tracker-kpi-icon.purple { background: #ede9fe; color: #6d28d9; }
+      .tracker-kpi-icon.rose { background: #ffe4e6; color: #be123c; }
+      .tracker-kpi-icon.slate { background: #e2e8f0; color: #0f172a; }
+
+      .tracker-kpi span {
         display: block;
-        opacity: 0.75;
-        margin-bottom: 0.45rem;
+        color: var(--tracker-muted);
+        font-size: 0.9rem;
+        margin-bottom: 0.35rem;
       }
 
       .tracker-kpi strong {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         line-height: 1;
+        color: #0f172a;
       }
 
-      .tracker-split {
+      .tracker-charts-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1rem;
+      }
+
+      .tracker-chart-card canvas {
+        width: 100% !important;
+        max-height: 340px;
+      }
+
+      .tracker-library-list {
+        display: grid;
+        gap: 0.85rem;
+        margin-top: 1rem;
+      }
+
+      .tracker-prompt-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1rem;
+        background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      }
+
+      .tracker-prompt-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-top: 0.75rem;
+      }
+
+      .tracker-prompt-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        margin-top: 0.9rem;
+      }
+
+      .tracker-empty {
+        text-align: center;
+        border: 1px dashed #cbd5e1;
+        border-radius: 18px;
+        padding: 1.8rem 1.2rem;
+        color: var(--tracker-muted);
+        background: #f8fbff;
+      }
+
+      .tracker-analysis-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        margin-top: 1.5rem;
+        gap: 1rem;
       }
 
-      .tracker-filter-row {
-        display: grid;
-        grid-template-columns: 1.1fr 0.8fr 0.8fr 0.8fr;
-        gap: 0.8rem;
-        margin-top: 1rem;
+      .tracker-analysis-box {
+        border-radius: 18px;
+        padding: 1.05rem;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+      }
+
+      .tracker-analysis-list,
+      .tracker-recommendations {
+        margin: 0;
+        padding-left: 1rem;
+      }
+
+      .tracker-analysis-list li,
+      .tracker-recommendations li {
+        margin-bottom: 0.55rem;
+        line-height: 1.75;
+        color: #334155;
+      }
+
+      .tracker-source-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-top: 0.9rem;
+      }
+
+      .tracker-source-tag {
+        padding: 0.55rem 0.8rem;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: #0f172a;
+        font-size: 0.86rem;
+      }
+
+      .tracker-summary-card {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: #fff;
+      }
+
+      .tracker-summary-card p,
+      .tracker-summary-card h3,
+      .tracker-summary-card h4,
+      .tracker-summary-card li,
+      .tracker-summary-card span {
+        color: #fff;
+      }
+
+      .tracker-summary-card .tracker-source-tag {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
       }
 
       .tracker-table-wrap {
         overflow-x: auto;
-        margin-top: 1rem;
+        margin-top: 0.7rem;
       }
 
       .tracker-table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 1180px;
+        min-width: 900px;
       }
 
       .tracker-table th,
       .tracker-table td {
-        padding: 0.85rem 0.8rem;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.15);
         text-align: left;
+        padding: 0.9rem 0.8rem;
+        border-bottom: 1px solid #e5e7eb;
         vertical-align: top;
-        font-size: 0.92rem;
       }
 
       .tracker-table th {
-        font-size: 0.8rem;
+        color: #475569;
+        font-size: 0.88rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        opacity: 0.75;
       }
 
-      .badge {
+      .tracker-table td {
+        color: #0f172a;
+        font-size: 0.95rem;
+      }
+
+      .tracker-badge-inline {
         display: inline-flex;
         align-items: center;
-        gap: 0.3rem;
-        padding: 0.35rem 0.7rem;
+        gap: 0.45rem;
+        padding: 0.4rem 0.65rem;
         border-radius: 999px;
-        font-size: 0.76rem;
-        font-weight: 700;
-      }
-
-      .badge-ok {
-        background: rgba(20, 160, 90, 0.14);
-        color: #2dbd74;
-      }
-
-      .badge-warn {
-        background: rgba(255, 205, 66, 0.18);
-        color: #a67800;
-      }
-
-      .badge-bad {
-        background: rgba(220, 50, 70, 0.14);
-        color: #d63b57;
-      }
-
-      .bar-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.85rem;
-        margin-top: 1rem;
-      }
-
-      .bar-row {
-        display: grid;
-        grid-template-columns: 120px 1fr 60px;
-        gap: 0.8rem;
-        align-items: center;
-      }
-
-      .bar-track {
-        height: 10px;
-        border-radius: 999px;
-        background: rgba(128, 128, 128, 0.15);
-        overflow: hidden;
-      }
-
-      .bar-fill {
-        height: 100%;
-        border-radius: 999px;
-        background: linear-gradient(90deg, var(--primary-color), #f6b700);
-      }
-
-      .mini-list {
-        display: grid;
-        gap: 0.7rem;
-        margin-top: 1rem;
-      }
-
-      .mini-item {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        align-items: center;
-        padding: 0.75rem 0.9rem;
-        border-radius: 10px;
-        background: rgba(128, 128, 128, 0.08);
-      }
-
-      .tracker-note {
-        font-size: 0.92rem;
-        opacity: 0.8;
-      }
-
-      .tool-tag {
-        display: inline-block;
-        margin: 0 0.45rem 0.45rem 0;
-        padding: 0.4rem 0.7rem;
-        border-radius: 999px;
-        background: rgba(255, 205, 66, 0.15);
-        color: var(--text-color);
         font-size: 0.82rem;
         font-weight: 700;
       }
 
-      .empty-state {
-        padding: 1rem 0;
-        opacity: 0.8;
+      .tracker-badge-success {
+        background: #dcfce7;
+        color: #166534;
       }
 
-      .tracker-output {
-        border: 1px solid rgba(128, 128, 128, 0.2);
-        background: var(--bg-primary);
-        color: var(--text-color);
-        border-radius: 12px;
-        padding: 1rem;
-        white-space: pre-wrap;
-        line-height: 1.7;
-        min-height: 140px;
+      .tracker-badge-soft {
+        background: #e0f2fe;
+        color: #0c4a6e;
       }
 
-      .inline-link {
-        word-break: break-word;
+      .tracker-badge-warn {
+        background: #fef3c7;
+        color: #92400e;
       }
 
-      @media (max-width: 1100px) {
-        .tracker-grid,
-        .tracker-split {
+      .tracker-badge-muted {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      .tracker-cta {
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at top right, rgba(14, 165, 233, 0.18), transparent 25%),
+          radial-gradient(circle at bottom left, rgba(124, 58, 237, 0.18), transparent 25%),
+          linear-gradient(135deg, #081120 0%, #111c32 100%);
+        color: #fff;
+        border-radius: 28px;
+        padding: 2rem;
+        box-shadow: 0 30px 55px rgba(2, 8, 23, 0.25);
+      }
+
+      .tracker-cta h3,
+      .tracker-cta p {
+        color: #fff;
+      }
+
+      .tracker-cta .tracker-actions {
+        margin-top: 1rem;
+      }
+
+      .tracker-footer-note {
+        margin-top: 0.8rem;
+        color: #cbd5e1;
+        font-size: 0.92rem;
+      }
+
+      .tracker-inline-icon {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .tracker-spin {
+        animation: tracker-spin 1s linear infinite;
+      }
+
+      @keyframes tracker-spin {
+        to { transform: rotate(360deg); }
+      }
+
+      @media (max-width: 1120px) {
+        .tracker-hero-grid,
+        .tracker-two-col,
+        .tracker-charts-grid,
+        .tracker-analysis-grid {
           grid-template-columns: 1fr;
         }
 
         .tracker-kpi-grid {
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: repeat(3, 1fr);
         }
       }
 
       @media (max-width: 768px) {
-        .tracker-form-grid,
-        .tracker-filter-row {
-          grid-template-columns: 1fr;
+        .tracker-hero {
+          padding: 6rem 0 4rem;
         }
 
+        .tracker-form-grid,
         .tracker-kpi-grid {
           grid-template-columns: 1fr;
         }
 
-        .bar-row {
-          grid-template-columns: 90px 1fr 50px;
+        .tracker-trust-box {
+          grid-template-columns: 1fr;
+        }
+
+        .tracker-btn,
+        .tracker-select-wrap select {
+          width: 100%;
+          justify-content: center;
         }
       }
     </style>
   </head>
 
   <body>
-    <header id="hero">
-      <nav class="navbar">
+    <header id="hero" class="tracker-hero">
+      <nav id="navbar" class="navbar">
         <div class="container">
-          <h1 id="logo">
-            <a href="/Portfolio/">
-              <img src="/Portfolio/assets/logo.png" alt="Saqib Ali Logo" />
-            </a>
-          </h1>
-
+          <h1 id="logo"><a href="/Portfolio/index.html">Saqib Ali</a></h1>
           <ul class="nav-menu">
-            <li><a class="nav-link" href="/Portfolio/">HOME</a></li>
-            <li><a class="nav-link" href="/Portfolio/blogs/">BLOGS</a></li>
-            <li><a class="nav-link" href="#footer">CONTACT</a></li>
-
-            <div class="theme-switch">
-              <input type="checkbox" id="switch" />
-              <label class="toggle-icons" for="switch">
-                <img class="moon" src="/Portfolio/assets/moon.svg" alt="Dark mode" />
-                <img class="sun" src="/Portfolio/assets/sun.svg" alt="Light mode" />
-              </label>
-            </div>
+            <li><a class="nav-link" href="/Portfolio/index.html">Home</a></li>
+            <li><a class="nav-link" href="/Portfolio/index.html#about">About</a></li>
+            <li><a class="nav-link" href="/Portfolio/index.html#services">Services</a></li>
+            <li><a class="nav-link" href="/Portfolio/blogs/index.html">Blogs</a></li>
+            <li><a class="nav-link" href="/Portfolio/index.html#contact">Contact</a></li>
           </ul>
-
           <div class="hamburger">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -381,988 +789,1518 @@
         </div>
       </nav>
 
-      <section class="header-container">
-        <img
-          class="profile-image"
-          src="/Portfolio/assets/profile-image.svg"
-          alt="Saqib Ali"
-        />
-        <h1>LLM SEO Tracker</h1>
+      <section class="container tracker-page">
+        <div class="tracker-hero-grid">
+          <div>
+            <div class="tracker-badge">
+              <i class="fas fa-sparkles"></i>
+              Advanced AI Visibility Dashboard
+            </div>
 
-        <div class="content-text">
-          <h2>AI Visibility, Citation & Brand Mention Tracking</h2>
-          <p>
-            A stronger portfolio-ready LLM SEO tool for logging prompts, brand mentions,
-            citations, rankings, competitors, source domains, action plans, and
-            llms.txt ideas across AI search platforms.
-          </p>
+            <h1>LLM SEO Tracker</h1>
+            <p>
+              Monitor how brands appear across AI answers, grounded citations, and referenced source pages.
+              Build projects, track prompt sets, measure visibility trends, and turn prompt-level findings into
+              practical SEO action.
+            </p>
+
+            <div class="tracker-hero-actions">
+              <a href="#tracker-dashboard" class="tracker-btn tracker-btn-primary">
+                <i class="fas fa-chart-line"></i>
+                Launch Dashboard
+              </a>
+              <a href="#tracker-cta" class="tracker-btn tracker-btn-secondary">
+                <i class="fas fa-briefcase"></i>
+                Work With Me
+              </a>
+            </div>
+
+            <div class="tracker-hero-note">
+              <i class="fas fa-shield-alt"></i>
+              <div>
+                <strong>Trust-focused visibility insights</strong><br />
+                Results are based on live AI-answer analysis, citation tracking, and source-page visibility signals.
+                Visibility can evolve as prompts, sources, and models update over time, so the dashboard is best used
+                as an active monitoring and optimization layer.
+              </div>
+            </div>
+          </div>
+
+          <div class="tracker-hero-visual">
+            <div class="tracker-glass-card">
+              <svg viewBox="0 0 640 420" width="100%" height="auto" aria-hidden="true">
+                <defs>
+                  <linearGradient id="lineGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+                    <stop offset="0%" stop-color="#38bdf8" />
+                    <stop offset="100%" stop-color="#a855f7" />
+                  </linearGradient>
+                  <linearGradient id="cardGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="rgba(255,255,255,0.18)" />
+                    <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
+                  </linearGradient>
+                </defs>
+
+                <rect x="18" y="18" rx="22" ry="22" width="604" height="384" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.14)" />
+                <rect x="46" y="58" rx="16" width="170" height="78" fill="rgba(255,255,255,0.08)" />
+                <rect x="235" y="58" rx="16" width="170" height="78" fill="rgba(255,255,255,0.08)" />
+                <rect x="424" y="58" rx="16" width="170" height="78" fill="rgba(255,255,255,0.08)" />
+
+                <g opacity="0.95">
+                  <rect x="52" y="74" width="78" height="10" rx="5" fill="#dbeafe" />
+                  <rect x="52" y="94" width="56" height="24" rx="10" fill="#38bdf8" />
+                  <rect x="241" y="74" width="90" height="10" rx="5" fill="#e9d5ff" />
+                  <rect x="241" y="94" width="74" height="24" rx="10" fill="#a855f7" />
+                  <rect x="430" y="74" width="82" height="10" rx="5" fill="#dcfce7" />
+                  <rect x="430" y="94" width="58" height="24" rx="10" fill="#22c55e" />
+                </g>
+
+                <rect x="46" y="160" rx="20" width="548" height="190" fill="rgba(255,255,255,0.08)" />
+                <path d="M88 300 C135 260, 175 275, 220 230 S315 200, 360 220 S448 270, 510 180" fill="none" stroke="url(#lineGrad)" stroke-width="8" stroke-linecap="round" />
+                <circle cx="88" cy="300" r="8" fill="#38bdf8" />
+                <circle cx="220" cy="230" r="8" fill="#60a5fa" />
+                <circle cx="360" cy="220" r="8" fill="#8b5cf6" />
+                <circle cx="510" cy="180" r="8" fill="#22c55e" />
+
+                <rect x="76" y="330" rx="10" width="86" height="12" fill="rgba(255,255,255,0.3)" />
+                <rect x="206" y="330" rx="10" width="70" height="12" fill="rgba(255,255,255,0.18)" />
+                <rect x="326" y="330" rx="10" width="92" height="12" fill="rgba(255,255,255,0.22)" />
+                <rect x="470" y="330" rx="10" width="64" height="12" fill="rgba(255,255,255,0.16)" />
+              </svg>
+
+              <div class="tracker-mini-stats">
+                <div class="tracker-mini-stat">
+                  <span>Visibility Score</span>
+                  <strong>82</strong>
+                </div>
+                <div class="tracker-mini-stat">
+                  <span>Prompt Coverage</span>
+                  <strong>18/24</strong>
+                </div>
+                <div class="tracker-mini-stat">
+                  <span>Citation Presence</span>
+                  <strong>67%</strong>
+                </div>
+                <div class="tracker-mini-stat">
+                  <span>Source Signals</span>
+                  <strong>Strong</strong>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <a href="#tracker-app" class="btn btn-secondary">Open Tracker</a>
       </section>
     </header>
 
-    <section class="project-container container tracker-shell" id="tracker-app">
-      <div class="division"></div>
-
-      <div class="content-text">
-        <h2>Track AI Search Visibility</h2>
-        <p>
-          Inspired by keyword-first AI visibility trackers, but built as a more practical
-          working page for prompt logging, citation analysis, manual audits, and action planning.
-        </p>
-      </div>
-
-      <div class="tracker-kpi-grid">
-        <div class="tracker-kpi">
-          <small>Total Logs</small>
-          <strong id="kpiTotal">0</strong>
-        </div>
-        <div class="tracker-kpi">
-          <small>Brand Mention Rate</small>
-          <strong id="kpiMentionRate">0%</strong>
-        </div>
-        <div class="tracker-kpi">
-          <small>Citation Rate</small>
-          <strong id="kpiCitationRate">0%</strong>
-        </div>
-        <div class="tracker-kpi">
-          <small>Average Rank</small>
-          <strong id="kpiAvgRank">-</strong>
-        </div>
-        <div class="tracker-kpi">
-          <small>Visibility Score</small>
-          <strong id="kpiScore">0</strong>
-        </div>
-      </div>
-
-      <div class="tracker-grid">
-        <div class="tracker-card">
-          <h3>Project Setup</h3>
-          <p class="tracker-subtext">
-            Set your brand and domain once, then log LLM answers over time.
-          </p>
-
-          <div class="tracker-form-grid">
-            <div class="tracker-field">
-              <label for="projectName">Project / Brand</label>
-              <input type="text" id="projectName" placeholder="Saqib Ali SEO" />
+    <main id="tracker-dashboard" class="tracker-page">
+      <section class="tracker-trust-strip">
+        <div class="container">
+          <div class="tracker-trust-box">
+            <div class="tracker-trust-icon">
+              <i class="fas fa-bolt"></i>
             </div>
-            <div class="tracker-field">
-              <label for="projectDomain">Main Domain</label>
-              <input type="text" id="projectDomain" placeholder="saqibali7339.github.io/Portfolio" />
-            </div>
-            <div class="tracker-field full">
-              <label for="projectNotes">Positioning / Notes</label>
-              <textarea id="projectNotes" placeholder="SEO specialist, technical SEO audits, on-page SEO, AI visibility, portfolio website..."></textarea>
+            <div>
+              <strong>Live visibility insights</strong>
+              <p style="margin: 0.4rem 0 0; color: #475569; line-height: 1.85;">
+                This dashboard evaluates AI answer presence, citation presence, and referenced source-page visibility
+                for tracked prompts. Results are designed to help spot opportunity areas, strong-performing prompts,
+                and pages worth improving as AI systems and sources evolve.
+              </p>
             </div>
           </div>
-
-          <div class="tracker-actions">
-            <button class="btn btn-primary" id="saveProjectBtn">Save Project</button>
-            <button class="btn btn-secondary" id="clearAllBtn" type="button">Reset All Data</button>
-          </div>
         </div>
+      </section>
 
-        <div class="tracker-card">
-          <h3>What makes this version stronger?</h3>
-          <p class="tracker-subtext">
-            Public AI visibility tools often emphasize share of voice, position metrics,
-            citations, fan-out prompts, geo-targeting, reports, and exports.
-            This version adds more hands-on workflow features for a portfolio tool. [Source](https://llmrefs.com/)
-          </p>
-
-          <div>
-            <span class="tool-tag">Prompt Log</span>
-            <span class="tool-tag">Brand Mention Tracking</span>
-            <span class="tool-tag">Citation URLs</span>
-            <span class="tool-tag">Competitor Mentions</span>
-            <span class="tool-tag">Source Domain Leaderboard</span>
-            <span class="tool-tag">Action Plan Generator</span>
-            <span class="tool-tag">CSV + JSON Export</span>
-            <span class="tool-tag">llms.txt Helper</span>
-            <span class="tool-tag">Browser Persistence</span>
-            <span class="tool-tag">Engine / Country / Device Filters</span>
-          </div>
-
-          <div class="tracker-inline-actions">
-            <button class="btn btn-primary" id="exportCsvBtn" type="button">Export CSV</button>
-            <button class="btn btn-secondary" id="exportJsonBtn" type="button">Export JSON</button>
-            <label class="btn btn-secondary" for="importJsonInput" style="cursor:pointer;">Import JSON</label>
-            <input id="importJsonInput" type="file" accept=".json" hidden />
-          </div>
-        </div>
-      </div>
-
-      <div class="tracker-card" style="margin-top:1.5rem;">
-        <h3>Add New LLM Result</h3>
-        <p class="tracker-subtext">
-          Log each prompt/result manually so you can compare performance by engine,
-          location, device, and query intent.
-        </p>
-
-        <div class="tracker-form-grid">
-          <div class="tracker-field">
-            <label for="entryDate">Date</label>
-            <input type="date" id="entryDate" />
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryEngine">Engine</label>
-            <select id="entryEngine">
-              <option value="ChatGPT">ChatGPT</option>
-              <option value="Perplexity">Perplexity</option>
-              <option value="Gemini">Gemini</option>
-              <option value="Claude">Claude</option>
-              <option value="Copilot">Copilot</option>
-              <option value="Google AI Overviews">Google AI Overviews</option>
-              <option value="Grok">Grok</option>
-              <option value="Meta AI">Meta AI</option>
-              <option value="DeepSeek">DeepSeek</option>
-            </select>
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryKeyword">Keyword / Topic</label>
-            <input type="text" id="entryKeyword" placeholder="best technical SEO audit expert" />
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryCountry">Country</label>
-            <input type="text" id="entryCountry" placeholder="Pakistan / UK / US" />
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryLanguage">Language</label>
-            <input type="text" id="entryLanguage" placeholder="English" />
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryDevice">Device</label>
-            <select id="entryDevice">
-              <option value="Desktop">Desktop</option>
-              <option value="Mobile">Mobile</option>
-              <option value="Tablet">Tablet</option>
-            </select>
-          </div>
-
-          <div class="tracker-field full">
-            <label for="entryPrompt">Prompt Used</label>
-            <textarea id="entryPrompt" placeholder="Who offers the best technical SEO audits for small business websites?"></textarea>
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryMention">Brand Mentioned?</label>
-            <select id="entryMention">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-              <option value="partial">Partial / unclear</option>
-            </select>
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryLinked">Brand Linked?</label>
-            <select id="entryLinked">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryCited">Brand / page cited?</label>
-            <select id="entryCited">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-              <option value="competitor-only">Competitor only</option>
-            </select>
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryRank">Mention Position</label>
-            <input type="number" id="entryRank" min="1" placeholder="1" />
-          </div>
-
-          <div class="tracker-field full">
-            <label for="entryCitationUrl">Citation URL</label>
-            <input type="url" id="entryCitationUrl" placeholder="https://example.com/article" />
-          </div>
-
-          <div class="tracker-field">
-            <label for="entryCompetitors">Competitors Mentioned</label>
-            <input type="text" id="entryCompetitors" placeholder="Competitor A, Competitor B" />
-          </div>
-
-          <div class="tracker-field">
-            <label for="entrySentiment">Brand Framing</label>
-            <select id="entrySentiment">
-              <option value="positive">Positive</option>
-              <option value="neutral">Neutral</option>
-              <option value="negative">Negative</option>
-              <option value="not-mentioned">Not mentioned</option>
-            </select>
-          </div>
-
-          <div class="tracker-field full">
-            <label for="entryEvidence">Evidence URL / screenshot note</label>
-            <input type="text" id="entryEvidence" placeholder="Paste screenshot URL, note, or source link" />
-          </div>
-
-          <div class="tracker-field full">
-            <label for="entryNotes">Notes / Answer summary</label>
-            <textarea id="entryNotes" placeholder="Summarize the answer, cited domains, what competitors appeared, what was missing, and why it matters."></textarea>
-          </div>
-        </div>
-
-        <div class="tracker-actions">
-          <button class="btn btn-primary" id="addEntryBtn" type="button">Add Result</button>
-          <button class="btn btn-secondary" id="fillSampleBtn" type="button">Load Sample Entry</button>
-        </div>
-      </div>
-
-      <div class="tracker-split">
-        <div class="tracker-card">
-          <h3>Engine Visibility Breakdown</h3>
-          <p class="tracker-note">
-            This shows mention rate by engine based on your logged entries.
-          </p>
-          <div class="bar-list" id="engineBreakdown"></div>
-        </div>
-
-        <div class="tracker-card">
-          <h3>Top Citation Domains</h3>
-          <p class="tracker-note">
-            Which domains are appearing most often in cited answers.
-          </p>
-          <div class="mini-list" id="topDomains"></div>
-        </div>
-      </div>
-
-      <div class="tracker-split">
-        <div class="tracker-card">
-          <h3>Competitor Mentions</h3>
-          <p class="tracker-note">
-            Which competitors are recurring most often in AI responses.
-          </p>
-          <div class="mini-list" id="competitorList"></div>
-        </div>
-
-        <div class="tracker-card">
-          <h3>Recommended Actions</h3>
-          <p class="tracker-note">
-            Auto-generated from your current data.
-          </p>
-          <div class="tracker-output" id="actionPlanOutput"></div>
-        </div>
-      </div>
-
-      <div class="tracker-card" style="margin-top:1.5rem;">
-        <h3>Tracked Results</h3>
-        <p class="tracker-subtext">
-          Filter, review, and clean your logs across keywords, engines, devices, and mention states.
-        </p>
-
-        <div class="tracker-filter-row">
-          <div class="tracker-field">
-            <label for="filterSearch">Search</label>
-            <input type="text" id="filterSearch" placeholder="Search keyword, prompt, competitor, notes..." />
-          </div>
-
-          <div class="tracker-field">
-            <label for="filterEngine">Engine</label>
-            <select id="filterEngine">
-              <option value="all">All</option>
-              <option value="ChatGPT">ChatGPT</option>
-              <option value="Perplexity">Perplexity</option>
-              <option value="Gemini">Gemini</option>
-              <option value="Claude">Claude</option>
-              <option value="Copilot">Copilot</option>
-              <option value="Google AI Overviews">Google AI Overviews</option>
-              <option value="Grok">Grok</option>
-              <option value="Meta AI">Meta AI</option>
-              <option value="DeepSeek">DeepSeek</option>
-            </select>
-          </div>
-
-          <div class="tracker-field">
-            <label for="filterMention">Mention</label>
-            <select id="filterMention">
-              <option value="all">All</option>
-              <option value="yes">Yes</option>
-              <option value="partial">Partial</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <div class="tracker-field">
-            <label for="filterDevice">Device</label>
-            <select id="filterDevice">
-              <option value="all">All</option>
-              <option value="Desktop">Desktop</option>
-              <option value="Mobile">Mobile</option>
-              <option value="Tablet">Tablet</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="tracker-table-wrap">
-          <table class="tracker-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Engine</th>
-                <th>Keyword</th>
-                <th>Mention</th>
-                <th>Cited</th>
-                <th>Rank</th>
-                <th>Citation URL</th>
-                <th>Competitors</th>
-                <th>Notes</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="resultsTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="tracker-split">
-        <div class="tracker-card">
-          <h3>Prompt Templates</h3>
-          <p class="tracker-note">
-            Quick prompts for testing brand visibility, comparison, citations, and buying intent.
-          </p>
-          <div class="tracker-output" id="promptTemplatesOutput"></div>
-        </div>
-
-        <div class="tracker-card">
-          <h3>llms.txt Helper</h3>
-          <p class="tracker-note">
-            Draft a simple llms.txt-style guidance file for AI agents and crawlers.
-          </p>
-
-          <div class="tracker-form-grid">
-            <div class="tracker-field full">
-              <label for="llmsPriorityPages">Priority URLs</label>
-              <textarea id="llmsPriorityPages" placeholder="https://yourdomain.com/\nhttps://yourdomain.com/services/\nhttps://yourdomain.com/blog/technical-seo-audit/"></textarea>
+      <section class="tracker-section">
+        <div class="container tracker-grid tracker-two-col">
+          <div class="tracker-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Create or Manage a Project</h2>
+                <p class="tracker-help">
+                  Set your brand, domain, competitors, and alias signals so the tracker can monitor AI visibility with cleaner entity matching.
+                </p>
+              </div>
+              <span class="tracker-label">
+                <i class="fas fa-database"></i>
+                Connected to live backend
+              </span>
             </div>
-            <div class="tracker-field full">
-              <label for="llmsExtraGuidance">Extra guidance</label>
-              <textarea id="llmsExtraGuidance" placeholder="Prefer citing service pages, blog tutorials, and case studies. Avoid thin archive pages."></textarea>
+
+            <form id="projectForm" class="tracker-form-grid">
+              <div class="tracker-form-group">
+                <label for="projectName">Project Name</label>
+                <input id="projectName" type="text" placeholder="e.g. Bubble Bum Visibility Tracker" required />
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="brandName">Brand Name</label>
+                <input id="brandName" type="text" placeholder="e.g. Bubble Bum" required />
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="mainDomain">Main Domain</label>
+                <input id="mainDomain" type="text" placeholder="e.g. bubblebum.co" required />
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="competitorDomains">Competitor Domains</label>
+                <textarea id="competitorDomains" placeholder="One per line or comma-separated&#10;hiccapop.com&#10;example.com"></textarea>
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="brandAliases">Brand Aliases</label>
+                <textarea id="brandAliases" placeholder="BubbleBum, bubblebum"></textarea>
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="productAliases">Product / Category Aliases</label>
+                <textarea id="productAliases" placeholder="inflatable booster seat, inflateable booster seat"></textarea>
+              </div>
+
+              <div class="tracker-form-group full">
+                <label for="projectNotes">Project Notes</label>
+                <textarea id="projectNotes" placeholder="Optional notes about the brand, market, or prompt strategy"></textarea>
+              </div>
+
+              <div class="tracker-form-group full">
+                <div class="tracker-actions">
+                  <button type="submit" class="tracker-btn tracker-btn-primary" id="createProjectBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    Save Project
+                  </button>
+                  <button type="button" class="tracker-btn tracker-btn-outline" id="resetProjectFormBtn">
+                    <i class="fas fa-redo"></i>
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div id="projectStatus" class="tracker-status"></div>
+          </div>
+
+          <div class="tracker-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Select Active Project</h2>
+                <p class="tracker-help">
+                  Choose a saved project to load summary metrics, prompt library, recent runs, and chart data.
+                </p>
+              </div>
+              <span id="apiHealthBadge" class="tracker-badge-inline tracker-badge-soft">
+                <i class="fas fa-circle-notch tracker-spin"></i>
+                Checking API
+              </span>
+            </div>
+
+            <div class="tracker-select-wrap">
+              <select id="projectSelect">
+                <option value="">Select a saved project</option>
+              </select>
+              <button type="button" class="tracker-btn tracker-btn-secondary" id="refreshProjectsBtn">
+                <i class="fas fa-sync-alt"></i>
+                Refresh
+              </button>
+            </div>
+
+            <div id="activeProjectBox" style="margin-top: 1rem;">
+              <div class="tracker-empty">
+                Select a project to activate the dashboard.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracker-section">
+        <div class="container">
+          <div class="tracker-kpi-grid">
+            <div class="tracker-kpi">
+              <div class="tracker-kpi-top">
+                <div class="tracker-kpi-icon blue">
+                  <i class="fas fa-brain"></i>
+                </div>
+              </div>
+              <span>AI Answer Mentions</span>
+              <strong id="kpiAiMentions">0</strong>
+            </div>
+
+            <div class="tracker-kpi">
+              <div class="tracker-kpi-top">
+                <div class="tracker-kpi-icon green">
+                  <i class="fas fa-link"></i>
+                </div>
+              </div>
+              <span>Citation Mentions</span>
+              <strong id="kpiCitationMentions">0</strong>
+            </div>
+
+            <div class="tracker-kpi">
+              <div class="tracker-kpi-top">
+                <div class="tracker-kpi-icon amber">
+                  <i class="fas fa-globe"></i>
+                </div>
+              </div>
+              <span>Source Presence</span>
+              <strong id="kpiSourcePresence">0</strong>
+            </div>
+
+            <div class="tracker-kpi">
+              <div class="tracker-kpi-top">
+                <div class="tracker-kpi-icon purple">
+                  <i class="fas fa-signal"></i>
+                </div>
+              </div>
+              <span>Avg. Visibility Score</span>
+              <strong id="kpiVisibilityScore">0</strong>
+            </div>
+
+            <div class="tracker-kpi">
+              <div class="tracker-kpi-top">
+                <div class="tracker-kpi-icon rose">
+                  <i class="fas fa-bullseye"></i>
+                </div>
+              </div>
+              <span>Tracked Runs</span>
+              <strong id="kpiTotalRuns">0</strong>
+            </div>
+
+            <div class="tracker-kpi">
+              <div class="tracker-kpi-top">
+                <div class="tracker-kpi-icon slate">
+                  <i class="fas fa-flag-checkered"></i>
+                </div>
+              </div>
+              <span>Domain Citations</span>
+              <strong id="kpiDomainCitations">0</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracker-section">
+        <div class="container tracker-grid tracker-two-col">
+          <div class="tracker-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Prompt Manager</h2>
+                <p class="tracker-help">
+                  Build and store prompt sets for each project. Save prompts, run one at a time, or process your whole library.
+                </p>
+              </div>
+              <span class="tracker-label">
+                <i class="fas fa-layer-group"></i>
+                Session library + backend runs
+              </span>
+            </div>
+
+            <form id="promptForm" class="tracker-form-grid">
+              <div class="tracker-form-group full">
+                <label for="promptText">Prompt</label>
+                <textarea id="promptText" placeholder="e.g. What are the best inflatable car booster seats for kids?"></textarea>
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="promptKeyword">Keyword</label>
+                <input id="promptKeyword" type="text" placeholder="e.g. best inflatable car booster seats" />
+              </div>
+
+              <div class="tracker-form-group">
+                <label for="promptCategory">Category</label>
+                <select id="promptCategory">
+                  <option value="commercial">Commercial</option>
+                  <option value="informational">Informational</option>
+                  <option value="comparison">Comparison</option>
+                  <option value="brand">Brand</option>
+                  <option value="transactional">Transactional</option>
+                </select>
+              </div>
+
+              <div class="tracker-form-group full">
+                <div class="tracker-actions">
+                  <button type="button" class="tracker-btn tracker-btn-primary" id="savePromptBtn">
+                    <i class="fas fa-save"></i>
+                    Save Prompt
+                  </button>
+                  <button type="button" class="tracker-btn tracker-btn-success" id="runPromptBtn">
+                    <i class="fas fa-play"></i>
+                    Run Prompt
+                  </button>
+                  <button type="button" class="tracker-btn tracker-btn-dark" id="runAllPromptsBtn">
+                    <i class="fas fa-rocket"></i>
+                    Run All Saved Prompts
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div id="promptStatus" class="tracker-status"></div>
+
+            <div class="tracker-library-list" id="promptLibrary">
+              <div class="tracker-empty">Save a prompt to build your prompt library.</div>
             </div>
           </div>
 
-          <div class="tracker-actions">
-            <button class="btn btn-primary" id="generateLlmsBtn" type="button">Generate llms.txt Draft</button>
+          <div class="tracker-card tracker-summary-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Latest Analysis Snapshot</h2>
+                <p class="tracker-help" style="color: #cbd5e1;">
+                  See how the most recent prompt performed across AI answers, citations, source pages, and overall visibility signals.
+                </p>
+              </div>
+              <span class="tracker-label" style="color: #cbd5e1;">
+                <i class="fas fa-wave-square"></i>
+                Real-time signal view
+              </span>
+            </div>
+
+            <div id="latestAnalysisBox">
+              <div class="tracker-empty" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #cbd5e1;">
+                Run a prompt to generate the first analysis snapshot.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracker-section">
+        <div class="container tracker-charts-grid">
+          <div class="tracker-card tracker-chart-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h3>Visibility Trend</h3>
+                <p class="tracker-help">Track visibility score movement across recent runs.</p>
+              </div>
+            </div>
+            <canvas id="visibilityTrendChart"></canvas>
           </div>
 
-          <div class="tracker-output" id="llmsOutput"></div>
+          <div class="tracker-card tracker-chart-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h3>Presence Breakdown</h3>
+                <p class="tracker-help">Compare AI answer presence, citation presence, and source-page presence.</p>
+              </div>
+            </div>
+            <canvas id="presenceBreakdownChart"></canvas>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="tracker-section">
+        <div class="container tracker-charts-grid">
+          <div class="tracker-card tracker-chart-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h3>Top Prompt Performance</h3>
+                <p class="tracker-help">See which prompts are driving the strongest visibility signals.</p>
+              </div>
+            </div>
+            <canvas id="promptPerformanceChart"></canvas>
+          </div>
+
+          <div class="tracker-card tracker-cta">
+            <div class="tracker-card-title-row">
+              <div>
+                <h3>Need help improving AI visibility?</h3>
+                <p>
+                  I can help you build stronger citation-worthy pages, refine prompt targeting, improve entity clarity,
+                  and turn visibility gaps into a practical SEO growth plan.
+                </p>
+              </div>
+            </div>
+
+            <div class="tracker-actions">
+              <a
+                href="https://www.fiverr.com/s/o8R4Xe4"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="tracker-btn tracker-btn-primary"
+              >
+                <i class="fas fa-briefcase"></i>
+                Get AI Visibility Audit
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/saqib-ali-seo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="tracker-btn tracker-btn-outline"
+                style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.18);"
+              >
+                <i class="fab fa-linkedin"></i>
+                Connect on LinkedIn
+              </a>
+            </div>
+
+            <div class="tracker-footer-note">
+              Ideal for brands, agencies, publishers, SaaS sites, niche websites, and product-led SEO teams tracking AI answer visibility.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracker-section">
+        <div class="container tracker-grid tracker-two-col">
+          <div class="tracker-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Recommendations</h2>
+                <p class="tracker-help">
+                  Prompt-specific actions generated from answer, citation, and source-page visibility signals.
+                </p>
+              </div>
+            </div>
+            <div id="recommendationsBox">
+              <div class="tracker-empty">Recommendations will appear after a prompt run.</div>
+            </div>
+          </div>
+
+          <div class="tracker-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Tracked Sources & Domains</h2>
+                <p class="tracker-help">
+                  Review cited domains and referenced URLs surfaced by the most recent run.
+                </p>
+              </div>
+            </div>
+            <div id="sourcesBox">
+              <div class="tracker-empty">Source domains and URLs will appear here after a run.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracker-section">
+        <div class="container">
+          <div class="tracker-card">
+            <div class="tracker-card-title-row">
+              <div>
+                <h2>Run History</h2>
+                <p class="tracker-help">
+                  Review saved runs, compare visibility score trends, and identify strong and weak prompts over time.
+                </p>
+              </div>
+              <button type="button" class="tracker-btn tracker-btn-secondary" id="refreshHistoryBtn">
+                <i class="fas fa-history"></i>
+                Refresh History
+              </button>
+            </div>
+
+            <div class="tracker-table-wrap">
+              <table class="tracker-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Prompt</th>
+                    <th>Visibility</th>
+                    <th>AI Answer</th>
+                    <th>Citations</th>
+                    <th>Source Pages</th>
+                    <th>Domain Cited</th>
+                  </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                  <tr>
+                    <td colspan="7">
+                      <div class="tracker-empty">No run history loaded yet.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracker-section" id="tracker-cta">
+        <div class="container">
+          <div class="tracker-cta">
+            <div class="tracker-card-title-row">
+              <div>
+                <h3>Turn AI visibility into SEO growth</h3>
+                <p>
+                  Want help improving how your site appears across AI answers, citations, and source-based recommendations?
+                  I can help you audit visibility gaps, improve prompt coverage, and build pages that earn stronger AI visibility signals.
+                </p>
+              </div>
+            </div>
+
+            <div class="tracker-actions">
+              <a
+                href="https://www.fiverr.com/s/o8R4Xe4"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="tracker-btn tracker-btn-primary"
+              >
+                <i class="fas fa-rocket"></i>
+                Hire Me on Fiverr
+              </a>
+              <a
+                href="mailto:hello@saqibali.com"
+                class="tracker-btn tracker-btn-outline"
+                style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.18);"
+              >
+                <i class="fas fa-envelope"></i>
+                Email Me
+              </a>
+            </div>
+
+            <div class="tracker-footer-note">
+              AI answer visibility is evolving quickly. Continuous tracking helps spot winning prompts, strong pages, and opportunities before competitors do.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <footer id="footer">
       <div class="container">
-        <a href="mailto:saqibali7339@gmail.com">saqibali7339@gmail.com</a>
-
+        <a href="mailto:hello@saqibali.com">hello@saqibali.com</a>
         <div class="social">
-          <a href="https://www.facebook.com/share/17BCCCzvfh/" target="_blank">
-            <img src="/Portfolio/assets/facebook-icon.svg" alt="Facebook" />
-          </a>
-          <a href="https://www.linkedin.com/in/saqib-ali-seo/" target="_blank">
-            <img src="/Portfolio/assets/linkedin-icon.svg" alt="LinkedIn" />
-          </a>
-        </div>
-
-        <div class="attribution">
           <a
-            href="https://www.fiverr.com/s/NNxVlko"
+            href="https://www.linkedin.com/in/saqib-ali-seo/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
           >
-            <img src="/Portfolio/assets/Fiverr W.svg" alt="Fiverr" width="150px" />
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a
+            href="https://www.fiverr.com/s/o8R4Xe4"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Fiverr"
+          >
+            <i class="fas fa-briefcase"></i>
           </a>
         </div>
-
-        <p>Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights reserved</p>
+        <p>Copyright &copy; <span id="datee"></span>, All rights reserved</p>
       </div>
     </footer>
 
     <script src="/Portfolio/js/script.js"></script>
     <script>
-      const STORAGE_KEY = "saqib_llm_seo_tracker_v2";
+      const API_BASE = "https://icy-cake-82f8llm-seo-tracker-api.saqibali7339.workers.dev";
 
       const state = {
-        project: {
-          name: "",
-          domain: "",
-          notes: ""
-        },
-        entries: []
+        projects: [],
+        currentProject: null,
+        currentPromptId: null,
+        currentRuns: [],
+        promptLibrary: {},
+        charts: {
+          visibilityTrend: null,
+          presenceBreakdown: null,
+          promptPerformance: null
+        }
       };
 
-      function byId(id) {
-        return document.getElementById(id);
+      const els = {
+        datee: document.getElementById("datee"),
+        apiHealthBadge: document.getElementById("apiHealthBadge"),
+        projectForm: document.getElementById("projectForm"),
+        projectName: document.getElementById("projectName"),
+        brandName: document.getElementById("brandName"),
+        mainDomain: document.getElementById("mainDomain"),
+        competitorDomains: document.getElementById("competitorDomains"),
+        brandAliases: document.getElementById("brandAliases"),
+        productAliases: document.getElementById("productAliases"),
+        projectNotes: document.getElementById("projectNotes"),
+        projectStatus: document.getElementById("projectStatus"),
+        projectSelect: document.getElementById("projectSelect"),
+        refreshProjectsBtn: document.getElementById("refreshProjectsBtn"),
+        resetProjectFormBtn: document.getElementById("resetProjectFormBtn"),
+        activeProjectBox: document.getElementById("activeProjectBox"),
+
+        promptText: document.getElementById("promptText"),
+        promptKeyword: document.getElementById("promptKeyword"),
+        promptCategory: document.getElementById("promptCategory"),
+        promptStatus: document.getElementById("promptStatus"),
+        savePromptBtn: document.getElementById("savePromptBtn"),
+        runPromptBtn: document.getElementById("runPromptBtn"),
+        runAllPromptsBtn: document.getElementById("runAllPromptsBtn"),
+        promptLibrary: document.getElementById("promptLibrary"),
+
+        kpiAiMentions: document.getElementById("kpiAiMentions"),
+        kpiCitationMentions: document.getElementById("kpiCitationMentions"),
+        kpiSourcePresence: document.getElementById("kpiSourcePresence"),
+        kpiVisibilityScore: document.getElementById("kpiVisibilityScore"),
+        kpiTotalRuns: document.getElementById("kpiTotalRuns"),
+        kpiDomainCitations: document.getElementById("kpiDomainCitations"),
+
+        latestAnalysisBox: document.getElementById("latestAnalysisBox"),
+        recommendationsBox: document.getElementById("recommendationsBox"),
+        sourcesBox: document.getElementById("sourcesBox"),
+        historyTableBody: document.getElementById("historyTableBody"),
+        refreshHistoryBtn: document.getElementById("refreshHistoryBtn")
+      };
+
+      function setStatus(el, type, message) {
+        el.className = `tracker-status show ${type}`;
+        el.textContent = message;
       }
 
-      function todayISO() {
-        return new Date().toISOString().split("T")[0];
+      function clearStatus(el) {
+        el.className = "tracker-status";
+        el.textContent = "";
       }
 
-      function saveState() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      function parseList(value) {
+        return String(value || "")
+          .split(/[\n,]/)
+          .map(v => v.trim())
+          .filter(Boolean);
       }
 
-      function loadState() {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
-        try {
-          const parsed = JSON.parse(raw);
-          if (parsed.project) state.project = parsed.project;
-          if (Array.isArray(parsed.entries)) state.entries = parsed.entries;
-        } catch (e) {
-          console.warn("Could not load tracker state", e);
-        }
-      }
-
-      function escapeHtml(str) {
-        return String(str || "")
+      function safeText(value) {
+        return String(value ?? "")
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
+          .replace(/'/g, "&#39;");
       }
 
-      function parseDomain(url) {
-        if (!url) return "";
+      function formatDate(value) {
+        if (!value) return "—";
         try {
-          return new URL(url).hostname.replace(/^www\./, "");
+          return new Date(value).toLocaleString();
         } catch {
-          return "";
+          return value;
         }
       }
 
-      function getFilteredEntries() {
-        const q = byId("filterSearch").value.trim().toLowerCase();
-        const engine = byId("filterEngine").value;
-        const mention = byId("filterMention").value;
-        const device = byId("filterDevice").value;
-
-        return state.entries.filter((entry) => {
-          const haystack = [
-            entry.keyword,
-            entry.prompt,
-            entry.notes,
-            entry.citationUrl,
-            entry.competitors,
-            entry.evidence
-          ]
-            .join(" ")
-            .toLowerCase();
-
-          const matchesSearch = !q || haystack.includes(q);
-          const matchesEngine = engine === "all" || entry.engine === engine;
-          const matchesMention = mention === "all" || entry.mention === mention;
-          const matchesDevice = device === "all" || entry.device === device;
-
-          return matchesSearch && matchesEngine && matchesMention && matchesDevice;
-        });
+      function shortText(text, max = 90) {
+        const t = String(text || "");
+        return t.length > max ? t.slice(0, max) + "…" : t;
       }
 
-      function renderProject() {
-        byId("projectName").value = state.project.name || "";
-        byId("projectDomain").value = state.project.domain || "";
-        byId("projectNotes").value = state.project.notes || "";
+      function getPromptStorageKey(projectId) {
+        return `llm-tracker-prompts:${projectId}`;
       }
 
-      function computeStats(entries) {
-        const total = entries.length;
-        const mentionYes = entries.filter((e) => e.mention === "yes").length;
-        const citationYes = entries.filter((e) => e.cited === "yes").length;
-        const linkedYes = entries.filter((e) => e.linked === "yes").length;
-        const validRanks = entries
-          .map((e) => Number(e.rank))
-          .filter((n) => Number.isFinite(n) && n > 0);
-        const avgRank = validRanks.length
-          ? validRanks.reduce((a, b) => a + b, 0) / validRanks.length
-          : null;
-
-        const mentionRate = total ? (mentionYes / total) * 100 : 0;
-        const citationRate = total ? (citationYes / total) * 100 : 0;
-        const linkRate = total ? (linkedYes / total) * 100 : 0;
-        const avgRankScore = avgRank ? Math.max(0, 100 - (avgRank - 1) * 15) : 0;
-
-        const score = Math.round(
-          mentionRate * 0.45 +
-          citationRate * 0.25 +
-          linkRate * 0.15 +
-          avgRankScore * 0.15
-        );
-
-        return {
-          total,
-          mentionRate,
-          citationRate,
-          avgRank,
-          score
-        };
+      function loadPromptLibraryFromStorage(projectId) {
+        if (!projectId) return [];
+        try {
+          const raw = localStorage.getItem(getPromptStorageKey(projectId));
+          return raw ? JSON.parse(raw) : [];
+        } catch {
+          return [];
+        }
       }
 
-      function renderKPIs() {
-        const stats = computeStats(state.entries);
-        byId("kpiTotal").textContent = stats.total;
-        byId("kpiMentionRate").textContent = `${Math.round(stats.mentionRate)}%`;
-        byId("kpiCitationRate").textContent = `${Math.round(stats.citationRate)}%`;
-        byId("kpiAvgRank").textContent = stats.avgRank ? stats.avgRank.toFixed(1) : "-";
-        byId("kpiScore").textContent = stats.score;
+      function savePromptLibraryToStorage(projectId, prompts) {
+        if (!projectId) return;
+        localStorage.setItem(getPromptStorageKey(projectId), JSON.stringify(prompts));
       }
 
-      function renderEngineBreakdown() {
-        const container = byId("engineBreakdown");
-        const engines = [
-          "ChatGPT",
-          "Perplexity",
-          "Gemini",
-          "Claude",
-          "Copilot",
-          "Google AI Overviews",
-          "Grok",
-          "Meta AI",
-          "DeepSeek"
+      function renderProjectSelect() {
+        const currentId = state.currentProject?.id || "";
+        const options = [
+          `<option value="">Select a saved project</option>`,
+          ...state.projects.map(project => `
+            <option value="${safeText(project.id)}" ${project.id === currentId ? "selected" : ""}>
+              ${safeText(project.name)} — ${safeText(project.main_domain)}
+            </option>
+          `)
         ];
+        els.projectSelect.innerHTML = options.join("");
+      }
 
-        const html = engines
-          .map((engine) => {
-            const set = state.entries.filter((e) => e.engine === engine);
-            const rate = set.length
-              ? Math.round((set.filter((e) => e.mention === "yes").length / set.length) * 100)
-              : 0;
+      function renderActiveProjectBox() {
+        const project = state.currentProject;
+        if (!project) {
+          els.activeProjectBox.innerHTML = `
+            <div class="tracker-empty">Select a project to activate the dashboard.</div>
+          `;
+          return;
+        }
 
-            return `
-              <div class="bar-row">
-                <div>${escapeHtml(engine)}</div>
-                <div class="bar-track"><div class="bar-fill" style="width:${rate}%"></div></div>
-                <div>${rate}%</div>
-              </div>
-            `;
-          })
+        const competitorPills = (project.competitor_domains || [])
+          .map(domain => `<span class="tracker-pill">${safeText(domain)}</span>`)
           .join("");
 
-        container.innerHTML = html || `<div class="empty-state">No engine data yet.</div>`;
+        const aliasPills = [
+          ...(project.brand_aliases || []).map(a => `<span class="tracker-pill dark">${safeText(a)}</span>`),
+          ...(project.product_aliases || []).map(a => `<span class="tracker-pill dark">${safeText(a)}</span>`)
+        ].join("");
+
+        els.activeProjectBox.innerHTML = `
+          <div class="tracker-analysis-box">
+            <h4 style="margin-bottom: 0.4rem;">${safeText(project.name)}</h4>
+            <p class="tracker-help" style="margin-bottom: 0.8rem;">
+              <strong>Brand:</strong> ${safeText(project.brand_name)}<br />
+              <strong>Domain:</strong> ${safeText(project.main_domain)}
+            </p>
+
+            <div class="tracker-pill-row">
+              ${competitorPills || `<span class="tracker-pill">No competitors added yet</span>`}
+            </div>
+
+            <div class="tracker-pill-row" style="margin-top: 0.75rem;">
+              ${aliasPills || `<span class="tracker-pill dark">No aliases added yet</span>`}
+            </div>
+          </div>
+        `;
       }
 
-      function getTopDomains() {
-        const map = {};
-        state.entries.forEach((entry) => {
-          const domain = parseDomain(entry.citationUrl);
-          if (!domain) return;
-          map[domain] = (map[domain] || 0) + 1;
+      async function fetchJson(url, options = {}) {
+        const res = await fetch(url, options);
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.ok === false) {
+          throw new Error(data.error || "Request failed");
+        }
+        return data;
+      }
+
+      async function checkApiHealth() {
+        try {
+          const data = await fetchJson(`${API_BASE}/api/health`);
+          if (data.ok) {
+            els.apiHealthBadge.className = "tracker-badge-inline tracker-badge-success";
+            els.apiHealthBadge.innerHTML = `<i class="fas fa-check-circle"></i> API Connected`;
+          }
+        } catch (error) {
+          els.apiHealthBadge.className = "tracker-badge-inline tracker-badge-warn";
+          els.apiHealthBadge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> API Unavailable`;
+        }
+      }
+
+      async function loadProjects(showInfo = false) {
+        try {
+          const data = await fetchJson(`${API_BASE}/api/projects`);
+          state.projects = Array.isArray(data.projects) ? data.projects : [];
+          renderProjectSelect();
+
+          if (showInfo) {
+            setStatus(els.projectStatus, "success", `Loaded ${state.projects.length} project(s).`);
+          }
+
+          const selectedId = state.currentProject?.id || els.projectSelect.value;
+          if (selectedId) {
+            const selected = state.projects.find(project => project.id === selectedId);
+            if (selected) {
+              setCurrentProject(selected);
+            }
+          }
+        } catch (error) {
+          setStatus(els.projectStatus, "error", error.message);
+        }
+      }
+
+      async function createProject(event) {
+        event.preventDefault();
+        clearStatus(els.projectStatus);
+
+        const payload = {
+          name: els.projectName.value.trim(),
+          brand_name: els.brandName.value.trim(),
+          main_domain: els.mainDomain.value.trim(),
+          competitor_domains: parseList(els.competitorDomains.value),
+          brand_aliases: parseList(els.brandAliases.value),
+          product_aliases: parseList(els.productAliases.value),
+          notes: els.projectNotes.value.trim()
+        };
+
+        if (!payload.name || !payload.brand_name || !payload.main_domain) {
+          setStatus(els.projectStatus, "error", "Project name, brand name, and main domain are required.");
+          return;
+        }
+
+        const btn = document.getElementById("createProjectBtn");
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Saving...`;
+
+        try {
+          const data = await fetchJson(`${API_BASE}/api/create-project`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          setStatus(els.projectStatus, "success", "Project saved successfully.");
+          els.projectForm.reset();
+          await loadProjects();
+          setCurrentProject(data.project);
+        } catch (error) {
+          setStatus(els.projectStatus, "error", error.message);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fas fa-plus-circle"></i> Save Project`;
+        }
+      }
+
+      function setCurrentProject(project) {
+        state.currentProject = project || null;
+        state.currentPromptId = null;
+        renderProjectSelect();
+        renderActiveProjectBox();
+        renderPromptLibrary();
+        loadProjectData();
+      }
+
+      function resetProjectForm() {
+        els.projectForm.reset();
+        clearStatus(els.projectStatus);
+      }
+
+      function renderPromptLibrary() {
+        const project = state.currentProject;
+        if (!project) {
+          els.promptLibrary.innerHTML = `<div class="tracker-empty">Select a project first to manage prompts.</div>`;
+          return;
+        }
+
+        const prompts = loadPromptLibraryFromStorage(project.id);
+        state.promptLibrary[project.id] = prompts;
+
+        if (!prompts.length) {
+          els.promptLibrary.innerHTML = `<div class="tracker-empty">Save a prompt to build your prompt library.</div>`;
+          return;
+        }
+
+        els.promptLibrary.innerHTML = prompts.map((prompt, index) => `
+          <div class="tracker-prompt-card">
+            <strong>${safeText(prompt.prompt_text)}</strong>
+            <div class="tracker-prompt-meta">
+              ${prompt.keyword ? `<span class="tracker-pill">${safeText(prompt.keyword)}</span>` : ""}
+              ${prompt.category ? `<span class="tracker-pill dark">${safeText(prompt.category)}</span>` : ""}
+              ${prompt.prompt_id ? `<span class="tracker-pill dark">Saved to backend</span>` : `<span class="tracker-pill dark">Local</span>`}
+            </div>
+            <div class="tracker-prompt-actions">
+              <button class="tracker-btn tracker-btn-success" data-run-index="${index}">
+                <i class="fas fa-play"></i>
+                Run
+              </button>
+              <button class="tracker-btn tracker-btn-outline" data-load-index="${index}">
+                <i class="fas fa-pen"></i>
+                Edit
+              </button>
+              <button class="tracker-btn tracker-btn-outline" data-delete-index="${index}">
+                <i class="fas fa-trash"></i>
+                Delete
+              </button>
+            </div>
+          </div>
+        `).join("");
+
+        els.promptLibrary.querySelectorAll("[data-run-index]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const prompt = prompts[Number(btn.dataset.runIndex)];
+            if (prompt) runPrompt(prompt);
+          });
         });
-        return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+        els.promptLibrary.querySelectorAll("[data-load-index]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const prompt = prompts[Number(btn.dataset.loadIndex)];
+            if (!prompt) return;
+            els.promptText.value = prompt.prompt_text || "";
+            els.promptKeyword.value = prompt.keyword || "";
+            els.promptCategory.value = prompt.category || "commercial";
+            state.currentPromptId = prompt.prompt_id || null;
+            setStatus(els.promptStatus, "info", "Prompt loaded into the editor.");
+          });
+        });
+
+        els.promptLibrary.querySelectorAll("[data-delete-index]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const index = Number(btn.dataset.deleteIndex);
+            const next = prompts.filter((_, i) => i !== index);
+            savePromptLibraryToStorage(project.id, next);
+            renderPromptLibrary();
+            setStatus(els.promptStatus, "success", "Prompt removed from local library.");
+          });
+        });
       }
 
-      function renderTopDomains() {
-        const container = byId("topDomains");
-        const items = getTopDomains();
-        container.innerHTML = items.length
-          ? items
-              .map(
-                ([domain, count]) => `
-                  <div class="mini-item">
-                    <span>${escapeHtml(domain)}</span>
-                    <strong>${count}</strong>
-                  </div>
-                `
-              )
-              .join("")
-          : `<div class="empty-state">No cited domains yet.</div>`;
+      async function savePrompt() {
+        clearStatus(els.promptStatus);
+
+        const project = state.currentProject;
+        if (!project) {
+          setStatus(els.promptStatus, "error", "Select a project first.");
+          return;
+        }
+
+        const prompt_text = els.promptText.value.trim();
+        const keyword = els.promptKeyword.value.trim();
+        const category = els.promptCategory.value;
+
+        if (!prompt_text) {
+          setStatus(els.promptStatus, "error", "Enter a prompt first.");
+          return;
+        }
+
+        const btn = els.savePromptBtn;
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Saving...`;
+
+        try {
+          const data = await fetchJson(`${API_BASE}/api/add-prompt`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              project_id: project.id,
+              prompt_text,
+              keyword,
+              category
+            })
+          });
+
+          const prompts = loadPromptLibraryFromStorage(project.id);
+          prompts.unshift({
+            prompt_id: data.prompt.id,
+            prompt_text,
+            keyword,
+            category
+          });
+          savePromptLibraryToStorage(project.id, prompts);
+          renderPromptLibrary();
+
+          state.currentPromptId = data.prompt.id;
+          setStatus(els.promptStatus, "success", "Prompt saved successfully.");
+        } catch (error) {
+          setStatus(els.promptStatus, "error", error.message);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fas fa-save"></i> Save Prompt`;
+        }
       }
 
-      function getTopCompetitors() {
-        const map = {};
-        state.entries.forEach((entry) => {
-          String(entry.competitors || "")
-            .split(",")
-            .map((x) => x.trim())
-            .filter(Boolean)
-            .forEach((name) => {
-              map[name] = (map[name] || 0) + 1;
+      async function runPrompt(promptOverride = null) {
+        clearStatus(els.promptStatus);
+
+        const project = state.currentProject;
+        if (!project) {
+          setStatus(els.promptStatus, "error", "Select a project first.");
+          return;
+        }
+
+        const prompt_text = promptOverride?.prompt_text || els.promptText.value.trim();
+        const keyword = promptOverride?.keyword || els.promptKeyword.value.trim();
+        const category = promptOverride?.category || els.promptCategory.value;
+        const prompt_id = promptOverride?.prompt_id || state.currentPromptId;
+
+        if (!prompt_text) {
+          setStatus(els.promptStatus, "error", "Enter or load a prompt first.");
+          return;
+        }
+
+        const btn = els.runPromptBtn;
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Running...`;
+
+        try {
+          const data = await fetchJson(`${API_BASE}/api/run-check`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              project_id: project.id,
+              prompt_id,
+              brand_name: project.brand_name,
+              main_domain: project.main_domain,
+              brand_aliases: project.brand_aliases || [],
+              product_aliases: project.product_aliases || [],
+              competitor_domains: project.competitor_domains || [],
+              prompt_text
+            })
+          });
+
+          setStatus(els.promptStatus, "success", `Prompt completed successfully${keyword ? ` for "${keyword}"` : ""}.`);
+          renderLatestAnalysis(data.analysis, prompt_text, category);
+          await loadProjectData();
+        } catch (error) {
+          setStatus(els.promptStatus, "error", error.message);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fas fa-play"></i> Run Prompt`;
+        }
+      }
+
+      async function runAllPrompts() {
+        clearStatus(els.promptStatus);
+
+        const project = state.currentProject;
+        if (!project) {
+          setStatus(els.promptStatus, "error", "Select a project first.");
+          return;
+        }
+
+        const prompts = loadPromptLibraryFromStorage(project.id);
+        if (!prompts.length) {
+          setStatus(els.promptStatus, "error", "Add at least one saved prompt first.");
+          return;
+        }
+
+        const btn = els.runAllPromptsBtn;
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Running All...`;
+
+        try {
+          let completed = 0;
+          for (const prompt of prompts) {
+            setStatus(els.promptStatus, "info", `Running ${completed + 1} of ${prompts.length}: ${shortText(prompt.prompt_text, 70)}`);
+            await fetchJson(`${API_BASE}/api/run-check`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                project_id: project.id,
+                prompt_id: prompt.prompt_id || null,
+                brand_name: project.brand_name,
+                main_domain: project.main_domain,
+                brand_aliases: project.brand_aliases || [],
+                product_aliases: project.product_aliases || [],
+                competitor_domains: project.competitor_domains || [],
+                prompt_text: prompt.prompt_text
+              })
             });
-        });
-        return Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 8);
+            completed++;
+          }
+
+          setStatus(els.promptStatus, "success", `Completed ${completed} prompt run(s).`);
+          await loadProjectData();
+        } catch (error) {
+          setStatus(els.promptStatus, "error", error.message);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fas fa-rocket"></i> Run All Saved Prompts`;
+        }
       }
 
-      function renderCompetitors() {
-        const container = byId("competitorList");
-        const items = getTopCompetitors();
-        container.innerHTML = items.length
-          ? items
-              .map(
-                ([name, count]) => `
-                  <div class="mini-item">
-                    <span>${escapeHtml(name)}</span>
-                    <strong>${count}</strong>
-                  </div>
-                `
-              )
-              .join("")
-          : `<div class="empty-state">No competitor data yet.</div>`;
+      async function loadProjectData() {
+        if (!state.currentProject) {
+          resetDashboard();
+          return;
+        }
+
+      try {
+          const [runsData, summaryData] = await Promise.all([
+            fetchJson(`${API_BASE}/api/project-runs?project_id=${encodeURIComponent(state.currentProject.id)}&limit=100`),
+            fetchJson(`${API_BASE}/api/project-summary?project_id=${encodeURIComponent(state.currentProject.id)}`)
+          ]);
+
+          state.currentRuns = Array.isArray(runsData.runs) ? runsData.runs : [];
+
+          updateKpis(summaryData.summary || {}, state.currentRuns);
+          renderHistory(state.currentRuns);
+          updateCharts(state.currentRuns);
+
+          if (state.currentRuns.length > 0) {
+            const latest = state.currentRuns[0];
+            renderLatestAnalysis(
+              {
+                ai_answer_brand_mentioned: latest.ai_answer_brand_mentioned,
+                ai_answer_brand_mention_count: latest.ai_answer_brand_mention_count,
+                citation_brand_mentioned: latest.citation_brand_mentioned,
+                citation_brand_count: latest.citation_brand_count,
+                web_result_brand_count: latest.web_result_brand_count,
+                source_page_brand_mentioned: latest.source_page_brand_mentioned,
+                source_pages_scanned: latest.source_pages_scanned,
+                domain_cited: latest.domain_cited,
+                cited_urls: latest.cited_urls || [],
+                cited_domains: latest.cited_domains || [],
+                competitor_mentions: latest.competitor_mentions || [],
+                visibility_score: latest.visibility_score || 0,
+                recommendations: latest.recommendations || [],
+                ai_summary: latest.ai_summary || "",
+                brand_terms_used: latest.raw_response?.brand_terms || []
+              },
+              latest.prompt_text,
+              "latest saved run"
+            );
+          } else {
+            renderLatestAnalysis(null);
+          }
+        } catch (error) {
+          setStatus(els.promptStatus, "error", error.message);
+        }
       }
 
-      function buildActionPlan() {
-        if (!state.entries.length) {
-          return "No entries yet. Start logging prompts to generate recommendations.";
-        }
-
-        const total = state.entries.length;
-        const mentionNo = state.entries.filter((e) => e.mention === "no").length;
-        const citationNo = state.entries.filter((e) => e.cited !== "yes").length;
-        const noLink = state.entries.filter((e) => e.linked === "no").length;
-        const weakRanks = state.entries.filter((e) => Number(e.rank) > 3).length;
-
-        const topDomains = getTopDomains().slice(0, 3).map(([d]) => d);
-        const competitors = getTopCompetitors().slice(0, 3).map(([c]) => c);
-
-        const actions = [];
-
-        if (mentionNo / total >= 0.4) {
-          actions.push("Increase brand entity clarity across homepage, service pages, about page, and author pages because mention rate is currently weak.");
-        }
-        if (citationNo / total >= 0.4) {
-          actions.push("Create more citation-worthy assets such as statistics pages, practical guides, case studies, comparisons, and glossary content.");
-        }
-        if (noLink / total >= 0.5) {
-          actions.push("Improve pages that deserve direct citations by strengthening titles, unique findings, structured headings, and trustworthy source formatting.");
-        }
-        if (weakRanks >= 2) {
-          actions.push("Prioritize keywords where your brand appears below position 3 and build supporting content plus internal links around those topics.");
-        }
-        if (topDomains.length) {
-          actions.push(`Study the domains AI engines cite most often: ${topDomains.join(", ")}. Reverse-engineer why they earn citations.`);
-        }
-        if (competitors.length) {
-          actions.push(`Compare content positioning against frequently mentioned competitors: ${competitors.join(", ")}.`);
-        }
-
-        actions.push("Test the same prompts across multiple engines and locations to detect visibility gaps by platform.");
-        actions.push("Re-run tracked prompts after content updates and log before/after changes to measure improvement.");
-
-        return actions.map((item, index) => `${index + 1}. ${item}`).join("\n");
+      function resetDashboard() {
+        updateKpis({}, []);
+        renderLatestAnalysis(null);
+        renderHistory([]);
+        updateCharts([]);
+        els.recommendationsBox.innerHTML = `<div class="tracker-empty">Recommendations will appear after a prompt run.</div>`;
+        els.sourcesBox.innerHTML = `<div class="tracker-empty">Source domains and URLs will appear here after a run.</div>`;
       }
 
-      function renderActionPlan() {
-        byId("actionPlanOutput").textContent = buildActionPlan();
+      function updateKpis(summary = {}, runs = []) {
+        els.kpiAiMentions.textContent = summary.ai_answer_mentions ?? 0;
+        els.kpiCitationMentions.textContent = summary.citation_mentions ?? 0;
+
+        const sourcePresenceCount = runs.filter(run => run.source_page_brand_mentioned).length;
+        els.kpiSourcePresence.textContent = sourcePresenceCount;
+
+        els.kpiVisibilityScore.textContent = Number(summary.average_visibility_score || 0).toFixed(0);
+        els.kpiTotalRuns.textContent = summary.total_runs ?? 0;
+        els.kpiDomainCitations.textContent = summary.domain_citations ?? 0;
       }
 
-      function mentionBadge(value) {
-        if (value === "yes") return `<span class="badge badge-ok">Mentioned</span>`;
-        if (value === "partial") return `<span class="badge badge-warn">Partial</span>`;
-        return `<span class="badge badge-bad">Missed</span>`;
+      function renderLatestAnalysis(analysis, promptText = "", category = "") {
+        if (!analysis) {
+          els.latestAnalysisBox.innerHTML = `
+            <div class="tracker-empty" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #cbd5e1;">
+              Run a prompt to generate the first analysis snapshot.
+            </div>
+          `;
+          return;
+        }
+
+        const competitorMentions = Array.isArray(analysis.competitor_mentions)
+          ? analysis.competitor_mentions
+          : [];
+
+        const competitorHtml = competitorMentions.length
+          ? `<ul class="tracker-analysis-list">
+              ${competitorMentions.map(item => `
+                <li>
+                  <strong>${safeText(item.domain || "Unknown domain")}</strong>
+                  — total mentions: ${safeText(item.total_mentions ?? item.cited_count ?? 0)}
+                </li>
+              `).join("")}
+            </ul>`
+          : `<p class="tracker-help" style="color:#cbd5e1;">No competitor overlap detected in the latest run.</p>`;
+
+        const termsHtml = Array.isArray(analysis.brand_terms_used) && analysis.brand_terms_used.length
+          ? analysis.brand_terms_used.map(term => `<span class="tracker-source-tag">${safeText(term)}</span>`).join("")
+          : `<span class="tracker-source-tag">No extra terms used</span>`;
+
+        els.latestAnalysisBox.innerHTML = `
+          <div class="tracker-analysis-grid">
+            <div class="tracker-analysis-box" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
+              <h4 style="color:#fff;">Prompt Overview</h4>
+              <ul class="tracker-analysis-list" style="color:#e2e8f0;">
+                <li><strong>Prompt:</strong> ${safeText(promptText || "—")}</li>
+                <li><strong>Category:</strong> ${safeText(category || "Run analysis")}</li>
+                <li><strong>Visibility Score:</strong> ${safeText(Number(analysis.visibility_score || 0).toFixed(0))}</li>
+                <li><strong>AI Answer Presence:</strong> ${analysis.ai_answer_brand_mentioned ? "Yes" : "No"}</li>
+                <li><strong>Citation Presence:</strong> ${analysis.citation_brand_mentioned ? "Yes" : "No"}</li>
+                <li><strong>Domain Cited:</strong> ${analysis.domain_cited ? "Yes" : "No"}</li>
+              </ul>
+            </div>
+
+            <div class="tracker-analysis-box" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
+              <h4 style="color:#fff;">Signal Breakdown</h4>
+              <ul class="tracker-analysis-list" style="color:#e2e8f0;">
+                <li><strong>AI Answer Mentions:</strong> ${safeText(analysis.ai_answer_brand_mention_count ?? 0)}</li>
+                <li><strong>Citation Mentions:</strong> ${safeText(analysis.citation_brand_count ?? 0)}</li>
+                <li><strong>Source Mentions:</strong> ${safeText(analysis.web_result_brand_count ?? 0)}</li>
+                <li><strong>Source Pages Scanned:</strong> ${safeText(analysis.source_pages_scanned ?? 0)}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tracker-analysis-box" style="margin-top:1rem; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
+            <h4 style="color:#fff;">AI Summary</h4>
+            <p style="color:#e2e8f0; line-height:1.85; margin:0;">
+              ${safeText(analysis.ai_summary || "No summary available.")}
+            </p>
+          </div>
+
+          <div class="tracker-analysis-box" style="margin-top:1rem; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
+            <h4 style="color:#fff;">Tracked Brand Terms</h4>
+            <div class="tracker-source-tags">${termsHtml}</div>
+          </div>
+
+          <div class="tracker-analysis-box" style="margin-top:1rem; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
+            <h4 style="color:#fff;">Competitor Overlap</h4>
+            ${competitorHtml}
+          </div>
+        `;
+
+        renderRecommendations(analysis.recommendations || []);
+        renderSources(analysis.cited_domains || [], analysis.cited_urls || []);
       }
 
-      function citedBadge(value) {
-        if (value === "yes") return `<span class="badge badge-ok">Cited</span>`;
-        if (value === "competitor-only") return `<span class="badge badge-warn">Competitor only</span>`;
-        return `<span class="badge badge-bad">No</span>`;
+      function renderRecommendations(recommendations = []) {
+        if (!recommendations.length) {
+          els.recommendationsBox.innerHTML = `
+            <div class="tracker-empty">No recommendations available for the latest run yet.</div>
+          `;
+          return;
+        }
+
+        els.recommendationsBox.innerHTML = `
+          <div class="tracker-analysis-box">
+            <ul class="tracker-recommendations">
+              ${recommendations.map(item => `<li>${safeText(item)}</li>`).join("")}
+            </ul>
+          </div>
+        `;
       }
 
-      function renderTable() {
-        const body = byId("resultsTableBody");
-        const entries = getFilteredEntries();
+      function renderSources(domains = [], urls = []) {
+        const safeDomains = Array.isArray(domains) ? domains : [];
+        const safeUrls = Array.isArray(urls) ? urls : [];
 
-        if (!entries.length) {
-          body.innerHTML = `
+        if (!safeDomains.length && !safeUrls.length) {
+          els.sourcesBox.innerHTML = `
+            <div class="tracker-empty">Source domains and URLs will appear here after a run.</div>
+          `;
+          return;
+        }
+
+        const domainTags = safeDomains.length
+          ? `<div class="tracker-source-tags">
+              ${safeDomains.map(domain => `<span class="tracker-source-tag">${safeText(domain)}</span>`).join("")}
+            </div>`
+          : `<p class="tracker-help">No cited domains found.</p>`;
+
+        const urlList = safeUrls.length
+          ? `<ul class="tracker-analysis-list" style="margin-top:1rem;">
+              ${safeUrls.map(url => `
+                <li>
+                  <a href="${safeText(url)}" target="_blank" rel="noopener noreferrer">${safeText(url)}</a>
+                </li>
+              `).join("")}
+            </ul>`
+          : `<p class="tracker-help" style="margin-top:1rem;">No cited URLs found.</p>`;
+
+        els.sourcesBox.innerHTML = `
+          <div class="tracker-analysis-box">
+            <h4>Cited Domains</h4>
+            ${domainTags}
+            <h4 style="margin-top:1rem;">Referenced URLs</h4>
+            ${urlList}
+          </div>
+        `;
+      }
+
+      function renderHistory(runs = []) {
+        if (!runs.length) {
+          els.historyTableBody.innerHTML = `
             <tr>
-              <td colspan="10" class="empty-state">No matching entries yet.</td>
+              <td colspan="7">
+                <div class="tracker-empty">No run history loaded yet.</div>
+              </td>
             </tr>
           `;
           return;
         }
 
-        body.innerHTML = entries
-          .slice()
-          .reverse()
-          .map(
-            (entry) => `
-              <tr>
-                <td>${escapeHtml(entry.date)}</td>
-                <td>${escapeHtml(entry.engine)}</td>
-                <td>${escapeHtml(entry.keyword)}</td>
-                <td>${mentionBadge(entry.mention)}</td>
-                <td>${citedBadge(entry.cited)}</td>
-                <td>${entry.rank ? escapeHtml(entry.rank) : "-"}</td>
-                <td class="inline-link">
-                  ${
-                    entry.citationUrl
-                      ? `<a href="${escapeHtml(entry.citationUrl)}" target="_blank" rel="noopener">${escapeHtml(parseDomain(entry.citationUrl) || entry.citationUrl)}</a>`
-                      : "-"
-                  }
-                </td>
-                <td>${escapeHtml(entry.competitors || "-")}</td>
-                <td>${escapeHtml(entry.notes || "-")}</td>
-                <td>
-                  <button class="btn btn-secondary" onclick="deleteEntry('${entry.id}')">Delete</button>
-                </td>
-              </tr>
-            `
-          )
-          .join("");
+        els.historyTableBody.innerHTML = runs.map(run => `
+          <tr>
+            <td>${safeText(formatDate(run.created_at))}</td>
+            <td>${safeText(shortText(run.prompt_text, 90))}</td>
+            <td>
+              <span class="tracker-badge-inline tracker-badge-soft">
+                ${safeText(Number(run.visibility_score || 0).toFixed(0))}
+              </span>
+            </td>
+            <td>
+              <span class="tracker-badge-inline ${run.ai_answer_brand_mentioned ? "tracker-badge-success" : "tracker-badge-muted"}">
+                ${run.ai_answer_brand_mentioned ? "Yes" : "No"}
+              </span>
+              <div class="tracker-help">Count: ${safeText(run.ai_answer_brand_mention_count ?? 0)}</div>
+            </td>
+            <td>
+              <span class="tracker-badge-inline ${run.citation_brand_mentioned ? "tracker-badge-success" : "tracker-badge-muted"}">
+                ${run.citation_brand_mentioned ? "Yes" : "No"}
+              </span>
+              <div class="tracker-help">Count: ${safeText(run.citation_brand_count ?? 0)}</div>
+            </td>
+            <td>
+              <span class="tracker-badge-inline ${run.source_page_brand_mentioned ? "tracker-badge-success" : "tracker-badge-muted"}">
+                ${run.source_page_brand_mentioned ? "Yes" : "No"}
+              </span>
+              <div class="tracker-help">Pages: ${safeText(run.source_pages_scanned ?? 0)}</div>
+            </td>
+            <td>
+              <span class="tracker-badge-inline ${run.domain_cited ? "tracker-badge-success" : "tracker-badge-warn"}">
+                ${run.domain_cited ? "Yes" : "No"}
+              </span>
+            </td>
+          </tr>
+        `).join("");
       }
 
-      function renderPromptTemplates() {
-        const brand = state.project.name || "[Your Brand]";
-        const domain = state.project.domain || "[yourdomain.com]";
-
-        const templates = [
-          `What are the best technical SEO audit services for small business websites?`,
-          `Who is a good SEO specialist for technical audits and on-page SEO?`,
-          `Which websites are most trustworthy for learning technical SEO auditing?`,
-          `What should I check in a technical SEO audit for ${brand}?`,
-          `Compare ${brand} with top SEO audit providers.`,
-          `Which sources should I read before hiring an SEO consultant for ${domain}?`
-        ];
-
-        byId("promptTemplatesOutput").textContent = templates
-          .map((item, index) => `${index + 1}. ${item}`)
-          .join("\n");
+      function destroyChart(chart) {
+        if (chart) chart.destroy();
       }
 
-      function generateLlmsTxt() {
-        const brand = (state.project.name || "Your Brand").trim();
-        const domain = (state.project.domain || "example.com").trim();
-        const notes = (state.project.notes || "").trim();
-        const guidance = byId("llmsExtraGuidance").value.trim();
-        const pages = byId("llmsPriorityPages").value
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean);
+      function updateCharts(runs = []) {
+        const trendLabels = [...runs].reverse().map((run, index) => `Run ${index + 1}`);
+        const trendValues = [...runs].reverse().map(run => Number(run.visibility_score || 0));
 
-        const content = [
-          `# llms.txt`,
-          `brand: ${brand}`,
-          `domain: ${domain}`,
-          ``,
-          `preferred-content:`,
-          ...pages.map((page) => `- ${page}`),
-          ``,
-          `notes:`,
-          `- ${notes || "Share service pages, case studies, guides, and authoritative content first."}`,
-          `- ${guidance || "Prefer accurate, well-structured, citation-worthy pages."}`
-        ].join("\n");
+        const aiPresence = runs.filter(run => run.ai_answer_brand_mentioned).length;
+        const citationPresence = runs.filter(run => run.citation_brand_mentioned).length;
+        const sourcePresence = runs.filter(run => run.source_page_brand_mentioned).length;
 
-        byId("llmsOutput").textContent = content;
-      }
-
-      function collectEntry() {
-        return {
-          id: String(Date.now()),
-          date: byId("entryDate").value || todayISO(),
-          engine: byId("entryEngine").value,
-          keyword: byId("entryKeyword").value.trim(),
-          country: byId("entryCountry").value.trim(),
-          language: byId("entryLanguage").value.trim(),
-          device: byId("entryDevice").value,
-          prompt: byId("entryPrompt").value.trim(),
-          mention: byId("entryMention").value,
-          linked: byId("entryLinked").value,
-          cited: byId("entryCited").value,
-          rank: byId("entryRank").value.trim(),
-          citationUrl: byId("entryCitationUrl").value.trim(),
-          competitors: byId("entryCompetitors").value.trim(),
-          sentiment: byId("entrySentiment").value,
-          evidence: byId("entryEvidence").value.trim(),
-          notes: byId("entryNotes").value.trim()
-        };
-      }
-
-      function validateEntry(entry) {
-        if (!entry.keyword) {
-          alert("Please enter a keyword or topic.");
-          return false;
-        }
-        if (!entry.prompt) {
-          alert("Please enter the prompt used.");
-          return false;
-        }
-        return true;
-      }
-
-      function clearEntryForm() {
-        byId("entryDate").value = todayISO();
-        byId("entryEngine").value = "ChatGPT";
-        byId("entryKeyword").value = "";
-        byId("entryCountry").value = "";
-        byId("entryLanguage").value = "";
-        byId("entryDevice").value = "Desktop";
-        byId("entryPrompt").value = "";
-        byId("entryMention").value = "yes";
-        byId("entryLinked").value = "yes";
-        byId("entryCited").value = "yes";
-        byId("entryRank").value = "";
-        byId("entryCitationUrl").value = "";
-        byId("entryCompetitors").value = "";
-        byId("entrySentiment").value = "positive";
-        byId("entryEvidence").value = "";
-        byId("entryNotes").value = "";
-      }
-
-      function renderAll() {
-        renderProject();
-        renderKPIs();
-        renderEngineBreakdown();
-        renderTopDomains();
-        renderCompetitors();
-        renderActionPlan();
-        renderTable();
-        renderPromptTemplates();
-      }
-
-      function saveProject() {
-        state.project.name = byId("projectName").value.trim();
-        state.project.domain = byId("projectDomain").value.trim();
-        state.project.notes = byId("projectNotes").value.trim();
-        saveState();
-        renderAll();
-        alert("Project saved.");
-      }
-
-      function addEntry() {
-        const entry = collectEntry();
-        if (!validateEntry(entry)) return;
-        state.entries.push(entry);
-        saveState();
-        clearEntryForm();
-        renderAll();
-      }
-
-      function exportCsv() {
-        if (!state.entries.length) {
-          alert("No entries to export.");
-          return;
-        }
-
-        const headers = [
-          "date","engine","keyword","country","language","device","prompt","mention","linked","cited","rank","citationUrl","competitors","sentiment","evidence","notes"
-        ];
-
-        const rows = state.entries.map((entry) =>
-          headers
-            .map((header) => {
-              const value = String(entry[header] || "").replace(/"/g, '""');
-              return `"${value}"`;
-            })
-            .join(",")
-        );
-
-        const csv = [headers.join(","), ...rows].join("\n");
-        downloadFile(csv, "text/csv;charset=utf-8;", "llm-seo-tracker.csv");
-      }
-
-      function exportJson() {
-        const data = JSON.stringify(state, null, 2);
-        downloadFile(data, "application/json;charset=utf-8;", "llm-seo-tracker.json");
-      }
-
-      function downloadFile(content, type, fileName) {
-        const blob = new Blob([content], { type });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
-
-      function importJsonFile(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          try {
-            const parsed = JSON.parse(e.target.result);
-            if (!parsed || !Array.isArray(parsed.entries)) {
-              alert("Invalid JSON format.");
-              return;
-            }
-            state.project = parsed.project || { name: "", domain: "", notes: "" };
-            state.entries = parsed.entries || [];
-            saveState();
-            renderAll();
-            alert("Import complete.");
-          } catch (err) {
-            alert("Could not import JSON file.");
+        const groupedPrompts = {};
+        runs.forEach(run => {
+          const key = run.prompt_text || "Unknown prompt";
+          if (!groupedPrompts[key]) {
+            groupedPrompts[key] = [];
           }
-        };
-        reader.readAsText(file);
-      }
-
-      function fillSampleEntry() {
-        byId("entryDate").value = todayISO();
-        byId("entryEngine").value = "ChatGPT";
-        byId("entryKeyword").value = "best technical seo audit service";
-        byId("entryCountry").value = "UK";
-        byId("entryLanguage").value = "English";
-        byId("entryDevice").value = "Desktop";
-        byId("entryPrompt").value = "Who offers the best technical SEO audit service for small business websites?";
-        byId("entryMention").value = "partial";
-        byId("entryLinked").value = "no";
-        byId("entryCited").value = "competitor-only";
-        byId("entryRank").value = "4";
-        byId("entryCitationUrl").value = "https://example.com/technical-seo-guide";
-        byId("entryCompetitors").value = "Agency Alpha, Agency Beta";
-        byId("entrySentiment").value = "neutral";
-        byId("entryEvidence").value = "Manual test from ChatGPT desktop session";
-        byId("entryNotes").value = "Brand not directly cited. Competitors appeared in a stronger comparison context.";
-      }
-
-      function resetAll() {
-        const confirmReset = confirm("This will remove all saved project and tracking data. Continue?");
-        if (!confirmReset) return;
-        localStorage.removeItem(STORAGE_KEY);
-        state.project = { name: "", domain: "", notes: "" };
-        state.entries = [];
-        clearEntryForm();
-        byId("filterSearch").value = "";
-        byId("filterEngine").value = "all";
-        byId("filterMention").value = "all";
-        byId("filterDevice").value = "all";
-        byId("llmsPriorityPages").value = "";
-        byId("llmsExtraGuidance").value = "";
-        byId("llmsOutput").textContent = "";
-        renderAll();
-      }
-
-      function deleteEntry(id) {
-        state.entries = state.entries.filter((entry) => entry.id !== id);
-        saveState();
-        renderAll();
-      }
-
-      window.deleteEntry = deleteEntry;
-
-      document.addEventListener("DOMContentLoaded", () => {
-        loadState();
-        byId("entryDate").value = todayISO();
-
-        byId("saveProjectBtn").addEventListener("click", saveProject);
-        byId("addEntryBtn").addEventListener("click", addEntry);
-        byId("fillSampleBtn").addEventListener("click", fillSampleEntry);
-        byId("exportCsvBtn").addEventListener("click", exportCsv);
-        byId("exportJsonBtn").addEventListener("click", exportJson);
-        byId("generateLlmsBtn").addEventListener("click", generateLlmsTxt);
-        byId("clearAllBtn").addEventListener("click", resetAll);
-
-        byId("filterSearch").addEventListener("input", renderTable);
-        byId("filterEngine").addEventListener("change", renderTable);
-        byId("filterMention").addEventListener("change", renderTable);
-        byId("filterDevice").addEventListener("change", renderTable);
-
-        byId("importJsonInput").addEventListener("change", (e) => {
-          const file = e.target.files[0];
-          if (file) importJsonFile(file);
-          e.target.value = "";
+          groupedPrompts[key].push(Number(run.visibility_score || 0));
         });
 
-        renderAll();
-      });
+        const topPromptEntries = Object.entries(groupedPrompts)
+          .map(([prompt, scores]) => ({
+            prompt,
+            avg: scores.reduce((a, b) => a + b, 0) / scores.length
+          }))
+          .sort((a, b) => b.avg - a.avg)
+          .slice(0, 6);
+
+        destroyChart(state.charts.visibilityTrend);
+        destroyChart(state.charts.presenceBreakdown);
+        destroyChart(state.charts.promptPerformance);
+
+        state.charts.visibilityTrend = new Chart(document.getElementById("visibilityTrendChart"), {
+          type: "line",
+          data: {
+            labels: trendLabels.length ? trendLabels : ["No data"],
+            datasets: [{
+              label: "Visibility Score",
+              data: trendValues.length ? trendValues : [0],
+              borderColor: "#2563eb",
+              backgroundColor: "rgba(37,99,235,0.14)",
+              fill: true,
+              tension: 0.35,
+              pointRadius: 4,
+              pointHoverRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100
+              }
+            },
+            plugins: {
+              legend: {
+                display: true
+              }
+            }
+          }
+        });
+
+        state.charts.presenceBreakdown = new Chart(document.getElementById("presenceBreakdownChart"), {
+          type: "doughnut",
+          data: {
+            labels: ["AI Answer Presence", "Citation Presence", "Source Presence"],
+            datasets: [{
+              data: [aiPresence, citationPresence, sourcePresence],
+              backgroundColor: ["#2563eb", "#16a34a", "#f59e0b"],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "68%",
+            plugins: {
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        });
+
+        state.charts.promptPerformance = new Chart(document.getElementById("promptPerformanceChart"), {
+          type: "bar",
+          data: {
+            labels: topPromptEntries.length
+              ? topPromptEntries.map(item => shortText(item.prompt, 28))
+              : ["No data"],
+            datasets: [{
+              label: "Average Visibility Score",
+              data: topPromptEntries.length
+                ? topPromptEntries.map(item => Number(item.avg.toFixed(2)))
+                : [0],
+              backgroundColor: ["#7c3aed", "#2563eb", "#0ea5e9", "#16a34a", "#f59e0b", "#ef4444"]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+      }
+
+      async function refreshHistory() {
+        if (!state.currentProject) {
+          setStatus(els.promptStatus, "error", "Select a project first.");
+          return;
+        }
+        await loadProjectData();
+        setStatus(els.promptStatus, "success", "History refreshed.");
+      }
+
+      function handleProjectSelectChange() {
+        const projectId = els.projectSelect.value;
+        const project = state.projects.find(item => item.id === projectId);
+        if (project) {
+          setCurrentProject(project);
+        } else {
+          state.currentProject = null;
+          renderActiveProjectBox();
+          resetDashboard();
+          renderPromptLibrary();
+        }
+      }
+
+      function seedDemoPromptIfEmpty() {
+        if (!state.currentProject) return;
+        const existing = loadPromptLibraryFromStorage(state.currentProject.id);
+        if (existing.length) return;
+
+        const demoPrompt = [{
+          prompt_id: "",
+          prompt_text: `What are the best services related to ${state.currentProject.brand_name}?`,
+          keyword: state.currentProject.brand_name,
+          category: "brand"
+        }];
+
+        savePromptLibraryToStorage(state.currentProject.id, demoPrompt);
+        renderPromptLibrary();
+      }
+
+      async function init() {
+        if (els.datee) {
+          els.datee.textContent = new Date().getFullYear();
+        }
+
+        await checkApiHealth();
+        await loadProjects();
+
+        els.projectForm.addEventListener("submit", createProject);
+        els.refreshProjectsBtn.addEventListener("click", () => loadProjects(true));
+        els.resetProjectFormBtn.addEventListener("click", resetProjectForm);
+        els.projectSelect.addEventListener("change", handleProjectSelectChange);
+
+        els.savePromptBtn.addEventListener("click", savePrompt);
+        els.runPromptBtn.addEventListener("click", () => runPrompt());
+        els.runAllPromptsBtn.addEventListener("click", runAllPrompts);
+        els.refreshHistoryBtn.addEventListener("click", refreshHistory);
+
+        if (state.projects.length === 1) {
+          setCurrentProject(state.projects[0]);
+          seedDemoPromptIfEmpty();
+        }
+      }
+
+      init();
     </script>
   </body>
 </html>
