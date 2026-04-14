@@ -1748,39 +1748,54 @@
       }
 
       function renderSources(domains = [], urls = []) {
-        const safeDomains = Array.isArray(domains) ? domains : [];
-        const safeUrls = Array.isArray(urls) ? urls : [];
+  const safeDomains = Array.isArray(domains) ? domains : [];
+  const safeUrls = Array.isArray(urls) ? urls : [];
 
-        if (!safeDomains.length && !safeUrls.length) {
-          els.sourcesBox.innerHTML = `<div class="tool-empty">Cited domains and URLs will appear here after a run.</div>`;
-          return;
-        }
+  if (!safeDomains.length && !safeUrls.length) {
+    els.sourcesBox.innerHTML = `<div class="tool-empty">Cited domains and URLs will appear here after a run.</div>`;
+    return;
+  }
 
-        const domainsHtml = safeDomains.length
-          ? `<div class="tool-source-tags">
-              ${safeDomains.map((domain) => `<span class="tool-source-tag">${safeText(domain)}</span>`).join("")}
-            </div>`
-          : `<p>No cited domains found.</p>`;
+  const domainsHtml = safeDomains.length
+    ? `<div class="tool-source-tags">
+        ${safeDomains.map((domain) => `<span class="tool-source-tag">${safeText(domain)}</span>`).join("")}
+      </div>`
+    : `<p>No cited domains found.</p>`;
 
-        const urlsHtml = safeUrls.length
-          ? `<ul class="tool-analysis-list" style="margin-top: 1rem;">
-              ${safeUrls.map((url) => `
-                <li>
-                  <a href="${safeText(url)}" target="_blank" rel="noopener">${safeText(url)}</a>
-                </li>
-              `).join("")}
-            </ul>`
-          : `<p style="margin-top: 1rem;">No cited URLs found.</p>`;
+  const urlsHtml = safeUrls.length
+    ? `<ul class="tool-analysis-list" style="margin-top: 1rem;">
+        ${safeUrls.map((url, index) => {
+          let label = `Referenced URL ${index + 1}`;
+          try {
+            const parsed = new URL(url);
+            label = parsed.hostname;
+          } catch (error) {}
+          return `
+            <li>
+              <a
+                href="${safeText(url)}"
+                target="_blank"
+                rel="noopener"
+                title="${safeText(url)}"
+              >
+                ${safeText(label)}
+              </a>
+            </li>
+          `;
+        }).join("")}
+      </ul>`
+    : `<p style="margin-top: 1rem;">No cited URLs found.</p>`;
 
-        els.sourcesBox.innerHTML = `
-          <div>
-            <h3 style="margin-bottom: 0.5rem;">Cited domains</h3>
-            ${domainsHtml}
-            <h3 style="margin: 1rem 0 0.5rem;">Referenced URLs</h3>
-            ${urlsHtml}
-          </div>
-        `;
-      }
+  els.sourcesBox.innerHTML = `
+    <div>
+      <h3 style="margin-bottom: 0.5rem;">Cited domains</h3>
+      ${domainsHtml}
+      <h3 style="margin: 1rem 0 0.5rem;">Referenced URLs</h3>
+      ${urlsHtml}
+    </div>
+  `;
+}
+
 
       function renderHistory(runs = []) {
         if (!runs.length) {
