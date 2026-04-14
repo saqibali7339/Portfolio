@@ -12,7 +12,7 @@
     <title>LLM SEO Tracker | Saqib Ali</title>
     <meta
       name="description"
-      content="Track how brands appear across AI answers, citations, and referenced source pages with a clean LLM SEO Tracker dashboard."
+      content="Track how brands appear across AI answers, citations, and source-page signals with this LLM SEO Tracker by Saqib Ali."
     />
     <meta name="blog-category" content="SEO Tools" />
 
@@ -20,7 +20,7 @@
     <meta property="og:title" content="LLM SEO Tracker | Saqib Ali" />
     <meta
       property="og:description"
-      content="An advanced AI visibility dashboard for monitoring AI answer presence, citation presence, source-page visibility, and prompt-level trends."
+      content="An advanced AI visibility tracker for monitoring AI answer presence, citation presence, source-page signals, and prompt-level trends."
     />
     <meta property="og:image" content="/Portfolio/assets/Meta.png" />
 
@@ -28,15 +28,45 @@
     <meta property="twitter:title" content="LLM SEO Tracker | Saqib Ali" />
     <meta
       property="twitter:description"
-      content="Track AI visibility, citations, source presence, and prompt performance with a premium LLM SEO dashboard."
+      content="Track AI answer presence, citation visibility, and prompt performance with a clean SEO-focused dashboard."
     />
     <meta property="twitter:image" content="/Portfolio/assets/Meta.png" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/Portfolio/assets/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/Portfolio/assets/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/Portfolio/assets/favicon-16x16.png" />
-    <link rel="manifest" href="/Portfolio/assets/site.webmanifest" />
-    <link rel="shortcut icon" href="/Portfolio/assets/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/Portfolio/assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/Portfolio/assets/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/Portfolio/assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/Portfolio/assets/favicon/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/Portfolio/assets/favicon/android-chrome-512x512.png"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/Portfolio/assets/favicon/favicon.ico"
+    />
+    <link rel="manifest" href="/Portfolio/assets/favicon/site.webmanifest" />
 
     <link
       rel="stylesheet"
@@ -49,738 +79,396 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-      :root {
-        --tracker-bg: #0b1220;
-        --tracker-bg-soft: #111827;
-        --tracker-card: rgba(255, 255, 255, 0.96);
-        --tracker-card-dark: #0f172a;
-        --tracker-line: rgba(255, 255, 255, 0.08);
-        --tracker-border: #e5e7eb;
-        --tracker-text: #0f172a;
-        --tracker-muted: #64748b;
-        --tracker-primary: #2563eb;
-        --tracker-primary-2: #0ea5e9;
-        --tracker-success: #16a34a;
-        --tracker-warning: #f59e0b;
-        --tracker-danger: #ef4444;
-        --tracker-purple: #7c3aed;
-        --tracker-shadow: 0 18px 50px rgba(2, 8, 23, 0.12);
-        --tracker-radius: 20px;
+      .tool-page-wrap .btn {
+        margin-top: 0.5rem;
       }
 
-      body {
-        background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
-        color: var(--tracker-text);
+      .tool-intro-note,
+      .tool-card,
+      .tool-cta-box,
+      .tool-metric-card,
+      .tool-chart-card,
+      .tool-analysis-box,
+      .tool-table-card,
+      .tool-prompt-item,
+      .tool-visual-panel {
+        background: var(--card-background);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
       }
 
-      .tracker-page {
-        padding-bottom: 5rem;
-      }
-
-      .tracker-hero {
-        position: relative;
-        overflow: hidden;
-        background:
-          radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.18), transparent 28%),
-          radial-gradient(circle at 85% 20%, rgba(124, 58, 237, 0.16), transparent 24%),
-          linear-gradient(135deg, #081120 0%, #10203b 55%, #0f1b31 100%);
-        color: #fff;
-        padding: 7rem 0 5rem;
-      }
-
-      .tracker-hero::before,
-      .tracker-hero::after {
-        content: "";
-        position: absolute;
-        border-radius: 999px;
-        opacity: 0.3;
-        pointer-events: none;
-      }
-
-      .tracker-hero::before {
-        width: 420px;
-        height: 420px;
-        background: radial-gradient(circle, rgba(56, 189, 248, 0.22), transparent 70%);
-        top: -130px;
-        left: -120px;
-      }
-
-      .tracker-hero::after {
-        width: 520px;
-        height: 520px;
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.18), transparent 70%);
-        bottom: -180px;
-        right: -140px;
-      }
-
-      .tracker-hero-grid {
-        position: relative;
-        z-index: 2;
-        display: grid;
-        gap: 2.5rem;
-        grid-template-columns: 1.1fr 0.9fr;
-        align-items: center;
-      }
-
-      .tracker-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-        padding: 0.6rem 1rem;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        background: rgba(255, 255, 255, 0.08);
-        color: #dbeafe;
-        font-size: 0.92rem;
-        margin-bottom: 1.15rem;
-      }
-
-      .tracker-hero h1 {
-        color: #fff;
-        font-size: clamp(2.25rem, 5vw, 4rem);
-        line-height: 1.08;
-        margin-bottom: 1rem;
-      }
-
-      .tracker-hero p {
-        color: rgba(255, 255, 255, 0.88);
-        font-size: 1.05rem;
-        line-height: 1.9;
-        max-width: 780px;
-      }
-
-      .tracker-hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-top: 1.75rem;
-      }
-
-      .tracker-hero-note {
-        display: flex;
-        gap: 0.85rem;
-        margin-top: 1.4rem;
+      .tool-intro-note {
+        margin-top: 1.5rem;
         padding: 1rem 1.1rem;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        color: #dbeafe;
       }
 
-      .tracker-hero-note i {
-        margin-top: 0.2rem;
-        color: #67e8f9;
+      .tool-intro-note p {
+        margin-bottom: 0;
       }
 
-      .tracker-hero-visual {
-        position: relative;
-      }
-
-      .tracker-glass-card {
-        position: relative;
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 28px;
-        padding: 1.25rem;
-        box-shadow: 0 30px 60px rgba(2, 8, 23, 0.35);
-      }
-
-      .tracker-mini-stats {
+      .tool-dashboard-grid,
+      .tool-chart-grid,
+      .tool-analysis-grid,
+      .tool-actions-grid {
         display: grid;
+        gap: 1rem;
+      }
+
+      .tool-dashboard-grid,
+      .tool-actions-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.9rem;
+      }
+
+      .tool-chart-grid,
+      .tool-analysis-grid {
+        grid-template-columns: repeat(2, 1fr);
         margin-top: 1rem;
       }
 
-      .tracker-mini-stat {
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        padding: 1rem;
-        color: #fff;
+      .tool-card,
+      .tool-chart-card,
+      .tool-analysis-box,
+      .tool-table-card,
+      .tool-visual-panel {
+        padding: 1.25rem;
       }
 
-      .tracker-mini-stat span {
-        display: block;
-        font-size: 0.85rem;
-        color: #bfdbfe;
-        margin-bottom: 0.35rem;
+      .tool-card h3,
+      .tool-chart-card h3,
+      .tool-analysis-box h3,
+      .tool-table-card h3,
+      .tool-cta-box h3,
+      .tool-visual-panel h3 {
+        margin-bottom: 0.6rem;
       }
 
-      .tracker-mini-stat strong {
-        font-size: 1.35rem;
-        font-weight: 700;
-      }
-
-      .tracker-trust-strip {
-        margin-top: -34px;
-        position: relative;
-        z-index: 4;
-      }
-
-      .tracker-trust-box {
-        background: #fff;
-        border-radius: 20px;
-        box-shadow: var(--tracker-shadow);
-        border: 1px solid rgba(37, 99, 235, 0.08);
-        padding: 1.2rem 1.4rem;
+      .tool-form-grid {
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        align-items: start;
+        margin-top: 1rem;
       }
 
-      .tracker-trust-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, #dbeafe, #e0f2fe);
-        color: var(--tracker-primary);
-        font-size: 1.2rem;
-      }
-
-      .tracker-section {
-        padding: 2.25rem 0 0;
-      }
-
-      .tracker-grid {
-        display: grid;
-        gap: 1.35rem;
-      }
-
-      .tracker-two-col {
-        grid-template-columns: 1.05fr 0.95fr;
-      }
-
-      .tracker-card {
-        background: var(--tracker-card);
-        border: 1px solid rgba(15, 23, 42, 0.06);
-        border-radius: var(--tracker-radius);
-        box-shadow: var(--tracker-shadow);
-        padding: 1.4rem;
-      }
-
-      .tracker-card h2,
-      .tracker-card h3,
-      .tracker-card h4 {
-        margin-bottom: 0.8rem;
-      }
-
-      .tracker-card-title-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        margin-bottom: 1rem;
-      }
-
-      .tracker-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        font-size: 0.86rem;
-        color: var(--tracker-muted);
-      }
-
-      .tracker-form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .tracker-form-group {
+      .tool-form-group {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.45rem;
       }
 
-      .tracker-form-group.full {
+      .tool-form-group.full {
         grid-column: 1 / -1;
       }
 
-      .tracker-form-group label {
-        font-weight: 600;
-        color: #1e293b;
-        font-size: 0.95rem;
+      .tool-form-group label {
+        font-weight: 700;
       }
 
-      .tracker-form-group input,
-      .tracker-form-group textarea,
-      .tracker-form-group select {
+      .tool-form-group input,
+      .tool-form-group textarea,
+      .tool-form-group select {
         width: 100%;
-        border-radius: 14px;
-        border: 1px solid #dbe3ee;
-        background: #fff;
-        padding: 0.9rem 1rem;
-        font-size: 0.98rem;
-        color: #0f172a;
-        outline: none;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        padding: 0.85rem 1rem;
+        border-radius: 10px;
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        background: var(--bg-primary);
+        color: var(--text-color);
+        font: inherit;
       }
 
-      .tracker-form-group textarea {
+      .tool-form-group textarea {
         min-height: 110px;
         resize: vertical;
       }
 
-      .tracker-form-group input:focus,
-      .tracker-form-group textarea:focus,
-      .tracker-form-group select:focus {
-        border-color: #93c5fd;
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-      }
-
-      .tracker-help {
-        color: var(--tracker-muted);
-        font-size: 0.88rem;
+      .tool-helper-text {
+        font-size: 0.92rem;
+        opacity: 0.85;
         line-height: 1.7;
       }
 
-      .tracker-actions {
-        display: flex;
-        gap: 0.85rem;
-        flex-wrap: wrap;
-        margin-top: 0.45rem;
-      }
-
-      .tracker-btn {
-        border: none;
-        border-radius: 14px;
-        padding: 0.9rem 1.15rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.6rem;
-        text-decoration: none;
-      }
-
-      .tracker-btn:hover {
-        transform: translateY(-1px);
-      }
-
-      .tracker-btn-primary {
-        background: linear-gradient(135deg, #2563eb, #0ea5e9);
-        color: #fff;
-        box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
-      }
-
-      .tracker-btn-secondary {
-        background: #eef4ff;
-        color: #1d4ed8;
-      }
-
-      .tracker-btn-dark {
-        background: #0f172a;
-        color: #fff;
-      }
-
-      .tracker-btn-success {
-        background: linear-gradient(135deg, #16a34a, #22c55e);
-        color: #fff;
-      }
-
-      .tracker-btn-outline {
-        background: #fff;
-        color: #0f172a;
-        border: 1px solid #d7dee8;
-      }
-
-      .tracker-btn:disabled {
-        cursor: not-allowed;
-        opacity: 0.7;
-        transform: none;
-      }
-
-      .tracker-status {
-        margin-top: 1rem;
-        padding: 0.95rem 1rem;
-        border-radius: 14px;
-        font-size: 0.95rem;
+      .tool-status {
         display: none;
+        margin-top: 1rem;
+        padding: 0.85rem 1rem;
+        border-radius: 10px;
+        line-height: 1.7;
       }
 
-      .tracker-status.show {
+      .tool-status.show {
         display: block;
       }
 
-      .tracker-status.success {
-        background: #ecfdf5;
-        border: 1px solid #bbf7d0;
-        color: #166534;
+      .tool-status.info {
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.2);
       }
 
-      .tracker-status.error {
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-        color: #991b1b;
+      .tool-status.success {
+        background: rgba(34, 197, 94, 0.14);
+        border: 1px solid rgba(34, 197, 94, 0.22);
       }
 
-      .tracker-status.info {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        color: #1d4ed8;
+      .tool-status.error {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.22);
       }
 
-      .tracker-select-wrap {
-        display: flex;
-        gap: 0.85rem;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-
-      .tracker-select-wrap select {
-        min-width: 260px;
-      }
-
-      .tracker-pill-row {
+      .tool-inline-actions,
+      .tool-project-select-row,
+      .tool-pill-row,
+      .tool-prompt-actions,
+      .tool-cta-buttons,
+      .tool-source-tags {
         display: flex;
         flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .tool-pill-row,
+      .tool-source-tags {
         gap: 0.6rem;
-        margin-top: 0.9rem;
+        margin-top: 0.8rem;
       }
 
-      .tracker-pill {
+      .tool-pill,
+      .tool-source-tag,
+      .tool-badge {
         display: inline-flex;
         align-items: center;
         gap: 0.45rem;
-        padding: 0.55rem 0.8rem;
+        padding: 0.45rem 0.8rem;
         border-radius: 999px;
-        background: #eff6ff;
-        color: #1d4ed8;
         font-size: 0.88rem;
-        font-weight: 600;
+        line-height: 1.3;
       }
 
-      .tracker-pill.dark {
-        background: #e2e8f0;
-        color: #0f172a;
+      .tool-pill,
+      .tool-source-tag {
+        background: var(--bg-primary);
+        box-shadow: var(--shadow);
       }
 
-      .tracker-kpi-grid {
+      .tool-badge {
+        font-weight: 700;
+      }
+
+      .tool-badge.success {
+        background: rgba(34, 197, 94, 0.14);
+      }
+
+      .tool-badge.warn {
+        background: rgba(245, 158, 11, 0.16);
+      }
+
+      .tool-badge.info {
+        background: rgba(59, 130, 246, 0.12);
+      }
+
+      .tool-metric-grid {
         display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-template-columns: repeat(6, 1fr);
         gap: 1rem;
-      }
-
-      .tracker-kpi {
-        position: relative;
-        overflow: hidden;
-        background: #fff;
-        border-radius: 20px;
-        padding: 1.1rem 1rem;
-        border: 1px solid rgba(15, 23, 42, 0.06);
-        box-shadow: var(--tracker-shadow);
-      }
-
-      .tracker-kpi::after {
-        content: "";
-        position: absolute;
-        inset: auto -12px -12px auto;
-        width: 80px;
-        height: 80px;
-        border-radius: 999px;
-        background: radial-gradient(circle, rgba(37, 99, 235, 0.1), transparent 70%);
-      }
-
-      .tracker-kpi-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.7rem;
-        margin-bottom: 0.7rem;
-      }
-
-      .tracker-kpi-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-      }
-
-      .tracker-kpi-icon.blue { background: #dbeafe; color: #1d4ed8; }
-      .tracker-kpi-icon.green { background: #dcfce7; color: #15803d; }
-      .tracker-kpi-icon.amber { background: #fef3c7; color: #b45309; }
-      .tracker-kpi-icon.purple { background: #ede9fe; color: #6d28d9; }
-      .tracker-kpi-icon.rose { background: #ffe4e6; color: #be123c; }
-      .tracker-kpi-icon.slate { background: #e2e8f0; color: #0f172a; }
-
-      .tracker-kpi span {
-        display: block;
-        color: var(--tracker-muted);
-        font-size: 0.9rem;
-        margin-bottom: 0.35rem;
-      }
-
-      .tracker-kpi strong {
-        font-size: 1.7rem;
-        line-height: 1;
-        color: #0f172a;
-      }
-
-      .tracker-charts-grid {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 1rem;
-      }
-
-      .tracker-chart-card canvas {
-        width: 100% !important;
-        max-height: 340px;
-      }
-
-      .tracker-library-list {
-        display: grid;
-        gap: 0.85rem;
         margin-top: 1rem;
       }
 
-      .tracker-prompt-card {
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 1rem;
-        background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-      }
-
-      .tracker-prompt-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-top: 0.75rem;
-      }
-
-      .tracker-prompt-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.65rem;
-        margin-top: 0.9rem;
-      }
-
-      .tracker-empty {
+      .tool-metric-card {
+        padding: 1.1rem 1rem;
         text-align: center;
-        border: 1px dashed #cbd5e1;
-        border-radius: 18px;
-        padding: 1.8rem 1.2rem;
-        color: var(--tracker-muted);
-        background: #f8fbff;
       }
 
-      .tracker-analysis-grid {
+      .tool-metric-card i {
+        font-size: 1.15rem;
+        margin-bottom: 0.7rem;
+        opacity: 0.9;
+      }
+
+      .tool-metric-card span {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.85;
+        margin-bottom: 0.45rem;
+      }
+
+      .tool-metric-card strong {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+      }
+
+      .tool-prompt-library {
         display: grid;
-        grid-template-columns: 1fr 1fr;
         gap: 1rem;
+        margin-top: 1rem;
       }
 
-      .tracker-analysis-box {
-        border-radius: 18px;
-        padding: 1.05rem;
-        border: 1px solid #e5e7eb;
-        background: #fff;
+      .tool-prompt-item {
+        padding: 1rem;
       }
 
-      .tracker-analysis-list,
-      .tracker-recommendations {
-        margin: 0;
-        padding-left: 1rem;
+      .tool-prompt-item h4 {
+        margin-bottom: 0.5rem;
       }
 
-      .tracker-analysis-list li,
-      .tracker-recommendations li {
-        margin-bottom: 0.55rem;
-        line-height: 1.75;
-        color: #334155;
-      }
-
-      .tracker-source-tags {
+      .tool-prompt-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-top: 0.9rem;
-      }
-
-      .tracker-source-tag {
-        padding: 0.55rem 0.8rem;
-        border-radius: 999px;
-        background: #f1f5f9;
-        color: #0f172a;
-        font-size: 0.86rem;
-      }
-
-      .tracker-summary-card {
-        background: linear-gradient(135deg, #0f172a, #1e293b);
-        color: #fff;
-      }
-
-      .tracker-summary-card p,
-      .tracker-summary-card h3,
-      .tracker-summary-card h4,
-      .tracker-summary-card li,
-      .tracker-summary-card span {
-        color: #fff;
-      }
-
-      .tracker-summary-card .tracker-source-tag {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-      }
-
-      .tracker-table-wrap {
-        overflow-x: auto;
+        gap: 0.5rem;
         margin-top: 0.7rem;
       }
 
-      .tracker-table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 900px;
+      .tool-analysis-list,
+      .tool-recommendation-list {
+        margin: 0;
+        padding-left: 1.2rem;
       }
 
-      .tracker-table th,
-      .tracker-table td {
+      .tool-analysis-list li,
+      .tool-recommendation-list li {
+        margin-bottom: 0.55rem;
+        line-height: 1.8;
+      }
+
+      .tool-analysis-box p:last-child {
+        margin-bottom: 0;
+      }
+
+      .tool-chart-card canvas {
+        width: 100% !important;
+        max-height: 330px;
+      }
+
+      .tool-table-wrap {
+        overflow-x: auto;
+        margin-top: 1rem;
+      }
+
+      .tool-table {
+        width: 100%;
+        min-width: 900px;
+        border-collapse: collapse;
+      }
+
+      .tool-table th,
+      .tool-table td {
         text-align: left;
-        padding: 0.9rem 0.8rem;
-        border-bottom: 1px solid #e5e7eb;
+        padding: 0.9rem 0.75rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.15);
         vertical-align: top;
       }
 
-      .tracker-table th {
-        color: #475569;
+      .tool-table th {
         font-size: 0.88rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
       }
 
-      .tracker-table td {
-        color: #0f172a;
+      .tool-empty {
+        padding: 1.25rem;
+        border-radius: 10px;
+        background: var(--bg-primary);
+        text-align: center;
+        opacity: 0.9;
+      }
+
+      .tool-cta-box {
+        margin-top: 2rem;
+        padding: 1.5rem;
+      }
+
+      .tool-trust-note {
         font-size: 0.95rem;
+        opacity: 0.88;
+        line-height: 1.8;
       }
 
-      .tracker-badge-inline {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.4rem 0.65rem;
-        border-radius: 999px;
-        font-size: 0.82rem;
-        font-weight: 700;
-      }
-
-      .tracker-badge-success {
-        background: #dcfce7;
-        color: #166534;
-      }
-
-      .tracker-badge-soft {
-        background: #e0f2fe;
-        color: #0c4a6e;
-      }
-
-      .tracker-badge-warn {
-        background: #fef3c7;
-        color: #92400e;
-      }
-
-      .tracker-badge-muted {
-        background: #e2e8f0;
-        color: #334155;
-      }
-
-      .tracker-cta {
-        position: relative;
-        overflow: hidden;
-        background:
-          radial-gradient(circle at top right, rgba(14, 165, 233, 0.18), transparent 25%),
-          radial-gradient(circle at bottom left, rgba(124, 58, 237, 0.18), transparent 25%),
-          linear-gradient(135deg, #081120 0%, #111c32 100%);
-        color: #fff;
-        border-radius: 28px;
-        padding: 2rem;
-        box-shadow: 0 30px 55px rgba(2, 8, 23, 0.25);
-      }
-
-      .tracker-cta h3,
-      .tracker-cta p {
-        color: #fff;
-      }
-
-      .tracker-cta .tracker-actions {
-        margin-top: 1rem;
-      }
-
-      .tracker-footer-note {
+      .tool-visual-panel svg {
+        width: 100%;
+        height: auto;
+        display: block;
         margin-top: 0.8rem;
-        color: #cbd5e1;
-        font-size: 0.92rem;
       }
 
-      .tracker-inline-icon {
-        width: 18px;
-        height: 18px;
-        display: inline-block;
-        vertical-align: middle;
+      .tool-summary-columns {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
       }
 
-      .tracker-spin {
-        animation: tracker-spin 1s linear infinite;
+      .tool-api-badge {
+        margin-top: 0.75rem;
       }
 
-      @keyframes tracker-spin {
-        to { transform: rotate(360deg); }
+      .spin-icon {
+        animation: spinIt 1s linear infinite;
       }
 
-      @media (max-width: 1120px) {
-        .tracker-hero-grid,
-        .tracker-two-col,
-        .tracker-charts-grid,
-        .tracker-analysis-grid {
-          grid-template-columns: 1fr;
+      @keyframes spinIt {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 1100px) {
+        .tool-metric-grid {
+          grid-template-columns: repeat(3, 1fr);
         }
 
-        .tracker-kpi-grid {
-          grid-template-columns: repeat(3, 1fr);
+        .tool-dashboard-grid,
+        .tool-chart-grid,
+        .tool-analysis-grid,
+        .tool-actions-grid,
+        .tool-summary-columns {
+          grid-template-columns: 1fr;
         }
       }
 
       @media (max-width: 768px) {
-        .tracker-hero {
-          padding: 6rem 0 4rem;
-        }
-
-        .tracker-form-grid,
-        .tracker-kpi-grid {
+        .tool-form-grid,
+        .tool-metric-grid {
           grid-template-columns: 1fr;
         }
 
-        .tracker-trust-box {
-          grid-template-columns: 1fr;
-        }
-
-        .tracker-btn,
-        .tracker-select-wrap select {
+        .tool-project-select-row select,
+        .tool-inline-actions .btn,
+        .tool-prompt-actions .btn {
           width: 100%;
-          justify-content: center;
         }
       }
     </style>
   </head>
 
   <body>
-    <header id="hero" class="tracker-hero">
-      <nav id="navbar" class="navbar">
+    <header id="hero">
+      <nav class="navbar">
         <div class="container">
-          <h1 id="logo"><a href="/Portfolio/index.html">Saqib Ali</a></h1>
+          <h1 id="logo">
+            <a href="/Portfolio/">
+              <img src="/Portfolio/assets/logo.png" alt="Your Logo" />
+            </a>
+          </h1>
+
           <ul class="nav-menu">
-            <li><a class="nav-link" href="/Portfolio/index.html">Home</a></li>
-            <li><a class="nav-link" href="/Portfolio/index.html#about">About</a></li>
-            <li><a class="nav-link" href="/Portfolio/index.html#services">Services</a></li>
-            <li><a class="nav-link" href="/Portfolio/blogs/index.html">Blogs</a></li>
-            <li><a class="nav-link" href="/Portfolio/index.html#contact">Contact</a></li>
+            <li><a class="nav-link" href="/Portfolio/">HOME</a></li>
+            <li><a class="nav-link" href="/Portfolio/blogs/">BLOGS</a></li>
+            <li><a class="nav-link" href="#footer">CONTACT</a></li>
+
+            <div class="theme-switch">
+              <input type="checkbox" id="switch" />
+              <label class="toggle-icons" for="switch">
+                <img
+                  class="moon"
+                  src="/Portfolio/assets/moon.svg"
+                  alt="Dark mode"
+                />
+                <img
+                  class="sun"
+                  src="/Portfolio/assets/sun.svg"
+                  alt="Light mode"
+                />
+              </label>
+            </div>
           </ul>
+
           <div class="hamburger">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -789,323 +477,323 @@
         </div>
       </nav>
 
-      <section class="container tracker-page">
-        <div class="tracker-hero-grid">
-          <div>
-            <div class="tracker-badge">
-              <i class="fas fa-sparkles"></i>
-              Advanced AI Visibility Dashboard
-            </div>
+      <section class="header-container">
+        <img
+          class="profile-image"
+          src="/Portfolio/assets/profile-image.svg"
+          alt="Saqib Ali"
+        />
+        <h1>LLM SEO Tracker</h1>
 
-            <h1>LLM SEO Tracker</h1>
-            <p>
-              Monitor how brands appear across AI answers, grounded citations, and referenced source pages.
-              Build projects, track prompt sets, measure visibility trends, and turn prompt-level findings into
-              practical SEO action.
-            </p>
-
-            <div class="tracker-hero-actions">
-              <a href="#tracker-dashboard" class="tracker-btn tracker-btn-primary">
-                <i class="fas fa-chart-line"></i>
-                Launch Dashboard
-              </a>
-              <a href="#tracker-cta" class="tracker-btn tracker-btn-secondary">
-                <i class="fas fa-briefcase"></i>
-                Work With Me
-              </a>
-            </div>
-
-            <div class="tracker-hero-note">
-              <i class="fas fa-shield-alt"></i>
-              <div>
-                <strong>Trust-focused visibility insights</strong><br />
-                Results are based on live AI-answer analysis, citation tracking, and source-page visibility signals.
-                Visibility can evolve as prompts, sources, and models update over time, so the dashboard is best used
-                as an active monitoring and optimization layer.
-              </div>
-            </div>
-          </div>
-
-          <div class="tracker-hero-visual">
-            <div class="tracker-glass-card">
-              <svg viewBox="0 0 640 420" width="100%" height="auto" aria-hidden="true">
-                <defs>
-                  <linearGradient id="lineGrad" x1="0%" x2="100%" y1="0%" y2="0%">
-                    <stop offset="0%" stop-color="#38bdf8" />
-                    <stop offset="100%" stop-color="#a855f7" />
-                  </linearGradient>
-                  <linearGradient id="cardGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-                    <stop offset="0%" stop-color="rgba(255,255,255,0.18)" />
-                    <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
-                  </linearGradient>
-                </defs>
-
-                <rect x="18" y="18" rx="22" ry="22" width="604" height="384" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.14)" />
-                <rect x="46" y="58" rx="16" width="170" height="78" fill="rgba(255,255,255,0.08)" />
-                <rect x="235" y="58" rx="16" width="170" height="78" fill="rgba(255,255,255,0.08)" />
-                <rect x="424" y="58" rx="16" width="170" height="78" fill="rgba(255,255,255,0.08)" />
-
-                <g opacity="0.95">
-                  <rect x="52" y="74" width="78" height="10" rx="5" fill="#dbeafe" />
-                  <rect x="52" y="94" width="56" height="24" rx="10" fill="#38bdf8" />
-                  <rect x="241" y="74" width="90" height="10" rx="5" fill="#e9d5ff" />
-                  <rect x="241" y="94" width="74" height="24" rx="10" fill="#a855f7" />
-                  <rect x="430" y="74" width="82" height="10" rx="5" fill="#dcfce7" />
-                  <rect x="430" y="94" width="58" height="24" rx="10" fill="#22c55e" />
-                </g>
-
-                <rect x="46" y="160" rx="20" width="548" height="190" fill="rgba(255,255,255,0.08)" />
-                <path d="M88 300 C135 260, 175 275, 220 230 S315 200, 360 220 S448 270, 510 180" fill="none" stroke="url(#lineGrad)" stroke-width="8" stroke-linecap="round" />
-                <circle cx="88" cy="300" r="8" fill="#38bdf8" />
-                <circle cx="220" cy="230" r="8" fill="#60a5fa" />
-                <circle cx="360" cy="220" r="8" fill="#8b5cf6" />
-                <circle cx="510" cy="180" r="8" fill="#22c55e" />
-
-                <rect x="76" y="330" rx="10" width="86" height="12" fill="rgba(255,255,255,0.3)" />
-                <rect x="206" y="330" rx="10" width="70" height="12" fill="rgba(255,255,255,0.18)" />
-                <rect x="326" y="330" rx="10" width="92" height="12" fill="rgba(255,255,255,0.22)" />
-                <rect x="470" y="330" rx="10" width="64" height="12" fill="rgba(255,255,255,0.16)" />
-              </svg>
-
-              <div class="tracker-mini-stats">
-                <div class="tracker-mini-stat">
-                  <span>Visibility Score</span>
-                  <strong>82</strong>
-                </div>
-                <div class="tracker-mini-stat">
-                  <span>Prompt Coverage</span>
-                  <strong>18/24</strong>
-                </div>
-                <div class="tracker-mini-stat">
-                  <span>Citation Presence</span>
-                  <strong>67%</strong>
-                </div>
-                <div class="tracker-mini-stat">
-                  <span>Source Signals</span>
-                  <strong>Strong</strong>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="content-text">
+          <h2>SEO Specialist & Web Developer</h2>
+          <p>
+            Track how brands appear across AI answers, grounded citations, and
+            source-page visibility signals. Build projects, save prompts, run
+            checks, and monitor where your brand earns attention in AI-driven
+            search experiences.
+          </p>
+          <p class="blog-meta-line">By <strong>Saqib Ali</strong></p>
         </div>
+
+        <a href="#tracker-tool" class="btn btn-secondary">
+          Open Dashboard
+        </a>
       </section>
     </header>
 
-    <main id="tracker-dashboard" class="tracker-page">
-      <section class="tracker-trust-strip">
-        <div class="container">
-          <div class="tracker-trust-box">
-            <div class="tracker-trust-icon">
-              <i class="fas fa-bolt"></i>
-            </div>
-            <div>
-              <strong>Live visibility insights</strong>
-              <p style="margin: 0.4rem 0 0; color: #475569; line-height: 1.85;">
-                This dashboard evaluates AI answer presence, citation presence, and referenced source-page visibility
-                for tracked prompts. Results are designed to help spot opportunity areas, strong-performing prompts,
-                and pages worth improving as AI systems and sources evolve.
-              </p>
+    <section class="project-container container blog-post-section tool-page-wrap" id="tracker-tool">
+      <div class="division"></div>
+
+      <div class="content-text">
+        <h2>AI Visibility Tool</h2>
+        <p>
+          A clean, practical dashboard for tracking prompt-level AI answer
+          presence, citation visibility, and source-page signals
+        </p>
+      </div>
+
+      <article class="blog-post-wrap">
+        <p>
+          This tool is designed to help brands, publishers, SEO teams, and site
+          owners monitor how they appear across AI-powered answers. Instead of
+          only checking rankings in traditional search, it focuses on whether a
+          brand is mentioned directly in AI answers, referenced in citations,
+          supported by source-page visibility, and present across valuable prompt
+          opportunities.
+        </p>
+
+        <p>
+          The dashboard works best as an active monitoring layer. Results are
+          based on live AI-answer analysis, citation tracking, and referenced
+          source-page signals, so visibility can evolve over time as prompts,
+          sources, and AI systems update. That makes the tool especially useful
+          for spotting opportunities, comparing prompts, and improving the pages
+          that deserve the most attention.
+        </p>
+
+        <div class="tool-intro-note">
+          <p>
+            <strong>How to read these insights:</strong> The dashboard is built
+            for dynamic AI visibility monitoring. It is best used to compare
+            prompt opportunities, surface strong and weak visibility patterns,
+            and guide SEO actions such as improving entity clarity, building
+            citation-worthy pages, and expanding prompt-focused content.
+          </p>
+        </div>
+
+        <div class="tool-actions-grid" style="margin-top: 1.5rem;">
+          <div class="tool-visual-panel">
+            <h3>What this tool tracks</h3>
+            <p>
+              Monitor AI answer presence, citation visibility, source-page
+              signals, prompt-level performance, and overall visibility score in
+              one workflow.
+            </p>
+
+            <svg viewBox="0 0 700 320" aria-hidden="true">
+              <defs>
+                <linearGradient id="trackerLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#3b82f6"></stop>
+                  <stop offset="100%" stop-color="#10b981"></stop>
+                </linearGradient>
+              </defs>
+
+              <rect x="20" y="20" width="660" height="280" rx="18" fill="rgba(128,128,128,0.08)"></rect>
+              <rect x="45" y="45" width="165" height="64" rx="12" fill="rgba(59,130,246,0.12)"></rect>
+              <rect x="230" y="45" width="165" height="64" rx="12" fill="rgba(16,185,129,0.12)"></rect>
+              <rect x="415" y="45" width="220" height="64" rx="12" fill="rgba(245,158,11,0.14)"></rect>
+
+              <path d="M70 250 C135 205, 175 215, 235 175 S350 135, 420 155 S530 200, 615 110" fill="none" stroke="url(#trackerLine)" stroke-width="8" stroke-linecap="round"></path>
+
+              <circle cx="70" cy="250" r="8" fill="#3b82f6"></circle>
+              <circle cx="235" cy="175" r="8" fill="#2563eb"></circle>
+              <circle cx="420" cy="155" r="8" fill="#10b981"></circle>
+              <circle cx="615" cy="110" r="8" fill="#f59e0b"></circle>
+
+              <rect x="58" y="60" width="76" height="10" rx="5" fill="rgba(59,130,246,0.55)"></rect>
+              <rect x="58" y="82" width="108" height="14" rx="7" fill="rgba(59,130,246,0.3)"></rect>
+
+              <rect x="245" y="60" width="74" height="10" rx="5" fill="rgba(16,185,129,0.55)"></rect>
+              <rect x="245" y="82" width="116" height="14" rx="7" fill="rgba(16,185,129,0.3)"></rect>
+
+              <rect x="430" y="60" width="96" height="10" rx="5" fill="rgba(245,158,11,0.58)"></rect>
+              <rect x="430" y="82" width="160" height="14" rx="7" fill="rgba(245,158,11,0.28)"></rect>
+            </svg>
+          </div>
+
+          <div class="tool-card">
+            <h3>What you can do with it</h3>
+            <ul class="tool-analysis-list">
+              <li>Create projects for different brands or websites</li>
+              <li>Track prompt sets for commercial, informational, or brand queries</li>
+              <li>Measure AI answer presence and citation presence separately</li>
+              <li>Review prompt-by-prompt visibility scores and trends</li>
+              <li>Spot competitor overlap and source-page opportunities</li>
+              <li>Turn findings into content and SEO action items</li>
+            </ul>
+
+            <div class="tool-api-badge">
+              <span class="tool-badge info" id="apiHealthBadge">
+                <i class="fas fa-circle-notch spin-icon"></i>
+                Checking API connection
+              </span>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container tracker-grid tracker-two-col">
-          <div class="tracker-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Create or Manage a Project</h2>
-                <p class="tracker-help">
-                  Set your brand, domain, competitors, and alias signals so the tracker can monitor AI visibility with cleaner entity matching.
-                </p>
-              </div>
-              <span class="tracker-label">
-                <i class="fas fa-database"></i>
-                Connected to live backend
-              </span>
-            </div>
+        <h2>Project setup</h2>
+        <p>
+          Start by creating a project with your brand name, main domain,
+          competitor domains, and any brand or product aliases you want the tool
+          to track. This improves entity matching and helps the dashboard return
+          more useful visibility signals.
+        </p>
 
-            <form id="projectForm" class="tracker-form-grid">
-              <div class="tracker-form-group">
+        <div class="tool-dashboard-grid">
+          <div class="tool-card">
+            <h3>Create Project</h3>
+            <p class="tool-helper-text">
+              Add your brand details, aliases, and competitor domains.
+            </p>
+
+            <form id="projectForm" class="tool-form-grid">
+              <div class="tool-form-group">
                 <label for="projectName">Project Name</label>
-                <input id="projectName" type="text" placeholder="e.g. Bubble Bum Visibility Tracker" required />
+                <input
+                  id="projectName"
+                  type="text"
+                  placeholder="e.g. Bubble Bum Visibility Tracker"
+                  required
+                />
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="brandName">Brand Name</label>
-                <input id="brandName" type="text" placeholder="e.g. Bubble Bum" required />
+                <input
+                  id="brandName"
+                  type="text"
+                  placeholder="e.g. Bubble Bum"
+                  required
+                />
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="mainDomain">Main Domain</label>
-                <input id="mainDomain" type="text" placeholder="e.g. bubblebum.co" required />
+                <input
+                  id="mainDomain"
+                  type="text"
+                  placeholder="e.g. bubblebum.co"
+                  required
+                />
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="competitorDomains">Competitor Domains</label>
-                <textarea id="competitorDomains" placeholder="One per line or comma-separated&#10;hiccapop.com&#10;example.com"></textarea>
+                <textarea
+                  id="competitorDomains"
+                  placeholder="One per line or comma separated&#10;hiccapop.com&#10;example.com"
+                ></textarea>
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="brandAliases">Brand Aliases</label>
-                <textarea id="brandAliases" placeholder="BubbleBum, bubblebum"></textarea>
+                <textarea
+                  id="brandAliases"
+                  placeholder="BubbleBum, bubblebum"
+                ></textarea>
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="productAliases">Product / Category Aliases</label>
-                <textarea id="productAliases" placeholder="inflatable booster seat, inflateable booster seat"></textarea>
+                <textarea
+                  id="productAliases"
+                  placeholder="inflatable booster seat, inflateable booster seat"
+                ></textarea>
               </div>
 
-              <div class="tracker-form-group full">
-                <label for="projectNotes">Project Notes</label>
-                <textarea id="projectNotes" placeholder="Optional notes about the brand, market, or prompt strategy"></textarea>
+              <div class="tool-form-group full">
+                <label for="projectNotes">Notes</label>
+                <textarea
+                  id="projectNotes"
+                  placeholder="Optional notes about the brand, category, or project"
+                ></textarea>
               </div>
 
-              <div class="tracker-form-group full">
-                <div class="tracker-actions">
-                  <button type="submit" class="tracker-btn tracker-btn-primary" id="createProjectBtn">
-                    <i class="fas fa-plus-circle"></i>
+              <div class="tool-form-group full">
+                <div class="tool-inline-actions">
+                  <button type="submit" class="btn btn-primary" id="createProjectBtn">
                     Save Project
                   </button>
-                  <button type="button" class="tracker-btn tracker-btn-outline" id="resetProjectFormBtn">
-                    <i class="fas fa-redo"></i>
+                  <button type="button" class="btn btn-secondary" id="resetProjectFormBtn">
                     Reset
                   </button>
                 </div>
               </div>
             </form>
 
-            <div id="projectStatus" class="tracker-status"></div>
+            <div id="projectStatus" class="tool-status"></div>
           </div>
 
-          <div class="tracker-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Select Active Project</h2>
-                <p class="tracker-help">
-                  Choose a saved project to load summary metrics, prompt library, recent runs, and chart data.
-                </p>
-              </div>
-              <span id="apiHealthBadge" class="tracker-badge-inline tracker-badge-soft">
-                <i class="fas fa-circle-notch tracker-spin"></i>
-                Checking API
-              </span>
-            </div>
+          <div class="tool-card">
+            <h3>Active Project</h3>
+            <p class="tool-helper-text">
+              Select a saved project to load prompt history, summary metrics,
+              charts, and latest visibility signals.
+            </p>
 
-            <div class="tracker-select-wrap">
+            <div class="tool-project-select-row">
               <select id="projectSelect">
                 <option value="">Select a saved project</option>
               </select>
-              <button type="button" class="tracker-btn tracker-btn-secondary" id="refreshProjectsBtn">
-                <i class="fas fa-sync-alt"></i>
+
+              <button type="button" class="btn btn-secondary" id="refreshProjectsBtn">
                 Refresh
               </button>
             </div>
 
             <div id="activeProjectBox" style="margin-top: 1rem;">
-              <div class="tracker-empty">
-                Select a project to activate the dashboard.
-              </div>
+              <div class="tool-empty">Select a project to activate the dashboard.</div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container">
-          <div class="tracker-kpi-grid">
-            <div class="tracker-kpi">
-              <div class="tracker-kpi-top">
-                <div class="tracker-kpi-icon blue">
-                  <i class="fas fa-brain"></i>
-                </div>
-              </div>
-              <span>AI Answer Mentions</span>
-              <strong id="kpiAiMentions">0</strong>
-            </div>
+        <h2>Visibility summary</h2>
+        <p>
+          These summary cards give you a fast view of how a project is performing
+          across tracked runs. The goal is not only to see whether a brand shows
+          up, but to understand how strongly it appears across answer text,
+          citations, and supporting source pages.
+        </p>
 
-            <div class="tracker-kpi">
-              <div class="tracker-kpi-top">
-                <div class="tracker-kpi-icon green">
-                  <i class="fas fa-link"></i>
-                </div>
-              </div>
-              <span>Citation Mentions</span>
-              <strong id="kpiCitationMentions">0</strong>
-            </div>
+        <div class="tool-metric-grid">
+          <div class="tool-metric-card">
+            <i class="fas fa-brain"></i>
+            <span>AI Answer Mentions</span>
+            <strong id="kpiAiMentions">0</strong>
+          </div>
 
-            <div class="tracker-kpi">
-              <div class="tracker-kpi-top">
-                <div class="tracker-kpi-icon amber">
-                  <i class="fas fa-globe"></i>
-                </div>
-              </div>
-              <span>Source Presence</span>
-              <strong id="kpiSourcePresence">0</strong>
-            </div>
+          <div class="tool-metric-card">
+            <i class="fas fa-link"></i>
+            <span>Citation Mentions</span>
+            <strong id="kpiCitationMentions">0</strong>
+          </div>
 
-            <div class="tracker-kpi">
-              <div class="tracker-kpi-top">
-                <div class="tracker-kpi-icon purple">
-                  <i class="fas fa-signal"></i>
-                </div>
-              </div>
-              <span>Avg. Visibility Score</span>
-              <strong id="kpiVisibilityScore">0</strong>
-            </div>
+          <div class="tool-metric-card">
+            <i class="fas fa-globe"></i>
+            <span>Source Presence</span>
+            <strong id="kpiSourcePresence">0</strong>
+          </div>
 
-            <div class="tracker-kpi">
-              <div class="tracker-kpi-top">
-                <div class="tracker-kpi-icon rose">
-                  <i class="fas fa-bullseye"></i>
-                </div>
-              </div>
-              <span>Tracked Runs</span>
-              <strong id="kpiTotalRuns">0</strong>
-            </div>
+          <div class="tool-metric-card">
+            <i class="fas fa-signal"></i>
+            <span>Avg. Visibility</span>
+            <strong id="kpiVisibilityScore">0</strong>
+          </div>
 
-            <div class="tracker-kpi">
-              <div class="tracker-kpi-top">
-                <div class="tracker-kpi-icon slate">
-                  <i class="fas fa-flag-checkered"></i>
-                </div>
-              </div>
-              <span>Domain Citations</span>
-              <strong id="kpiDomainCitations">0</strong>
-            </div>
+          <div class="tool-metric-card">
+            <i class="fas fa-bullseye"></i>
+            <span>Tracked Runs</span>
+            <strong id="kpiTotalRuns">0</strong>
+          </div>
+
+          <div class="tool-metric-card">
+            <i class="fas fa-flag-checkered"></i>
+            <span>Domain Citations</span>
+            <strong id="kpiDomainCitations">0</strong>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container tracker-grid tracker-two-col">
-          <div class="tracker-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Prompt Manager</h2>
-                <p class="tracker-help">
-                  Build and store prompt sets for each project. Save prompts, run one at a time, or process your whole library.
-                </p>
-              </div>
-              <span class="tracker-label">
-                <i class="fas fa-layer-group"></i>
-                Session library + backend runs
-              </span>
-            </div>
+        <h2>Prompt manager</h2>
+        <p>
+          Save prompts to build a repeatable testing library. You can track
+          commercial, informational, comparison, and brand prompts, then run them
+          one by one or execute multiple saved prompts for the selected project.
+        </p>
 
-            <form id="promptForm" class="tracker-form-grid">
-              <div class="tracker-form-group full">
+        <div class="tool-dashboard-grid">
+          <div class="tool-card">
+            <h3>Add or Run a Prompt</h3>
+
+            <form id="promptForm" class="tool-form-grid">
+              <div class="tool-form-group full">
                 <label for="promptText">Prompt</label>
-                <textarea id="promptText" placeholder="e.g. What are the best inflatable car booster seats for kids?"></textarea>
+                <textarea
+                  id="promptText"
+                  placeholder="e.g. What are the best inflatable car booster seats for kids?"
+                ></textarea>
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="promptKeyword">Keyword</label>
-                <input id="promptKeyword" type="text" placeholder="e.g. best inflatable car booster seats" />
+                <input
+                  id="promptKeyword"
+                  type="text"
+                  placeholder="e.g. best inflatable car booster seats"
+                />
               </div>
 
-              <div class="tracker-form-group">
+              <div class="tool-form-group">
                 <label for="promptCategory">Category</label>
                 <select id="promptCategory">
                   <option value="commercial">Commercial</option>
@@ -1116,268 +804,222 @@
                 </select>
               </div>
 
-              <div class="tracker-form-group full">
-                <div class="tracker-actions">
-                  <button type="button" class="tracker-btn tracker-btn-primary" id="savePromptBtn">
-                    <i class="fas fa-save"></i>
+              <div class="tool-form-group full">
+                <div class="tool-inline-actions">
+                  <button type="button" class="btn btn-primary" id="savePromptBtn">
                     Save Prompt
                   </button>
-                  <button type="button" class="tracker-btn tracker-btn-success" id="runPromptBtn">
-                    <i class="fas fa-play"></i>
+                  <button type="button" class="btn btn-secondary" id="runPromptBtn">
                     Run Prompt
                   </button>
-                  <button type="button" class="tracker-btn tracker-btn-dark" id="runAllPromptsBtn">
-                    <i class="fas fa-rocket"></i>
+                  <button type="button" class="btn btn-primary" id="runAllPromptsBtn">
                     Run All Saved Prompts
                   </button>
                 </div>
               </div>
             </form>
 
-            <div id="promptStatus" class="tracker-status"></div>
+            <div id="promptStatus" class="tool-status"></div>
 
-            <div class="tracker-library-list" id="promptLibrary">
-              <div class="tracker-empty">Save a prompt to build your prompt library.</div>
+            <div class="tool-prompt-library" id="promptLibrary">
+              <div class="tool-empty">Save a prompt to build your prompt library.</div>
             </div>
           </div>
 
-          <div class="tracker-card tracker-summary-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Latest Analysis Snapshot</h2>
-                <p class="tracker-help" style="color: #cbd5e1;">
-                  See how the most recent prompt performed across AI answers, citations, source pages, and overall visibility signals.
-                </p>
-              </div>
-              <span class="tracker-label" style="color: #cbd5e1;">
-                <i class="fas fa-wave-square"></i>
-                Real-time signal view
-              </span>
-            </div>
+          <div class="tool-card">
+            <h3>Latest analysis snapshot</h3>
+            <p class="tool-helper-text">
+              The latest run shows answer presence, citation presence, source
+              visibility, competitor overlap, and prompt-specific recommendations.
+            </p>
 
             <div id="latestAnalysisBox">
-              <div class="tracker-empty" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #cbd5e1;">
-                Run a prompt to generate the first analysis snapshot.
-              </div>
+              <div class="tool-empty">Run a prompt to generate the first analysis snapshot.</div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container tracker-charts-grid">
-          <div class="tracker-card tracker-chart-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h3>Visibility Trend</h3>
-                <p class="tracker-help">Track visibility score movement across recent runs.</p>
-              </div>
-            </div>
+        <h2>Charts and performance overview</h2>
+        <p>
+          These visual summaries make it easier to compare runs, identify winning
+          prompts, and spot where visibility is growing or underperforming.
+        </p>
+
+        <div class="tool-chart-grid">
+          <div class="tool-chart-card">
+            <h3>Visibility trend</h3>
             <canvas id="visibilityTrendChart"></canvas>
           </div>
 
-          <div class="tracker-card tracker-chart-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h3>Presence Breakdown</h3>
-                <p class="tracker-help">Compare AI answer presence, citation presence, and source-page presence.</p>
-              </div>
-            </div>
+          <div class="tool-chart-card">
+            <h3>Presence breakdown</h3>
             <canvas id="presenceBreakdownChart"></canvas>
           </div>
-        </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container tracker-charts-grid">
-          <div class="tracker-card tracker-chart-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h3>Top Prompt Performance</h3>
-                <p class="tracker-help">See which prompts are driving the strongest visibility signals.</p>
-              </div>
-            </div>
+          <div class="tool-chart-card">
+            <h3>Top prompt performance</h3>
             <canvas id="promptPerformanceChart"></canvas>
           </div>
 
-          <div class="tracker-card tracker-cta">
-            <div class="tracker-card-title-row">
-              <div>
-                <h3>Need help improving AI visibility?</h3>
-                <p>
-                  I can help you build stronger citation-worthy pages, refine prompt targeting, improve entity clarity,
-                  and turn visibility gaps into a practical SEO growth plan.
-                </p>
-              </div>
-            </div>
+          <div class="tool-cta-box">
+            <h3>Need help improving AI visibility?</h3>
+            <p>
+              If you want help improving brand mentions, earning stronger
+              citations, and building prompt-focused SEO pages, I can help you
+              turn these insights into a practical action plan.
+            </p>
 
-            <div class="tracker-actions">
+            <div class="tool-cta-buttons">
               <a
                 href="https://www.fiverr.com/s/o8R4Xe4"
                 target="_blank"
-                rel="noopener noreferrer"
-                class="tracker-btn tracker-btn-primary"
+                rel="noopener"
+                class="btn btn-primary"
               >
-                <i class="fas fa-briefcase"></i>
                 Get AI Visibility Audit
               </a>
 
               <a
                 href="https://www.linkedin.com/in/saqib-ali-seo/"
                 target="_blank"
-                rel="noopener noreferrer"
-                class="tracker-btn tracker-btn-outline"
-                style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.18);"
+                rel="noopener"
+                class="btn btn-secondary"
               >
-                <i class="fab fa-linkedin"></i>
                 Connect on LinkedIn
               </a>
             </div>
-
-            <div class="tracker-footer-note">
-              Ideal for brands, agencies, publishers, SaaS sites, niche websites, and product-led SEO teams tracking AI answer visibility.
-            </div>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container tracker-grid tracker-two-col">
-          <div class="tracker-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Recommendations</h2>
-                <p class="tracker-help">
-                  Prompt-specific actions generated from answer, citation, and source-page visibility signals.
-                </p>
-              </div>
-            </div>
+        <h2>Detailed findings</h2>
+        <p>
+          The sections below surface the latest recommendations, cited domains,
+          source URLs, and saved run history for the active project.
+        </p>
+
+        <div class="tool-analysis-grid">
+          <div class="tool-analysis-box">
+            <h3>Recommendations</h3>
             <div id="recommendationsBox">
-              <div class="tracker-empty">Recommendations will appear after a prompt run.</div>
+              <div class="tool-empty">Recommendations will appear after a prompt run.</div>
             </div>
           </div>
 
-          <div class="tracker-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Tracked Sources & Domains</h2>
-                <p class="tracker-help">
-                  Review cited domains and referenced URLs surfaced by the most recent run.
-                </p>
-              </div>
-            </div>
+          <div class="tool-analysis-box">
+            <h3>Tracked sources and cited URLs</h3>
             <div id="sourcesBox">
-              <div class="tracker-empty">Source domains and URLs will appear here after a run.</div>
+              <div class="tool-empty">Cited domains and URLs will appear here after a run.</div>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section">
-        <div class="container">
-          <div class="tracker-card">
-            <div class="tracker-card-title-row">
-              <div>
-                <h2>Run History</h2>
-                <p class="tracker-help">
-                  Review saved runs, compare visibility score trends, and identify strong and weak prompts over time.
-                </p>
-              </div>
-              <button type="button" class="tracker-btn tracker-btn-secondary" id="refreshHistoryBtn">
-                <i class="fas fa-history"></i>
-                Refresh History
-              </button>
-            </div>
+        <div class="tool-table-card" style="margin-top: 1rem;">
+          <h3>Run history</h3>
+          <p class="tool-helper-text">
+            Review saved runs, compare visibility patterns, and monitor prompt
+            performance over time.
+          </p>
 
-            <div class="tracker-table-wrap">
-              <table class="tracker-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Prompt</th>
-                    <th>Visibility</th>
-                    <th>AI Answer</th>
-                    <th>Citations</th>
-                    <th>Source Pages</th>
-                    <th>Domain Cited</th>
-                  </tr>
-                </thead>
-                <tbody id="historyTableBody">
-                  <tr>
-                    <td colspan="7">
-                      <div class="tracker-empty">No run history loaded yet.</div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="tool-inline-actions">
+            <button type="button" class="btn btn-secondary" id="refreshHistoryBtn">
+              Refresh History
+            </button>
+          </div>
+
+          <div class="tool-table-wrap">
+            <table class="tool-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Prompt</th>
+                  <th>Visibility</th>
+                  <th>AI Answer</th>
+                  <th>Citations</th>
+                  <th>Source Pages</th>
+                  <th>Domain Cited</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <tr>
+                  <td colspan="7">
+                    <div class="tool-empty">No run history loaded yet.</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
 
-      <section class="tracker-section" id="tracker-cta">
-        <div class="container">
-          <div class="tracker-cta">
-            <div class="tracker-card-title-row">
-              <div>
-                <h3>Turn AI visibility into SEO growth</h3>
-                <p>
-                  Want help improving how your site appears across AI answers, citations, and source-based recommendations?
-                  I can help you audit visibility gaps, improve prompt coverage, and build pages that earn stronger AI visibility signals.
-                </p>
-              </div>
-            </div>
+        <div class="tool-cta-box">
+          <h3>Want a hands-on AI visibility strategy?</h3>
+          <p>
+            I can help you identify missed prompts, improve entity clarity,
+            strengthen citation-worthy pages, and build a better content strategy
+            for AI-driven discovery.
+          </p>
 
-            <div class="tracker-actions">
-              <a
-                href="https://www.fiverr.com/s/o8R4Xe4"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="tracker-btn tracker-btn-primary"
-              >
-                <i class="fas fa-rocket"></i>
-                Hire Me on Fiverr
-              </a>
-              <a
-                href="mailto:hello@saqibali.com"
-                class="tracker-btn tracker-btn-outline"
-                style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.18);"
-              >
-                <i class="fas fa-envelope"></i>
-                Email Me
-              </a>
-            </div>
+          <p class="tool-trust-note">
+            The dashboard is designed for practical monitoring and ongoing SEO
+            improvement. The best results come from consistent tracking, clearer
+            entity signals, better prompt-focused content, and pages built to
+            earn citations naturally.
+          </p>
 
-            <div class="tracker-footer-note">
-              AI answer visibility is evolving quickly. Continuous tracking helps spot winning prompts, strong pages, and opportunities before competitors do.
-            </div>
+          <div class="tool-cta-buttons">
+            <a
+              href="https://www.fiverr.com/s/o8R4Xe4"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-primary"
+            >
+              Hire Me on Fiverr
+            </a>
+
+            <a
+              href="mailto:saqibali7339@gmail.com"
+              class="btn btn-secondary"
+            >
+              Email Me
+            </a>
           </div>
         </div>
-      </section>
-    </main>
+      </article>
+    </section>
 
     <footer id="footer">
       <div class="container">
-        <a href="mailto:hello@saqibali.com">hello@saqibali.com</a>
+        <a href="mailto:saqibali7339@gmail.com">saqibali7339@gmail.com</a>
+
         <div class="social">
+          <a href="https://www.facebook.com/share/17BCCCzvfh/" target="_blank">
+            <img src="/Portfolio/assets/facebook-icon.svg" alt="Facebook" />
+          </a>
           <a
             href="https://www.linkedin.com/in/saqib-ali-seo/"
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
           >
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a
-            href="https://www.fiverr.com/s/o8R4Xe4"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Fiverr"
-          >
-            <i class="fas fa-briefcase"></i>
+            <img src="/Portfolio/assets/linkedin-icon.svg" alt="LinkedIn" />
           </a>
         </div>
-        <p>Copyright &copy; <span id="datee"></span>, All rights reserved</p>
+
+        <div class="attribution">
+          <a
+            href="https://www.fiverr.com/s/NNxVlko"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/Portfolio/assets/Fiverr W.svg"
+              alt="Fiverr"
+              width="150px"
+            />
+          </a>
+        </div>
+
+        <p>
+          Copyright &copy; Saqib-Ali <span id="datee"></span>, All rights
+          reserved
+        </p>
       </div>
     </footer>
 
@@ -1439,19 +1081,19 @@
       };
 
       function setStatus(el, type, message) {
-        el.className = `tracker-status show ${type}`;
+        el.className = `tool-status show ${type}`;
         el.textContent = message;
       }
 
       function clearStatus(el) {
-        el.className = "tracker-status";
+        el.className = "tool-status";
         el.textContent = "";
       }
 
       function parseList(value) {
         return String(value || "")
           .split(/[\n,]/)
-          .map(v => v.trim())
+          .map((v) => v.trim())
           .filter(Boolean);
       }
 
@@ -1468,14 +1110,14 @@
         if (!value) return "—";
         try {
           return new Date(value).toLocaleString();
-        } catch {
+        } catch (error) {
           return value;
         }
       }
 
       function shortText(text, max = 90) {
-        const t = String(text || "");
-        return t.length > max ? t.slice(0, max) + "…" : t;
+        const value = String(text || "");
+        return value.length > max ? value.slice(0, max) + "…" : value;
       }
 
       function getPromptStorageKey(projectId) {
@@ -1487,7 +1129,7 @@
         try {
           const raw = localStorage.getItem(getPromptStorageKey(projectId));
           return raw ? JSON.parse(raw) : [];
-        } catch {
+        } catch (error) {
           return [];
         }
       }
@@ -1495,56 +1137,6 @@
       function savePromptLibraryToStorage(projectId, prompts) {
         if (!projectId) return;
         localStorage.setItem(getPromptStorageKey(projectId), JSON.stringify(prompts));
-      }
-
-      function renderProjectSelect() {
-        const currentId = state.currentProject?.id || "";
-        const options = [
-          `<option value="">Select a saved project</option>`,
-          ...state.projects.map(project => `
-            <option value="${safeText(project.id)}" ${project.id === currentId ? "selected" : ""}>
-              ${safeText(project.name)} — ${safeText(project.main_domain)}
-            </option>
-          `)
-        ];
-        els.projectSelect.innerHTML = options.join("");
-      }
-
-      function renderActiveProjectBox() {
-        const project = state.currentProject;
-        if (!project) {
-          els.activeProjectBox.innerHTML = `
-            <div class="tracker-empty">Select a project to activate the dashboard.</div>
-          `;
-          return;
-        }
-
-        const competitorPills = (project.competitor_domains || [])
-          .map(domain => `<span class="tracker-pill">${safeText(domain)}</span>`)
-          .join("");
-
-        const aliasPills = [
-          ...(project.brand_aliases || []).map(a => `<span class="tracker-pill dark">${safeText(a)}</span>`),
-          ...(project.product_aliases || []).map(a => `<span class="tracker-pill dark">${safeText(a)}</span>`)
-        ].join("");
-
-        els.activeProjectBox.innerHTML = `
-          <div class="tracker-analysis-box">
-            <h4 style="margin-bottom: 0.4rem;">${safeText(project.name)}</h4>
-            <p class="tracker-help" style="margin-bottom: 0.8rem;">
-              <strong>Brand:</strong> ${safeText(project.brand_name)}<br />
-              <strong>Domain:</strong> ${safeText(project.main_domain)}
-            </p>
-
-            <div class="tracker-pill-row">
-              ${competitorPills || `<span class="tracker-pill">No competitors added yet</span>`}
-            </div>
-
-            <div class="tracker-pill-row" style="margin-top: 0.75rem;">
-              ${aliasPills || `<span class="tracker-pill dark">No aliases added yet</span>`}
-            </div>
-          </div>
-        `;
       }
 
       async function fetchJson(url, options = {}) {
@@ -1560,28 +1152,80 @@
         try {
           const data = await fetchJson(`${API_BASE}/api/health`);
           if (data.ok) {
-            els.apiHealthBadge.className = "tracker-badge-inline tracker-badge-success";
+            els.apiHealthBadge.className = "tool-badge success";
             els.apiHealthBadge.innerHTML = `<i class="fas fa-check-circle"></i> API Connected`;
           }
         } catch (error) {
-          els.apiHealthBadge.className = "tracker-badge-inline tracker-badge-warn";
+          els.apiHealthBadge.className = "tool-badge warn";
           els.apiHealthBadge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> API Unavailable`;
         }
       }
 
-      async function loadProjects(showInfo = false) {
+      function renderProjectSelect() {
+        const currentId = state.currentProject?.id || "";
+        const options = [
+          `<option value="">Select a saved project</option>`,
+          ...state.projects.map((project) => `
+            <option value="${safeText(project.id)}" ${project.id === currentId ? "selected" : ""}>
+              ${safeText(project.name)} — ${safeText(project.main_domain)}
+            </option>
+          `)
+        ];
+
+        els.projectSelect.innerHTML = options.join("");
+      }
+
+      function renderActiveProjectBox() {
+        const project = state.currentProject;
+
+        if (!project) {
+          els.activeProjectBox.innerHTML = `
+            <div class="tool-empty">Select a project to activate the dashboard.</div>
+          `;
+          return;
+        }
+
+        const competitorHtml = (project.competitor_domains || []).length
+          ? (project.competitor_domains || [])
+              .map((domain) => `<span class="tool-pill">${safeText(domain)}</span>`)
+              .join("")
+          : `<span class="tool-pill">No competitors added yet</span>`;
+
+        const aliasHtml = [
+          ...(project.brand_aliases || []).map((alias) => `<span class="tool-pill">${safeText(alias)}</span>`),
+          ...(project.product_aliases || []).map((alias) => `<span class="tool-pill">${safeText(alias)}</span>`)
+        ].join("");
+
+        els.activeProjectBox.innerHTML = `
+          <div class="tool-analysis-box">
+            <p><strong>Project:</strong> ${safeText(project.name)}</p>
+            <p><strong>Brand:</strong> ${safeText(project.brand_name)}</p>
+            <p><strong>Main Domain:</strong> ${safeText(project.main_domain)}</p>
+
+            <div class="tool-pill-row">
+              ${competitorHtml}
+            </div>
+
+            <div class="tool-pill-row">
+              ${aliasHtml || `<span class="tool-pill">No aliases added yet</span>`}
+            </div>
+          </div>
+        `;
+      }
+
+      async function loadProjects(showMessage = false) {
         try {
           const data = await fetchJson(`${API_BASE}/api/projects`);
           state.projects = Array.isArray(data.projects) ? data.projects : [];
           renderProjectSelect();
 
-          if (showInfo) {
+          if (showMessage) {
             setStatus(els.projectStatus, "success", `Loaded ${state.projects.length} project(s).`);
           }
 
           const selectedId = state.currentProject?.id || els.projectSelect.value;
           if (selectedId) {
-            const selected = state.projects.find(project => project.id === selectedId);
+            const selected = state.projects.find((item) => item.id === selectedId);
             if (selected) {
               setCurrentProject(selected);
             }
@@ -1612,12 +1256,14 @@
 
         const btn = document.getElementById("createProjectBtn");
         btn.disabled = true;
-        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Saving...`;
+        btn.textContent = "Saving...";
 
         try {
           const data = await fetchJson(`${API_BASE}/api/create-project`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify(payload)
           });
 
@@ -1629,7 +1275,7 @@
           setStatus(els.projectStatus, "error", error.message);
         } finally {
           btn.disabled = false;
-          btn.innerHTML = `<i class="fas fa-plus-circle"></i> Save Project`;
+          btn.textContent = "Save Project";
         }
       }
 
@@ -1642,15 +1288,11 @@
         loadProjectData();
       }
 
-      function resetProjectForm() {
-        els.projectForm.reset();
-        clearStatus(els.projectStatus);
-      }
-
       function renderPromptLibrary() {
         const project = state.currentProject;
+
         if (!project) {
-          els.promptLibrary.innerHTML = `<div class="tracker-empty">Select a project first to manage prompts.</div>`;
+          els.promptLibrary.innerHTML = `<div class="tool-empty">Select a project first to manage prompts.</div>`;
           return;
         }
 
@@ -1658,58 +1300,57 @@
         state.promptLibrary[project.id] = prompts;
 
         if (!prompts.length) {
-          els.promptLibrary.innerHTML = `<div class="tracker-empty">Save a prompt to build your prompt library.</div>`;
+          els.promptLibrary.innerHTML = `<div class="tool-empty">Save a prompt to build your prompt library.</div>`;
           return;
         }
 
-        els.promptLibrary.innerHTML = prompts.map((prompt, index) => `
-          <div class="tracker-prompt-card">
-            <strong>${safeText(prompt.prompt_text)}</strong>
-            <div class="tracker-prompt-meta">
-              ${prompt.keyword ? `<span class="tracker-pill">${safeText(prompt.keyword)}</span>` : ""}
-              ${prompt.category ? `<span class="tracker-pill dark">${safeText(prompt.category)}</span>` : ""}
-              ${prompt.prompt_id ? `<span class="tracker-pill dark">Saved to backend</span>` : `<span class="tracker-pill dark">Local</span>`}
-            </div>
-            <div class="tracker-prompt-actions">
-              <button class="tracker-btn tracker-btn-success" data-run-index="${index}">
-                <i class="fas fa-play"></i>
-                Run
-              </button>
-              <button class="tracker-btn tracker-btn-outline" data-load-index="${index}">
-                <i class="fas fa-pen"></i>
-                Edit
-              </button>
-              <button class="tracker-btn tracker-btn-outline" data-delete-index="${index}">
-                <i class="fas fa-trash"></i>
-                Delete
-              </button>
-            </div>
-          </div>
-        `).join("");
+        els.promptLibrary.innerHTML = prompts
+          .map((prompt, index) => `
+            <div class="tool-prompt-item">
+              <h4>${safeText(prompt.prompt_text)}</h4>
 
-        els.promptLibrary.querySelectorAll("[data-run-index]").forEach(btn => {
+              <div class="tool-prompt-meta">
+                ${prompt.keyword ? `<span class="tool-pill">${safeText(prompt.keyword)}</span>` : ""}
+                ${prompt.category ? `<span class="tool-pill">${safeText(prompt.category)}</span>` : ""}
+                ${prompt.prompt_id ? `<span class="tool-pill">Saved to backend</span>` : `<span class="tool-pill">Local only</span>`}
+              </div>
+
+              <div class="tool-prompt-actions">
+                <button type="button" class="btn btn-secondary" data-run-index="${index}">Run</button>
+                <button type="button" class="btn btn-primary" data-load-index="${index}">Edit</button>
+                <button type="button" class="btn btn-secondary" data-delete-index="${index}">Delete</button>
+              </div>
+            </div>
+          `)
+          .join("");
+
+        els.promptLibrary.querySelectorAll("[data-run-index]").forEach((btn) => {
           btn.addEventListener("click", () => {
+            const prompts = loadPromptLibraryFromStorage(project.id);
             const prompt = prompts[Number(btn.dataset.runIndex)];
             if (prompt) runPrompt(prompt);
           });
         });
 
-        els.promptLibrary.querySelectorAll("[data-load-index]").forEach(btn => {
+        els.promptLibrary.querySelectorAll("[data-load-index]").forEach((btn) => {
           btn.addEventListener("click", () => {
+            const prompts = loadPromptLibraryFromStorage(project.id);
             const prompt = prompts[Number(btn.dataset.loadIndex)];
             if (!prompt) return;
+
             els.promptText.value = prompt.prompt_text || "";
             els.promptKeyword.value = prompt.keyword || "";
             els.promptCategory.value = prompt.category || "commercial";
             state.currentPromptId = prompt.prompt_id || null;
+
             setStatus(els.promptStatus, "info", "Prompt loaded into the editor.");
           });
         });
 
-        els.promptLibrary.querySelectorAll("[data-delete-index]").forEach(btn => {
+        els.promptLibrary.querySelectorAll("[data-delete-index]").forEach((btn) => {
           btn.addEventListener("click", () => {
-            const index = Number(btn.dataset.deleteIndex);
-            const next = prompts.filter((_, i) => i !== index);
+            const prompts = loadPromptLibraryFromStorage(project.id);
+            const next = prompts.filter((_, i) => i !== Number(btn.dataset.deleteIndex));
             savePromptLibraryToStorage(project.id, next);
             renderPromptLibrary();
             setStatus(els.promptStatus, "success", "Prompt removed from local library.");
@@ -1737,12 +1378,14 @@
 
         const btn = els.savePromptBtn;
         btn.disabled = true;
-        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Saving...`;
+        btn.textContent = "Saving...";
 
         try {
           const data = await fetchJson(`${API_BASE}/api/add-prompt`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify({
               project_id: project.id,
               prompt_text,
@@ -1767,7 +1410,7 @@
           setStatus(els.promptStatus, "error", error.message);
         } finally {
           btn.disabled = false;
-          btn.innerHTML = `<i class="fas fa-save"></i> Save Prompt`;
+          btn.textContent = "Save Prompt";
         }
       }
 
@@ -1792,12 +1435,14 @@
 
         const btn = els.runPromptBtn;
         btn.disabled = true;
-        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Running...`;
+        btn.textContent = "Running...";
 
         try {
           const data = await fetchJson(`${API_BASE}/api/run-check`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify({
               project_id: project.id,
               prompt_id,
@@ -1810,14 +1455,19 @@
             })
           });
 
-          setStatus(els.promptStatus, "success", `Prompt completed successfully${keyword ? ` for "${keyword}"` : ""}.`);
+          setStatus(
+            els.promptStatus,
+            "success",
+            `Prompt completed successfully${keyword ? ` for "${keyword}"` : ""}.`
+          );
+
           renderLatestAnalysis(data.analysis, prompt_text, category);
           await loadProjectData();
         } catch (error) {
           setStatus(els.promptStatus, "error", error.message);
         } finally {
           btn.disabled = false;
-          btn.innerHTML = `<i class="fas fa-play"></i> Run Prompt`;
+          btn.textContent = "Run Prompt";
         }
       }
 
@@ -1838,15 +1488,23 @@
 
         const btn = els.runAllPromptsBtn;
         btn.disabled = true;
-        btn.innerHTML = `<i class="fas fa-circle-notch tracker-spin"></i> Running All...`;
+        btn.textContent = "Running all...";
 
         try {
           let completed = 0;
+
           for (const prompt of prompts) {
-            setStatus(els.promptStatus, "info", `Running ${completed + 1} of ${prompts.length}: ${shortText(prompt.prompt_text, 70)}`);
+            setStatus(
+              els.promptStatus,
+              "info",
+              `Running ${completed + 1} of ${prompts.length}: ${shortText(prompt.prompt_text, 72)}`
+            );
+
             await fetchJson(`${API_BASE}/api/run-check`, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json"
+              },
               body: JSON.stringify({
                 project_id: project.id,
                 prompt_id: prompt.prompt_id || null,
@@ -1858,6 +1516,7 @@
                 prompt_text: prompt.prompt_text
               })
             });
+
             completed++;
           }
 
@@ -1867,7 +1526,7 @@
           setStatus(els.promptStatus, "error", error.message);
         } finally {
           btn.disabled = false;
-          btn.innerHTML = `<i class="fas fa-rocket"></i> Run All Saved Prompts`;
+          btn.textContent = "Run All Saved Prompts";
         }
       }
 
@@ -1877,10 +1536,14 @@
           return;
         }
 
-      try {
+        try {
           const [runsData, summaryData] = await Promise.all([
-            fetchJson(`${API_BASE}/api/project-runs?project_id=${encodeURIComponent(state.currentProject.id)}&limit=100`),
-            fetchJson(`${API_BASE}/api/project-summary?project_id=${encodeURIComponent(state.currentProject.id)}`)
+            fetchJson(
+              `${API_BASE}/api/project-runs?project_id=${encodeURIComponent(state.currentProject.id)}&limit=100`
+            ),
+            fetchJson(
+              `${API_BASE}/api/project-summary?project_id=${encodeURIComponent(state.currentProject.id)}`
+            )
           ]);
 
           state.currentRuns = Array.isArray(runsData.runs) ? runsData.runs : [];
@@ -1925,17 +1588,14 @@
         renderLatestAnalysis(null);
         renderHistory([]);
         updateCharts([]);
-        els.recommendationsBox.innerHTML = `<div class="tracker-empty">Recommendations will appear after a prompt run.</div>`;
-        els.sourcesBox.innerHTML = `<div class="tracker-empty">Source domains and URLs will appear here after a run.</div>`;
+        els.recommendationsBox.innerHTML = `<div class="tool-empty">Recommendations will appear after a prompt run.</div>`;
+        els.sourcesBox.innerHTML = `<div class="tool-empty">Cited domains and URLs will appear here after a run.</div>`;
       }
 
       function updateKpis(summary = {}, runs = []) {
         els.kpiAiMentions.textContent = summary.ai_answer_mentions ?? 0;
         els.kpiCitationMentions.textContent = summary.citation_mentions ?? 0;
-
-        const sourcePresenceCount = runs.filter(run => run.source_page_brand_mentioned).length;
-        els.kpiSourcePresence.textContent = sourcePresenceCount;
-
+        els.kpiSourcePresence.textContent = runs.filter((run) => run.source_page_brand_mentioned).length;
         els.kpiVisibilityScore.textContent = Number(summary.average_visibility_score || 0).toFixed(0);
         els.kpiTotalRuns.textContent = summary.total_runs ?? 0;
         els.kpiDomainCitations.textContent = summary.domain_citations ?? 0;
@@ -1944,10 +1604,10 @@
       function renderLatestAnalysis(analysis, promptText = "", category = "") {
         if (!analysis) {
           els.latestAnalysisBox.innerHTML = `
-            <div class="tracker-empty" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #cbd5e1;">
-              Run a prompt to generate the first analysis snapshot.
-            </div>
+            <div class="tool-empty">Run a prompt to generate the first analysis snapshot.</div>
           `;
+          els.recommendationsBox.innerHTML = `<div class="tool-empty">Recommendations will appear after a prompt run.</div>`;
+          els.sourcesBox.innerHTML = `<div class="tool-empty">Cited domains and URLs will appear here after a run.</div>`;
           return;
         }
 
@@ -1956,59 +1616,63 @@
           : [];
 
         const competitorHtml = competitorMentions.length
-          ? `<ul class="tracker-analysis-list">
-              ${competitorMentions.map(item => `
+          ? `<ul class="tool-analysis-list">
+              ${competitorMentions.map((item) => `
                 <li>
                   <strong>${safeText(item.domain || "Unknown domain")}</strong>
                   — total mentions: ${safeText(item.total_mentions ?? item.cited_count ?? 0)}
                 </li>
               `).join("")}
             </ul>`
-          : `<p class="tracker-help" style="color:#cbd5e1;">No competitor overlap detected in the latest run.</p>`;
+          : `<p>No competitor overlap detected in the latest run.</p>`;
 
-        const termsHtml = Array.isArray(analysis.brand_terms_used) && analysis.brand_terms_used.length
-          ? analysis.brand_terms_used.map(term => `<span class="tracker-source-tag">${safeText(term)}</span>`).join("")
-          : `<span class="tracker-source-tag">No extra terms used</span>`;
+        const brandTerms = Array.isArray(analysis.brand_terms_used)
+          ? analysis.brand_terms_used
+          : [];
 
         els.latestAnalysisBox.innerHTML = `
-          <div class="tracker-analysis-grid">
-            <div class="tracker-analysis-box" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-              <h4 style="color:#fff;">Prompt Overview</h4>
-              <ul class="tracker-analysis-list" style="color:#e2e8f0;">
+          <div class="tool-summary-columns">
+            <div class="tool-analysis-box">
+              <h3>Prompt overview</h3>
+              <ul class="tool-analysis-list">
                 <li><strong>Prompt:</strong> ${safeText(promptText || "—")}</li>
                 <li><strong>Category:</strong> ${safeText(category || "Run analysis")}</li>
-                <li><strong>Visibility Score:</strong> ${safeText(Number(analysis.visibility_score || 0).toFixed(0))}</li>
-                <li><strong>AI Answer Presence:</strong> ${analysis.ai_answer_brand_mentioned ? "Yes" : "No"}</li>
-                <li><strong>Citation Presence:</strong> ${analysis.citation_brand_mentioned ? "Yes" : "No"}</li>
-                <li><strong>Domain Cited:</strong> ${analysis.domain_cited ? "Yes" : "No"}</li>
+                <li><strong>Visibility score:</strong> ${safeText(Number(analysis.visibility_score || 0).toFixed(0))}</li>
+                <li><strong>AI answer presence:</strong> ${analysis.ai_answer_brand_mentioned ? "Yes" : "No"}</li>
+                <li><strong>Citation presence:</strong> ${analysis.citation_brand_mentioned ? "Yes" : "No"}</li>
+                <li><strong>Domain cited:</strong> ${analysis.domain_cited ? "Yes" : "No"}</li>
               </ul>
             </div>
 
-            <div class="tracker-analysis-box" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-              <h4 style="color:#fff;">Signal Breakdown</h4>
-              <ul class="tracker-analysis-list" style="color:#e2e8f0;">
-                <li><strong>AI Answer Mentions:</strong> ${safeText(analysis.ai_answer_brand_mention_count ?? 0)}</li>
-                <li><strong>Citation Mentions:</strong> ${safeText(analysis.citation_brand_count ?? 0)}</li>
-                <li><strong>Source Mentions:</strong> ${safeText(analysis.web_result_brand_count ?? 0)}</li>
-                <li><strong>Source Pages Scanned:</strong> ${safeText(analysis.source_pages_scanned ?? 0)}</li>
+            <div class="tool-analysis-box">
+              <h3>Signal breakdown</h3>
+              <ul class="tool-analysis-list">
+                <li><strong>AI answer mentions:</strong> ${safeText(analysis.ai_answer_brand_mention_count ?? 0)}</li>
+                <li><strong>Citation mentions:</strong> ${safeText(analysis.citation_brand_count ?? 0)}</li>
+                <li><strong>Source mentions:</strong> ${safeText(analysis.web_result_brand_count ?? 0)}</li>
+                <li><strong>Source pages scanned:</strong> ${safeText(analysis.source_pages_scanned ?? 0)}</li>
               </ul>
             </div>
           </div>
 
-          <div class="tracker-analysis-box" style="margin-top:1rem; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-            <h4 style="color:#fff;">AI Summary</h4>
-            <p style="color:#e2e8f0; line-height:1.85; margin:0;">
-              ${safeText(analysis.ai_summary || "No summary available.")}
-            </p>
+          <div class="tool-analysis-box" style="margin-top: 1rem;">
+            <h3>AI summary</h3>
+            <p>${safeText(analysis.ai_summary || "No summary available.")}</p>
           </div>
 
-          <div class="tracker-analysis-box" style="margin-top:1rem; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-            <h4 style="color:#fff;">Tracked Brand Terms</h4>
-            <div class="tracker-source-tags">${termsHtml}</div>
+          <div class="tool-analysis-box" style="margin-top: 1rem;">
+            <h3>Tracked terms used</h3>
+            <div class="tool-source-tags">
+              ${
+                brandTerms.length
+                  ? brandTerms.map((term) => `<span class="tool-source-tag">${safeText(term)}</span>`).join("")
+                  : `<span class="tool-source-tag">No extra terms used</span>`
+              }
+            </div>
           </div>
 
-          <div class="tracker-analysis-box" style="margin-top:1rem; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-            <h4 style="color:#fff;">Competitor Overlap</h4>
+          <div class="tool-analysis-box" style="margin-top: 1rem;">
+            <h3>Competitor overlap</h3>
             ${competitorHtml}
           </div>
         `;
@@ -2019,18 +1683,14 @@
 
       function renderRecommendations(recommendations = []) {
         if (!recommendations.length) {
-          els.recommendationsBox.innerHTML = `
-            <div class="tracker-empty">No recommendations available for the latest run yet.</div>
-          `;
+          els.recommendationsBox.innerHTML = `<div class="tool-empty">No recommendations available for the latest run yet.</div>`;
           return;
         }
 
         els.recommendationsBox.innerHTML = `
-          <div class="tracker-analysis-box">
-            <ul class="tracker-recommendations">
-              ${recommendations.map(item => `<li>${safeText(item)}</li>`).join("")}
-            </ul>
-          </div>
+          <ul class="tool-recommendation-list">
+            ${recommendations.map((item) => `<li>${safeText(item)}</li>`).join("")}
+          </ul>
         `;
       }
 
@@ -2039,34 +1699,32 @@
         const safeUrls = Array.isArray(urls) ? urls : [];
 
         if (!safeDomains.length && !safeUrls.length) {
-          els.sourcesBox.innerHTML = `
-            <div class="tracker-empty">Source domains and URLs will appear here after a run.</div>
-          `;
+          els.sourcesBox.innerHTML = `<div class="tool-empty">Cited domains and URLs will appear here after a run.</div>`;
           return;
         }
 
-        const domainTags = safeDomains.length
-          ? `<div class="tracker-source-tags">
-              ${safeDomains.map(domain => `<span class="tracker-source-tag">${safeText(domain)}</span>`).join("")}
+        const domainsHtml = safeDomains.length
+          ? `<div class="tool-source-tags">
+              ${safeDomains.map((domain) => `<span class="tool-source-tag">${safeText(domain)}</span>`).join("")}
             </div>`
-          : `<p class="tracker-help">No cited domains found.</p>`;
+          : `<p>No cited domains found.</p>`;
 
-        const urlList = safeUrls.length
-          ? `<ul class="tracker-analysis-list" style="margin-top:1rem;">
-              ${safeUrls.map(url => `
+        const urlsHtml = safeUrls.length
+          ? `<ul class="tool-analysis-list" style="margin-top: 1rem;">
+              ${safeUrls.map((url) => `
                 <li>
-                  <a href="${safeText(url)}" target="_blank" rel="noopener noreferrer">${safeText(url)}</a>
+                  <a href="${safeText(url)}" target="_blank" rel="noopener">${safeText(url)}</a>
                 </li>
               `).join("")}
             </ul>`
-          : `<p class="tracker-help" style="margin-top:1rem;">No cited URLs found.</p>`;
+          : `<p style="margin-top: 1rem;">No cited URLs found.</p>`;
 
         els.sourcesBox.innerHTML = `
-          <div class="tracker-analysis-box">
-            <h4>Cited Domains</h4>
-            ${domainTags}
-            <h4 style="margin-top:1rem;">Referenced URLs</h4>
-            ${urlList}
+          <div>
+            <h3 style="margin-bottom: 0.5rem;">Cited domains</h3>
+            ${domainsHtml}
+            <h3 style="margin: 1rem 0 0.5rem;">Referenced URLs</h3>
+            ${urlsHtml}
           </div>
         `;
       }
@@ -2076,47 +1734,53 @@
           els.historyTableBody.innerHTML = `
             <tr>
               <td colspan="7">
-                <div class="tracker-empty">No run history loaded yet.</div>
+                <div class="tool-empty">No run history loaded yet.</div>
               </td>
             </tr>
           `;
           return;
         }
 
-        els.historyTableBody.innerHTML = runs.map(run => `
-          <tr>
-            <td>${safeText(formatDate(run.created_at))}</td>
-            <td>${safeText(shortText(run.prompt_text, 90))}</td>
-            <td>
-              <span class="tracker-badge-inline tracker-badge-soft">
-                ${safeText(Number(run.visibility_score || 0).toFixed(0))}
-              </span>
-            </td>
-            <td>
-              <span class="tracker-badge-inline ${run.ai_answer_brand_mentioned ? "tracker-badge-success" : "tracker-badge-muted"}">
-                ${run.ai_answer_brand_mentioned ? "Yes" : "No"}
-              </span>
-              <div class="tracker-help">Count: ${safeText(run.ai_answer_brand_mention_count ?? 0)}</div>
-            </td>
-            <td>
-              <span class="tracker-badge-inline ${run.citation_brand_mentioned ? "tracker-badge-success" : "tracker-badge-muted"}">
-                ${run.citation_brand_mentioned ? "Yes" : "No"}
-              </span>
-              <div class="tracker-help">Count: ${safeText(run.citation_brand_count ?? 0)}</div>
-            </td>
-            <td>
-              <span class="tracker-badge-inline ${run.source_page_brand_mentioned ? "tracker-badge-success" : "tracker-badge-muted"}">
-                ${run.source_page_brand_mentioned ? "Yes" : "No"}
-              </span>
-              <div class="tracker-help">Pages: ${safeText(run.source_pages_scanned ?? 0)}</div>
-            </td>
-            <td>
-              <span class="tracker-badge-inline ${run.domain_cited ? "tracker-badge-success" : "tracker-badge-warn"}">
-                ${run.domain_cited ? "Yes" : "No"}
-              </span>
-            </td>
-          </tr>
-        `).join("");
+        els.historyTableBody.innerHTML = runs
+          .map((run) => `
+            <tr>
+              <td>${safeText(formatDate(run.created_at))}</td>
+              <td>${safeText(shortText(run.prompt_text, 90))}</td>
+              <td>
+                <span class="tool-badge info">${safeText(Number(run.visibility_score || 0).toFixed(0))}</span>
+              </td>
+              <td>
+                <span class="tool-badge ${run.ai_answer_brand_mentioned ? "success" : "warn"}">
+                  ${run.ai_answer_brand_mentioned ? "Yes" : "No"}
+                </span>
+                <div style="margin-top: 0.4rem; font-size: 0.9rem;">
+                  Count: ${safeText(run.ai_answer_brand_mention_count ?? 0)}
+                </div>
+              </td>
+              <td>
+                <span class="tool-badge ${run.citation_brand_mentioned ? "success" : "warn"}">
+                  ${run.citation_brand_mentioned ? "Yes" : "No"}
+                </span>
+                <div style="margin-top: 0.4rem; font-size: 0.9rem;">
+                  Count: ${safeText(run.citation_brand_count ?? 0)}
+                </div>
+              </td>
+              <td>
+                <span class="tool-badge ${run.source_page_brand_mentioned ? "success" : "warn"}">
+                  ${run.source_page_brand_mentioned ? "Yes" : "No"}
+                </span>
+                <div style="margin-top: 0.4rem; font-size: 0.9rem;">
+                  Pages: ${safeText(run.source_pages_scanned ?? 0)}
+                </div>
+              </td>
+              <td>
+                <span class="tool-badge ${run.domain_cited ? "success" : "warn"}">
+                  ${run.domain_cited ? "Yes" : "No"}
+                </span>
+              </td>
+            </tr>
+          `)
+          .join("");
       }
 
       function destroyChart(chart) {
@@ -2125,14 +1789,14 @@
 
       function updateCharts(runs = []) {
         const trendLabels = [...runs].reverse().map((run, index) => `Run ${index + 1}`);
-        const trendValues = [...runs].reverse().map(run => Number(run.visibility_score || 0));
+        const trendValues = [...runs].reverse().map((run) => Number(run.visibility_score || 0));
 
-        const aiPresence = runs.filter(run => run.ai_answer_brand_mentioned).length;
-        const citationPresence = runs.filter(run => run.citation_brand_mentioned).length;
-        const sourcePresence = runs.filter(run => run.source_page_brand_mentioned).length;
+        const aiPresence = runs.filter((run) => run.ai_answer_brand_mentioned).length;
+        const citationPresence = runs.filter((run) => run.citation_brand_mentioned).length;
+        const sourcePresence = runs.filter((run) => run.source_page_brand_mentioned).length;
 
         const groupedPrompts = {};
-        runs.forEach(run => {
+        runs.forEach((run) => {
           const key = run.prompt_text || "Unknown prompt";
           if (!groupedPrompts[key]) {
             groupedPrompts[key] = [];
@@ -2152,90 +1816,99 @@
         destroyChart(state.charts.presenceBreakdown);
         destroyChart(state.charts.promptPerformance);
 
-        state.charts.visibilityTrend = new Chart(document.getElementById("visibilityTrendChart"), {
-          type: "line",
-          data: {
-            labels: trendLabels.length ? trendLabels : ["No data"],
-            datasets: [{
-              label: "Visibility Score",
-              data: trendValues.length ? trendValues : [0],
-              borderColor: "#2563eb",
-              backgroundColor: "rgba(37,99,235,0.14)",
-              fill: true,
-              tension: 0.35,
-              pointRadius: 4,
-              pointHoverRadius: 5
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                max: 100
-              }
+        state.charts.visibilityTrend = new Chart(
+          document.getElementById("visibilityTrendChart"),
+          {
+            type: "line",
+            data: {
+              labels: trendLabels.length ? trendLabels : ["No data"],
+              datasets: [
+                {
+                  label: "Visibility Score",
+                  data: trendValues.length ? trendValues : [0],
+                  borderColor: "#3b82f6",
+                  backgroundColor: "rgba(59,130,246,0.12)",
+                  fill: true,
+                  tension: 0.35,
+                  pointRadius: 4
+                }
+              ]
             },
-            plugins: {
-              legend: {
-                display: true
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100
+                }
               }
             }
           }
-        });
+        );
 
-        state.charts.presenceBreakdown = new Chart(document.getElementById("presenceBreakdownChart"), {
-          type: "doughnut",
-          data: {
-            labels: ["AI Answer Presence", "Citation Presence", "Source Presence"],
-            datasets: [{
-              data: [aiPresence, citationPresence, sourcePresence],
-              backgroundColor: ["#2563eb", "#16a34a", "#f59e0b"],
-              borderWidth: 0
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: "68%",
-            plugins: {
-              legend: {
-                position: "bottom"
-              }
-            }
-          }
-        });
-
-        state.charts.promptPerformance = new Chart(document.getElementById("promptPerformanceChart"), {
-          type: "bar",
-          data: {
-            labels: topPromptEntries.length
-              ? topPromptEntries.map(item => shortText(item.prompt, 28))
-              : ["No data"],
-            datasets: [{
-              label: "Average Visibility Score",
-              data: topPromptEntries.length
-                ? topPromptEntries.map(item => Number(item.avg.toFixed(2)))
-                : [0],
-              backgroundColor: ["#7c3aed", "#2563eb", "#0ea5e9", "#16a34a", "#f59e0b", "#ef4444"]
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                max: 100
-              }
+        state.charts.presenceBreakdown = new Chart(
+          document.getElementById("presenceBreakdownChart"),
+          {
+            type: "doughnut",
+            data: {
+              labels: ["AI Answer Presence", "Citation Presence", "Source Presence"],
+              datasets: [
+                {
+                  data: [aiPresence, citationPresence, sourcePresence],
+                  backgroundColor: ["#3b82f6", "#10b981", "#f59e0b"],
+                  borderWidth: 0
+                }
+              ]
             },
-            plugins: {
-              legend: {
-                display: false
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: "66%",
+              plugins: {
+                legend: {
+                  position: "bottom"
+                }
               }
             }
           }
-        });
+        );
+
+        state.charts.promptPerformance = new Chart(
+          document.getElementById("promptPerformanceChart"),
+          {
+            type: "bar",
+            data: {
+              labels: topPromptEntries.length
+                ? topPromptEntries.map((item) => shortText(item.prompt, 28))
+                : ["No data"],
+              datasets: [
+                {
+                  label: "Average Visibility Score",
+                  data: topPromptEntries.length
+                    ? topPromptEntries.map((item) => Number(item.avg.toFixed(2)))
+                    : [0],
+                  backgroundColor: ["#3b82f6", "#10b981", "#f59e0b", "#6366f1", "#ef4444", "#06b6d4"]
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100
+                }
+              },
+              plugins: {
+                legend: {
+                  display: false
+                }
+              }
+            }
+          }
+        );
       }
 
       async function refreshHistory() {
@@ -2249,7 +1922,7 @@
 
       function handleProjectSelectChange() {
         const projectId = els.projectSelect.value;
-        const project = state.projects.find(item => item.id === projectId);
+        const project = state.projects.find((item) => item.id === projectId);
         if (project) {
           setCurrentProject(project);
         } else {
@@ -2260,20 +1933,9 @@
         }
       }
 
-      function seedDemoPromptIfEmpty() {
-        if (!state.currentProject) return;
-        const existing = loadPromptLibraryFromStorage(state.currentProject.id);
-        if (existing.length) return;
-
-        const demoPrompt = [{
-          prompt_id: "",
-          prompt_text: `What are the best services related to ${state.currentProject.brand_name}?`,
-          keyword: state.currentProject.brand_name,
-          category: "brand"
-        }];
-
-        savePromptLibraryToStorage(state.currentProject.id, demoPrompt);
-        renderPromptLibrary();
+      function resetProjectForm() {
+        els.projectForm.reset();
+        clearStatus(els.projectStatus);
       }
 
       async function init() {
@@ -2293,11 +1955,6 @@
         els.runPromptBtn.addEventListener("click", () => runPrompt());
         els.runAllPromptsBtn.addEventListener("click", runAllPrompts);
         els.refreshHistoryBtn.addEventListener("click", refreshHistory);
-
-        if (state.projects.length === 1) {
-          setCurrentProject(state.projects[0]);
-          seedDemoPromptIfEmpty();
-        }
       }
 
       init();
